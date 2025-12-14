@@ -11,11 +11,11 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white py-16 lg:py-24 2xl:py-32">
+      <section className="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white py-16 lg:py-24 2xl:py-32 3xl:py-40">
         <div className="container-custom">
-          <div className="max-w-3xl 2xl:max-w-4xl">
-            <h1 className="text-4xl md:text-5xl 2xl:text-6xl font-bold mb-6 2xl:mb-8">Contact Us</h1>
-            <p className="text-xl 2xl:text-2xl text-secondary-300">
+          <div className="max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl">
+            <h1 className="text-4xl md:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold mb-6 2xl:mb-8 3xl:mb-10">Contact Us</h1>
+            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300">
               Ready to start your project? Get in touch for a quote or to discuss your machining
               and tooling needs.
             </p>
@@ -24,14 +24,14 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-16 lg:py-24 2xl:py-32">
+      <section className="py-16 lg:py-24 2xl:py-32 3xl:py-40">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-3 gap-12 2xl:gap-16">
+          <div className="grid lg:grid-cols-3 gap-12 2xl:gap-16 3xl:gap-20">
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-2xl 2xl:rounded-3xl shadow-lg border border-secondary-100 p-6 lg:p-8 2xl:p-10">
-                <h2 className="text-2xl 2xl:text-3xl font-bold text-secondary-900 mb-2">Request a Quote</h2>
-                <p className="text-secondary-600 2xl:text-lg mb-6 2xl:mb-8">
+              <div className="bg-white rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] shadow-lg border border-secondary-100 p-6 lg:p-8 2xl:p-10 3xl:p-12">
+                <h2 className="text-2xl 2xl:text-3xl 3xl:text-4xl font-bold text-secondary-900 mb-2 3xl:mb-4">Request a Quote</h2>
+                <p className="text-secondary-600 2xl:text-lg 3xl:text-xl mb-6 2xl:mb-8 3xl:mb-10">
                   Fill out the form below and we&apos;ll get back to you as soon as possible.
                 </p>
                 <ContactForm />
@@ -39,10 +39,10 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-6 2xl:space-y-8">
+            <div className="space-y-6 2xl:space-y-8 3xl:space-y-10">
               {/* Direct Contact */}
-              <div className="bg-white rounded-2xl 2xl:rounded-3xl shadow-lg border border-secondary-100 p-6 2xl:p-8">
-                <h3 className="text-lg 2xl:text-xl font-semibold text-secondary-900 mb-4">Direct Contact</h3>
+              <div className="bg-white rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] shadow-lg border border-secondary-100 p-6 2xl:p-8 3xl:p-10">
+                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-900 mb-4 3xl:mb-6">Direct Contact</h3>
                 <ul className="space-y-4">
                   <li>
                     <a
@@ -75,8 +75,8 @@ export default function ContactPage() {
               </div>
 
               {/* Location */}
-              <div className="bg-white rounded-2xl 2xl:rounded-3xl shadow-lg border border-secondary-100 p-6 2xl:p-8">
-                <h3 className="text-lg 2xl:text-xl font-semibold text-secondary-900 mb-4">Location</h3>
+              <div className="bg-white rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] shadow-lg border border-secondary-100 p-6 2xl:p-8 3xl:p-10">
+                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-900 mb-4 3xl:mb-6">Location</h3>
                 <div className="flex items-start space-x-3 text-secondary-600">
                   <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -106,8 +106,8 @@ export default function ContactPage() {
               </div>
 
               {/* Hours */}
-              <div className="bg-white rounded-2xl 2xl:rounded-3xl shadow-lg border border-secondary-100 p-6 2xl:p-8">
-                <h3 className="text-lg 2xl:text-xl font-semibold text-secondary-900 mb-4">Business Hours</h3>
+              <div className="bg-white rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] shadow-lg border border-secondary-100 p-6 2xl:p-8 3xl:p-10">
+                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-900 mb-4 3xl:mb-6">Business Hours</h3>
                 <div className="flex items-start space-x-3 text-secondary-600">
                   <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -134,14 +134,14 @@ export default function ContactPage() {
               </div>
 
               {/* Quick Response */}
-              <div className="bg-primary-50 rounded-2xl 2xl:rounded-3xl p-6 2xl:p-8 border border-primary-100">
-                <div className="flex items-center space-x-3 mb-3">
-                  <svg className="w-6 h-6 2xl:w-7 2xl:h-7 text-primary-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <div className="bg-primary-50 rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] p-6 2xl:p-8 3xl:p-10 border border-primary-100">
+                <div className="flex items-center space-x-3 3xl:space-x-4 mb-3 3xl:mb-4">
+                  <svg className="w-6 h-6 2xl:w-7 2xl:h-7 3xl:w-8 3xl:h-8 text-primary-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                   </svg>
-                  <h3 className="font-semibold text-primary-900 2xl:text-lg">Quick Response</h3>
+                  <h3 className="font-semibold text-primary-900 2xl:text-lg 3xl:text-xl">Quick Response</h3>
                 </div>
-                <p className="text-primary-700 text-sm 2xl:text-base">
+                <p className="text-primary-700 text-sm 2xl:text-base 3xl:text-lg">
                   We typically respond to quote requests within 1-2 business days. For urgent needs,
                   please call us directly.
                 </p>

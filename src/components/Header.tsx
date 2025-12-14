@@ -31,34 +31,34 @@ export default function Header() {
         : 'bg-transparent'
     }`}>
       <nav className="container-custom" aria-label="Main navigation">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 3xl:h-24">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          <Link href="/" className="flex items-center space-x-3 3xl:space-x-4 group">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-xl">RT</span>
+              <div className="w-12 h-12 3xl:w-14 3xl:h-14 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg 3xl:rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+                <span className="text-white font-bold text-xl 3xl:text-2xl">RT</span>
               </div>
-              <div className="absolute inset-0 bg-primary-500 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-primary-500 rounded-lg 3xl:rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <div className="hidden sm:block">
-              <span className="text-xl font-bold text-white">RoweTech</span>
-              <span className="block text-xs text-primary-400 font-medium tracking-wider uppercase">Machine & Engineering</span>
+              <span className="text-xl 3xl:text-2xl font-bold text-white">RoweTech</span>
+              <span className="block text-xs 3xl:text-sm text-primary-400 font-medium tracking-wider uppercase">Machine & Engineering</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1 3xl:space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative px-4 py-2 text-secondary-300 hover:text-white font-medium transition-colors duration-200 group"
+                className="relative px-4 py-2 3xl:px-5 3xl:py-3 text-secondary-300 hover:text-white font-medium 3xl:text-lg transition-colors duration-200 group"
               >
                 {item.name}
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
-            <Link href="/contact" className="btn-primary ml-4">
+            <Link href="/contact" className="btn-primary ml-4 3xl:ml-6">
               Request a Quote
             </Link>
           </div>

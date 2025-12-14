@@ -74,7 +74,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 2xl:pt-40 2xl:pb-32 overflow-hidden">
+      <section className="relative pt-32 pb-24 2xl:pt-40 2xl:pb-32 3xl:pt-48 3xl:pb-40 overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&q=80"
@@ -87,14 +87,14 @@ export default function AboutPage() {
         <div className="absolute inset-0 tech-lines opacity-20"></div>
 
         <div className="container-custom relative">
-          <div className="max-w-3xl 2xl:max-w-4xl">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base">About Us</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold text-white mt-2 mb-6 2xl:mb-8">
+          <div className="max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">About Us</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold text-white mt-2 mb-6 2xl:mb-8 3xl:mb-10">
               Precision Engineering,
               <br />
               <span className="gradient-text">Wisconsin Roots</span>
             </h1>
-            <p className="text-xl 2xl:text-2xl text-secondary-300 leading-relaxed">
+            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300 leading-relaxed">
               A Wisconsin-based machine shop dedicated to quality, precision, and customer success.
               We bring decades of combined experience to every project.
             </p>
@@ -103,13 +103,13 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-24 2xl:py-32 bg-secondary-800">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
             <div>
-              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base">Our Story</span>
+              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Story</span>
               <h2 className="section-heading mt-2">Built on Expertise</h2>
-              <div className="space-y-4 2xl:space-y-6 text-secondary-300 leading-relaxed 2xl:text-lg">
+              <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 text-secondary-300 leading-relaxed 2xl:text-lg 3xl:text-xl">
                 <p>
                   RoweTech Machine & Engineering was founded with a simple mission: provide
                   manufacturers with reliable, high-quality machining and tooling services they can
@@ -130,10 +130,10 @@ export default function AboutPage() {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary-500/20 to-transparent rounded-2xl blur-2xl"></div>
-              <div className="relative grid grid-cols-2 gap-4 2xl:gap-6">
-                <div className="space-y-4 2xl:space-y-6">
-                  <div className="rounded-xl 2xl:rounded-2xl overflow-hidden border border-secondary-800">
+              <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/20 to-transparent rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
+              <div className="relative grid grid-cols-2 gap-4 2xl:gap-6 3xl:gap-8">
+                <div className="space-y-4 2xl:space-y-6 3xl:space-y-8">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="CNC machining"
@@ -142,28 +142,28 @@ export default function AboutPage() {
                       className="w-full h-auto"
                     />
                   </div>
-                  <div className="card-dark text-center 2xl:p-8">
-                    <div className="w-12 h-12 2xl:w-14 2xl:h-14 bg-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mx-auto mb-3">
-                      <svg className="w-6 h-6 2xl:w-7 2xl:h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                  <div className="card-dark text-center 2xl:p-8 3xl:p-10">
+                    <div className="w-12 h-12 2xl:w-14 2xl:h-14 3xl:w-16 3xl:h-16 bg-primary-500/20 rounded-xl 3xl:rounded-2xl flex items-center justify-center text-primary-400 mx-auto mb-3 3xl:mb-4">
+                      <svg className="w-6 h-6 2xl:w-7 2xl:h-7 3xl:w-8 3xl:h-8" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                       </svg>
                     </div>
-                    <p className="font-semibold text-white 2xl:text-lg">Location</p>
-                    <p className="text-secondary-400 text-sm 2xl:text-base">Cadott, Wisconsin</p>
+                    <p className="font-semibold text-white 2xl:text-lg 3xl:text-xl">Location</p>
+                    <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">Cadott, Wisconsin</p>
                   </div>
                 </div>
-                <div className="space-y-4 2xl:space-y-6 pt-8">
-                  <div className="card-dark text-center 2xl:p-8">
-                    <div className="w-12 h-12 2xl:w-14 2xl:h-14 bg-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mx-auto mb-3">
-                      <svg className="w-6 h-6 2xl:w-7 2xl:h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 pt-8 3xl:pt-12">
+                  <div className="card-dark text-center 2xl:p-8 3xl:p-10">
+                    <div className="w-12 h-12 2xl:w-14 2xl:h-14 3xl:w-16 3xl:h-16 bg-primary-500/20 rounded-xl 3xl:rounded-2xl flex items-center justify-center text-primary-400 mx-auto mb-3 3xl:mb-4">
+                      <svg className="w-6 h-6 2xl:w-7 2xl:h-7 3xl:w-8 3xl:h-8" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
                       </svg>
                     </div>
-                    <p className="font-semibold text-white 2xl:text-lg">Specialization</p>
-                    <p className="text-secondary-400 text-sm 2xl:text-base">Mold Repair & CNC</p>
+                    <p className="font-semibold text-white 2xl:text-lg 3xl:text-xl">Specialization</p>
+                    <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">Mold Repair & CNC</p>
                   </div>
-                  <div className="rounded-xl 2xl:rounded-2xl overflow-hidden border border-secondary-800">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="Manufacturing"
@@ -180,23 +180,23 @@ export default function AboutPage() {
       </section>
 
       {/* Our Values */}
-      <section className="py-24 2xl:py-32 bg-secondary-700">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-700">
         <div className="container-custom">
-          <div className="text-center mb-16 2xl:mb-20">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base">Our Values</span>
+          <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Values</span>
             <h2 className="section-heading mt-2">What Drives Us</h2>
             <p className="section-subheading mx-auto">
               The principles that guide how we work and serve our customers.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8 3xl:gap-10">
             {values.map((value, index) => (
-              <div key={index} className="card group 2xl:p-8">
-                <div className="w-14 h-14 2xl:w-16 2xl:h-16 bg-primary-500/10 border border-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mb-4 group-hover:bg-primary-500/20 transition-colors">
+              <div key={index} className="card group 2xl:p-8 3xl:p-10">
+                <div className="w-14 h-14 2xl:w-16 2xl:h-16 3xl:w-20 3xl:h-20 bg-primary-500/10 border border-primary-500/20 rounded-xl 3xl:rounded-2xl flex items-center justify-center text-primary-400 mb-4 3xl:mb-6 group-hover:bg-primary-500/20 transition-colors">
                   {value.icon}
                 </div>
-                <h3 className="text-lg 2xl:text-xl font-semibold text-white mb-2">{value.title}</h3>
-                <p className="text-secondary-400 text-sm 2xl:text-base">{value.description}</p>
+                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3">{value.title}</h3>
+                <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{value.description}</p>
               </div>
             ))}
           </div>
@@ -204,19 +204,19 @@ export default function AboutPage() {
       </section>
 
       {/* Industries We Serve */}
-      <section className="py-24 2xl:py-32 bg-secondary-800">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800">
         <div className="container-custom">
-          <div className="text-center mb-16 2xl:mb-20">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base">Industries</span>
+          <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Industries</span>
             <h2 className="section-heading mt-2">Who We Serve</h2>
             <p className="section-subheading mx-auto">
               We work with manufacturers and molders across various sectors.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8 3xl:gap-10">
             {industries.map((industry, index) => (
               <div key={index} className="service-card group">
-                <div className="relative h-48 2xl:h-56 overflow-hidden">
+                <div className="relative h-48 2xl:h-56 3xl:h-64 overflow-hidden">
                   <Image
                     src={industry.image}
                     alt={industry.title}
@@ -225,11 +225,11 @@ export default function AboutPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/50 to-transparent"></div>
                 </div>
-                <div className="p-6 2xl:p-8">
-                  <h3 className="text-lg 2xl:text-xl font-semibold text-white mb-2 group-hover:text-primary-400 transition-colors">
+                <div className="p-6 2xl:p-8 3xl:p-10">
+                  <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3 group-hover:text-primary-400 transition-colors">
                     {industry.title}
                   </h3>
-                  <p className="text-secondary-400 text-sm 2xl:text-base">{industry.description}</p>
+                  <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{industry.description}</p>
                 </div>
               </div>
             ))}
@@ -238,7 +238,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 2xl:py-32 relative overflow-hidden">
+      <section className="py-24 2xl:py-32 3xl:py-40 relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80"
@@ -251,18 +251,18 @@ export default function AboutPage() {
         </div>
 
         <div className="container-custom relative text-center">
-          <h2 className="text-3xl md:text-4xl 2xl:text-5xl font-bold text-white mb-6 2xl:mb-8">
+          <h2 className="text-3xl md:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-white mb-6 2xl:mb-8 3xl:mb-10">
             Let&apos;s Work Together
           </h2>
-          <p className="text-secondary-300 text-lg 2xl:text-xl mb-10 max-w-2xl 2xl:max-w-3xl mx-auto">
+          <p className="text-secondary-300 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
             Ready to discuss your project? Contact us for a quote or to learn more about our
             capabilities.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 2xl:gap-6 justify-center">
-            <Link href="/contact" className="btn-primary text-lg 2xl:text-xl px-10 py-4 2xl:px-12 2xl:py-5">
+          <div className="flex flex-col sm:flex-row gap-4 2xl:gap-6 3xl:gap-8 justify-center">
+            <Link href="/contact" className="btn-primary text-lg 2xl:text-xl 3xl:text-2xl px-10 py-4 2xl:px-12 2xl:py-5 3xl:px-14 3xl:py-6">
               Request a Quote
             </Link>
-            <Link href="/capabilities" className="btn-outline text-lg 2xl:text-xl px-10 py-4 2xl:px-12 2xl:py-5">
+            <Link href="/capabilities" className="btn-outline text-lg 2xl:text-xl 3xl:text-2xl px-10 py-4 2xl:px-12 2xl:py-5 3xl:px-14 3xl:py-6">
               View Our Capabilities
             </Link>
           </div>
