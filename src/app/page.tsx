@@ -28,6 +28,39 @@ const services = [
   },
 ]
 
+const machineGallery = [
+  {
+    title: 'CNC Milling',
+    description: 'Precision 3-axis and 5-axis CNC milling for complex parts',
+    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
+  },
+  {
+    title: 'Laser Cutting',
+    description: 'High-precision laser cutting and engraving services',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+  },
+  {
+    title: 'Welding & Fabrication',
+    description: 'Professional welding and metal fabrication',
+    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80',
+  },
+  {
+    title: '3D Printing',
+    description: 'Rapid prototyping with industrial 3D printing',
+    image: 'https://images.unsplash.com/photo-1631549916768-4119b4220e49?w=800&q=80',
+  },
+  {
+    title: 'CNC Turning',
+    description: 'Precision lathe work for cylindrical components',
+    image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&q=80',
+  },
+  {
+    title: 'Plasma Cutting',
+    description: 'Heavy-duty plasma cutting for thick materials',
+    image: 'https://images.unsplash.com/photo-1605296867424-35fc25c9212a?w=800&q=80',
+  },
+]
+
 const stats = [
   { value: 'WI', label: 'Based in Wisconsin' },
   { value: 'CNC', label: 'Precision Machining' },
@@ -144,7 +177,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 bg-secondary-950 relative">
+      <section className="py-24 bg-secondary-800 relative">
         <div className="absolute inset-0 tech-lines opacity-10"></div>
         <div className="container-custom relative">
           <div className="text-center mb-16">
@@ -192,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 bg-secondary-900 relative overflow-hidden">
+      <section className="py-24 bg-secondary-700 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full">
           <Image
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80"
@@ -283,7 +316,7 @@ export default function Home() {
       </section>
 
       {/* Capabilities Preview */}
-      <section className="py-24 bg-secondary-950 relative">
+      <section className="py-24 bg-secondary-800 relative">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative order-2 lg:order-1">
@@ -319,6 +352,68 @@ export default function Home() {
                 View Full Capabilities
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Machine Gallery Section */}
+      <section className="py-24 bg-secondary-700">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Our Equipment</span>
+            <h2 className="section-heading mt-2">State-of-the-Art Machinery</h2>
+            <p className="section-subheading mx-auto">
+              From CNC machining to laser cutting and 3D printing, we have the equipment to handle any project.
+            </p>
+          </div>
+
+          {/* Video Feature */}
+          <div className="mb-12">
+            <div className="relative rounded-2xl overflow-hidden border border-secondary-600 aspect-video max-w-4xl mx-auto">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                poster="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80"
+              >
+                <source src="https://videos.pexels.com/video-files/7480059/7480059-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/80 via-transparent to-transparent"></div>
+              <div className="absolute bottom-6 left-6">
+                <p className="text-white font-semibold text-lg">CNC Precision in Action</p>
+                <p className="text-secondary-300 text-sm">Watch our machines at work</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Image Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {machineGallery.map((item, index) => (
+              <div key={index} className="group relative rounded-xl overflow-hidden border border-secondary-600 aspect-[4/3]">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/20 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-white font-semibold">{item.title}</h3>
+                  <p className="text-secondary-300 text-sm">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/gallery" className="btn-outline">
+              View Full Gallery
+              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>

@@ -128,7 +128,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services List */}
-      <section className="py-24 bg-secondary-950">
+      <section className="py-24 bg-secondary-800">
         <div className="container-custom">
           <div className="space-y-32">
             {services.map((service, index) => (
@@ -207,7 +207,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Don't See What You Need */}
-      <section className="py-24 bg-secondary-900">
+      <section className="py-24 bg-secondary-700">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Custom Projects</span>

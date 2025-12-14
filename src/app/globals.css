@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-secondary-950 text-secondary-100 antialiased;
+    @apply bg-secondary-900 text-secondary-100 antialiased;
   }
 
   /* Custom scrollbar for dark theme */
@@ -52,11 +52,15 @@
   }
 
   .card {
-    @apply bg-secondary-900/50 backdrop-blur-sm rounded-xl p-6 border border-secondary-800 hover:border-primary-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10;
+    @apply bg-secondary-800/60 backdrop-blur-sm rounded-xl p-6 border border-secondary-700 hover:border-primary-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10;
   }
 
   .card-dark {
-    @apply bg-secondary-900 rounded-xl p-6 border border-secondary-800 hover:border-secondary-700 transition-all duration-300;
+    @apply bg-secondary-800 rounded-xl p-6 border border-secondary-700 hover:border-secondary-600 transition-all duration-300;
+  }
+
+  .card-light {
+    @apply bg-secondary-700/50 backdrop-blur-sm rounded-xl p-6 border border-secondary-600 hover:border-primary-500/50 transition-all duration-300;
   }
 
   .container-custom {

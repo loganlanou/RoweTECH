@@ -103,7 +103,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-24 bg-secondary-950">
+      <section className="py-24 bg-secondary-800">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -180,7 +180,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Values */}
-      <section className="py-24 bg-secondary-900">
+      <section className="py-24 bg-secondary-700">
         <div className="container-custom">
           <div className="text-center mb-16">
             <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Our Values</span>
@@ -204,7 +204,7 @@ export default function AboutPage() {
       </section>
 
       {/* Industries We Serve */}
-      <section className="py-24 bg-secondary-950">
+      <section className="py-24 bg-secondary-800">
         <div className="container-custom">
           <div className="text-center mb-16">
             <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Industries</span>
