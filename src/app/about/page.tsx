@@ -51,7 +51,7 @@ const industries = [
   {
     title: 'Plastic Injection Molding',
     description: 'Mold repair and maintenance for injection molding operations.',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80',
   },
   {
     title: 'Automation & Robotics',
@@ -135,7 +135,7 @@ export default function AboutPage() {
                 <div className="space-y-4">
                   <div className="rounded-xl overflow-hidden border border-secondary-800">
                     <Image
-                      src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="CNC machining"
                       width={300}
                       height={350}

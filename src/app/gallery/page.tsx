@@ -49,7 +49,7 @@ const galleryItems = [
     title: 'Plasma Cutting',
     category: 'Plasma',
     description: 'Heavy-duty plasma cutting for thick materials',
-    image: 'https://images.unsplash.com/photo-1605296867424-35fc25c9212a?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80',
   },
   {
     id: 7,
@@ -70,7 +70,7 @@ const galleryItems = [
     title: 'Precision Grinding',
     category: 'CNC Machining',
     description: 'Surface grinding to tight tolerances',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
   },
   {
     id: 10,
@@ -95,18 +95,16 @@ const galleryItems = [
   },
 ]
 
-const videos = [
+const featuredImages = [
   {
-    title: 'CNC Machining in Action',
-    description: 'Watch our CNC machines create precision parts',
-    poster: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80',
-    src: 'https://videos.pexels.com/video-files/7480059/7480059-uhd_2560_1440_25fps.mp4',
+    title: 'Metal Grinding in Action',
+    description: 'Precision metalwork with sparks flying',
+    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80',
   },
   {
-    title: 'Steel Turning Operation',
-    description: 'Precision lathe work on steel components',
-    poster: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=1920&q=80',
-    src: 'https://videos.pexels.com/video-files/19791092/19791092-uhd_2560_1440_30fps.mp4',
+    title: 'Industrial CNC Machining',
+    description: 'State-of-the-art precision equipment',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=80',
   },
 ]
 
@@ -143,31 +141,27 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Videos Section */}
+      {/* Featured Section */}
       <section className="py-16 bg-secondary-800">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Videos</span>
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Featured</span>
             <h2 className="section-heading mt-2">Machines in Action</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {videos.map((video, index) => (
-              <div key={index} className="relative rounded-2xl overflow-hidden border border-secondary-600 aspect-video">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  poster={video.poster}
-                >
-                  <source src={video.src} type="video/mp4" />
-                </video>
+            {featuredImages.map((item, index) => (
+              <div key={index} className="group relative rounded-2xl overflow-hidden border border-secondary-600 aspect-video">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-6 left-6">
-                  <p className="text-white font-semibold text-lg">{video.title}</p>
-                  <p className="text-secondary-300 text-sm">{video.description}</p>
+                  <p className="text-white font-semibold text-lg">{item.title}</p>
+                  <p className="text-secondary-300 text-sm">{item.description}</p>
                 </div>
               </div>
             ))}

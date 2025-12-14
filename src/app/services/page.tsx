@@ -14,7 +14,7 @@ const services = [
     title: 'Plastic Injection Mold Repair',
     description:
       'Keep your production running with expert mold repair and maintenance services. We handle everything from minor repairs to major rebuilds.',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
     details: [
       'Weld repair and re-machining',
       'Insert replacement and modification',
@@ -102,7 +102,7 @@ export default function ServicesPage() {
       <section className="relative pt-32 pb-24 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=80"
             alt="CNC machining"
             fill
             className="object-cover"

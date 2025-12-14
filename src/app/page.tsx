@@ -5,7 +5,7 @@ const services = [
   {
     title: 'Plastic Injection Mold Repair',
     description: 'Expert repair and maintenance of plastic injection molds to keep your production running smoothly.',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
     href: '/services#mold-repair',
   },
   {
@@ -57,7 +57,7 @@ const machineGallery = [
   {
     title: 'Plasma Cutting',
     description: 'Heavy-duty plasma cutting for thick materials',
-    image: 'https://images.unsplash.com/photo-1605296867424-35fc25c9212a?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80',
   },
 ]
 
@@ -85,7 +85,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=80"
             alt="CNC Machine in operation"
             fill
             className="object-cover"
@@ -282,7 +282,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="rounded-xl overflow-hidden border border-secondary-800">
                     <Image
-                      src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="CNC Machine"
                       width={300}
                       height={400}
@@ -367,23 +367,19 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Video Feature */}
+          {/* Featured Image */}
           <div className="mb-12">
-            <div className="relative rounded-2xl overflow-hidden border border-secondary-600 aspect-video max-w-4xl mx-auto">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-                poster="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80"
-              >
-                <source src="https://videos.pexels.com/video-files/7480059/7480059-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-              </video>
+            <div className="relative rounded-2xl overflow-hidden border border-secondary-600 aspect-video max-w-4xl mx-auto group">
+              <Image
+                src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
+                alt="CNC Precision Machining"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/80 via-transparent to-transparent"></div>
               <div className="absolute bottom-6 left-6">
-                <p className="text-white font-semibold text-lg">CNC Precision in Action</p>
-                <p className="text-secondary-300 text-sm">Watch our machines at work</p>
+                <p className="text-white font-semibold text-lg">Precision Manufacturing</p>
+                <p className="text-secondary-300 text-sm">Expert craftsmanship in every project</p>
               </div>
             </div>
           </div>
