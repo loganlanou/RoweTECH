@@ -47,12 +47,12 @@ const machineGallery = [
   {
     title: '3D Printing',
     description: 'Rapid prototyping with industrial 3D printing',
-    image: 'https://images.unsplash.com/photo-1631549916768-4119b4220e49?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=800&q=80',
   },
   {
     title: 'CNC Turning',
     description: 'Precision lathe work for cylindrical components',
-    image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
   },
   {
     title: 'Plasma Cutting',

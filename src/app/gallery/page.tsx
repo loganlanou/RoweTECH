@@ -35,14 +35,14 @@ const galleryItems = [
     title: '3D Printing',
     category: '3D Printing',
     description: 'Rapid prototyping with industrial FDM and SLA',
-    image: 'https://images.unsplash.com/photo-1631549916768-4119b4220e49?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=800&q=80',
   },
   {
     id: 5,
     title: 'CNC Lathe Work',
     category: 'CNC Machining',
     description: 'Precision turning for cylindrical components',
-    image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
   },
   {
     id: 6,
@@ -84,7 +84,7 @@ const galleryItems = [
     title: 'Laser Engraving',
     category: 'Laser',
     description: 'Detailed marking and engraving services',
-    image: 'https://images.unsplash.com/photo-1609741199743-392dbc7b7ecd?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
   },
   {
     id: 12,
