@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -14,34 +14,51 @@ const navigation = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled
+        ? 'bg-secondary-950/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-secondary-800/50'
+        : 'bg-transparent'
+    }`}>
       <nav className="container-custom" aria-label="Main navigation">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">RT</span>
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+                <span className="text-white font-bold text-xl">RT</span>
+              </div>
+              <div className="absolute inset-0 bg-primary-500 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <div className="hidden sm:block">
-              <span className="text-xl font-bold text-secondary-900">RoweTech</span>
-              <span className="block text-xs text-secondary-500">Machine & Engineering</span>
+              <span className="text-xl font-bold text-white">RoweTech</span>
+              <span className="block text-xs text-primary-400 font-medium tracking-wider uppercase">Machine & Engineering</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-secondary-600 hover:text-primary-600 font-medium transition-colors duration-200"
+                className="relative px-4 py-2 text-secondary-300 hover:text-white font-medium transition-colors duration-200 group"
               >
                 {item.name}
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
-            <Link href="/contact" className="btn-primary">
+            <Link href="/contact" className="btn-primary ml-4">
               Request a Quote
             </Link>
           </div>
@@ -49,7 +66,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden p-2 rounded-md text-secondary-600 hover:bg-secondary-100"
+            className="lg:hidden p-2 rounded-lg text-secondary-400 hover:text-white hover:bg-secondary-800/50 transition-colors duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -68,29 +85,32 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden pb-4" id="mobile-menu">
-            <div className="flex flex-col space-y-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-secondary-600 hover:text-primary-600 hover:bg-secondary-50 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-96 pb-4' : 'max-h-0'
+          }`}
+          id="mobile-menu"
+        >
+          <div className="flex flex-col space-y-1 bg-secondary-900/90 backdrop-blur-md rounded-xl p-4 border border-secondary-800">
+            {navigation.map((item) => (
               <Link
-                href="/contact"
-                className="btn-primary mx-4 mt-2 text-center"
+                key={item.name}
+                href={item.href}
+                className="text-secondary-300 hover:text-white hover:bg-secondary-800/50 px-4 py-3 rounded-lg font-medium transition-all duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Request a Quote
+                {item.name}
               </Link>
-            </div>
+            ))}
+            <Link
+              href="/contact"
+              className="btn-primary mt-2 text-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Request a Quote
+            </Link>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   )

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -46,34 +47,75 @@ const values = [
   },
 ]
 
+const industries = [
+  {
+    title: 'Plastic Injection Molding',
+    description: 'Mold repair and maintenance for injection molding operations.',
+    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80',
+  },
+  {
+    title: 'Automation & Robotics',
+    description: 'Custom EOAT and fixtures for automated production lines.',
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80',
+  },
+  {
+    title: 'OEM Manufacturing',
+    description: 'Precision parts and tooling for original equipment manufacturers.',
+    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80',
+  },
+  {
+    title: 'Local Manufacturers',
+    description: 'Quick-turn machining services for Wisconsin businesses.',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80',
+  },
+]
+
 export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white py-16 lg:py-24">
-        <div className="container-custom">
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&q=80"
+            alt="Machine shop"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/80"></div>
+        </div>
+        <div className="absolute inset-0 tech-lines opacity-20"></div>
+
+        <div className="container-custom relative">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About RoweTech</h1>
-            <p className="text-xl text-secondary-300">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">About Us</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-2 mb-6">
+              Precision Engineering,
+              <br />
+              <span className="gradient-text">Wisconsin Roots</span>
+            </h1>
+            <p className="text-xl text-secondary-300 leading-relaxed">
               A Wisconsin-based machine shop dedicated to quality, precision, and customer success.
+              We bring decades of combined experience to every project.
             </p>
           </div>
         </div>
       </section>
 
       {/* Our Story */}
-      <section className="py-16 lg:py-24">
+      <section className="py-24 bg-secondary-950">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="section-heading">Our Story</h2>
-              <div className="prose prose-lg text-secondary-600">
-                <p className="mb-4">
+              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Our Story</span>
+              <h2 className="section-heading mt-2">Built on Expertise</h2>
+              <div className="space-y-4 text-secondary-300 leading-relaxed">
+                <p>
                   RoweTech Machine & Engineering was founded with a simple mission: provide
                   manufacturers with reliable, high-quality machining and tooling services they can
                   count on.
                 </p>
-                <p className="mb-4">
+                <p>
                   Based in Cadott, Wisconsin, we serve plastic injection molding companies,
                   automation integrators, and OEM manufacturers throughout the Midwest. Our location
                   allows us to offer quick turnaround times and hands-on service that larger, more
@@ -86,40 +128,49 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-            <div className="bg-secondary-100 rounded-2xl p-8 lg:p-12">
-              <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                    </svg>
+
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary-500/20 to-transparent rounded-2xl blur-2xl"></div>
+              <div className="relative grid grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="rounded-xl overflow-hidden border border-secondary-800">
+                    <Image
+                      src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+                      alt="CNC machining"
+                      width={300}
+                      height={350}
+                      className="w-full h-auto"
+                    />
                   </div>
-                  <div>
-                    <p className="font-semibold text-secondary-900">Location</p>
-                    <p className="text-secondary-600">Cadott, Wisconsin</p>
+                  <div className="card-dark text-center">
+                    <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mx-auto mb-3">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                      </svg>
+                    </div>
+                    <p className="font-semibold text-white">Location</p>
+                    <p className="text-secondary-400 text-sm">Cadott, Wisconsin</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
-                    </svg>
+                <div className="space-y-4 pt-8">
+                  <div className="card-dark text-center">
+                    <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mx-auto mb-3">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                      </svg>
+                    </div>
+                    <p className="font-semibold text-white">Specialization</p>
+                    <p className="text-secondary-400 text-sm">Mold Repair & CNC</p>
                   </div>
-                  <div>
-                    <p className="font-semibold text-secondary-900">Specialization</p>
-                    <p className="text-secondary-600">Mold Repair & CNC Machining</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-secondary-900">Focus</p>
-                    <p className="text-secondary-600">Plastics & Manufacturing Support</p>
+                  <div className="rounded-xl overflow-hidden border border-secondary-800">
+                    <Image
+                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
+                      alt="Manufacturing"
+                      width={300}
+                      height={350}
+                      className="w-full h-auto"
+                    />
                   </div>
                 </div>
               </div>
@@ -129,22 +180,23 @@ export default function AboutPage() {
       </section>
 
       {/* Our Values */}
-      <section className="py-16 lg:py-24 bg-secondary-50">
+      <section className="py-24 bg-secondary-900">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="section-heading">Our Values</h2>
+          <div className="text-center mb-16">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Our Values</span>
+            <h2 className="section-heading mt-2">What Drives Us</h2>
             <p className="section-subheading mx-auto">
               The principles that guide how we work and serve our customers.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600 mb-4">
+              <div key={index} className="card group">
+                <div className="w-14 h-14 bg-primary-500/10 border border-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 mb-4 group-hover:bg-primary-500/20 transition-colors">
                   {value.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-secondary-900 mb-2">{value.title}</h3>
-                <p className="text-secondary-600 text-sm">{value.description}</p>
+                <h3 className="text-lg font-semibold text-white mb-2">{value.title}</h3>
+                <p className="text-secondary-400 text-sm">{value.description}</p>
               </div>
             ))}
           </div>
@@ -152,39 +204,33 @@ export default function AboutPage() {
       </section>
 
       {/* Industries We Serve */}
-      <section className="py-16 lg:py-24">
+      <section className="py-24 bg-secondary-950">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="section-heading">Industries We Serve</h2>
+          <div className="text-center mb-16">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm">Industries</span>
+            <h2 className="section-heading mt-2">Who We Serve</h2>
             <p className="section-subheading mx-auto">
               We work with manufacturers and molders across various sectors.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                title: 'Plastic Injection Molding',
-                description: 'Mold repair and maintenance for injection molding operations.',
-              },
-              {
-                title: 'Automation & Robotics',
-                description: 'Custom EOAT and fixtures for automated production lines.',
-              },
-              {
-                title: 'OEM Manufacturing',
-                description: 'Precision parts and tooling for original equipment manufacturers.',
-              },
-              {
-                title: 'Local Manufacturers',
-                description: 'Quick-turn machining services for Wisconsin businesses.',
-              },
-            ].map((industry, index) => (
-              <div
-                key={index}
-                className="border border-secondary-200 rounded-xl p-6 hover:border-primary-300 hover:shadow-md transition-all duration-200"
-              >
-                <h3 className="text-lg font-semibold text-secondary-900 mb-2">{industry.title}</h3>
-                <p className="text-secondary-600 text-sm">{industry.description}</p>
+            {industries.map((industry, index) => (
+              <div key={index} className="service-card group">
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={industry.image}
+                    alt={industry.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/50 to-transparent"></div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-primary-400 transition-colors">
+                    {industry.title}
+                  </h3>
+                  <p className="text-secondary-400 text-sm">{industry.description}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -192,23 +238,31 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary-600 py-16">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80"
+            alt="Manufacturing background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-secondary-950/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-950/50"></div>
+        </div>
+
+        <div className="container-custom relative text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Let&apos;s Work Together
           </h2>
-          <p className="text-primary-100 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-secondary-300 text-lg mb-10 max-w-2xl mx-auto">
             Ready to discuss your project? Contact us for a quote or to learn more about our
             capabilities.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="btn-secondary bg-white text-primary-600 hover:bg-secondary-100"
-            >
+            <Link href="/contact" className="btn-primary text-lg px-10 py-4">
               Request a Quote
             </Link>
-            <Link href="/capabilities" className="btn-outline border-white text-white hover:bg-white hover:text-primary-600">
+            <Link href="/capabilities" className="btn-outline text-lg px-10 py-4">
               View Our Capabilities
             </Link>
           </div>
