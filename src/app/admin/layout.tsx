@@ -1,27 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
-
-// Check if Clerk is properly configured
-const isClerkConfigured = (): boolean => {
-  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
-}
-
-// Dynamically import UserButton to avoid issues when Clerk isn't configured
-const UserButton = dynamic(
-  () => import('@clerk/nextjs').then((mod) => mod.UserButton),
-  { ssr: false, loading: () => <div className="w-8 h-8 rounded-full bg-secondary-200 animate-pulse" /> }
-)
+import { UserButton } from '@clerk/nextjs'
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const clerkEnabled = isClerkConfigured()
-
   return (
     <div className="min-h-screen bg-secondary-50">
       {/* Admin Header */}
@@ -69,15 +55,13 @@ export default function AdminLayout({
               >
                 View Site
               </Link>
-              {clerkEnabled && (
-                <UserButton
-                  appearance={{
-                    elements: {
-                      avatarBox: 'w-8 h-8',
-                    },
-                  }}
-                />
-              )}
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: 'w-8 h-8',
+                  },
+                }}
+              />
             </div>
           </div>
         </div>

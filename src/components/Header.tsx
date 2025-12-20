@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
+import { DesktopAuthButtons, MobileAuthButtons } from './AuthButtons'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -13,35 +13,15 @@ const navigation = [
   { name: 'Contact', href: '/contact' },
 ]
 
-// Check if Clerk is properly configured
-const isClerkConfigured = (): boolean => {
-  if (typeof window === 'undefined') return false
-  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
-}
-
-// Dynamically import auth buttons only when Clerk is configured
-const DesktopAuthButtons = dynamic(
-  () => import('./AuthButtons').then((mod) => mod.DesktopAuthButtons),
-  { ssr: false }
-)
-
-const MobileAuthButtons = dynamic(
-  () => import('./AuthButtons').then((mod) => mod.MobileAuthButtons),
-  { ssr: false }
-)
-
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [clerkEnabled, setClerkEnabled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
-    setClerkEnabled(isClerkConfigured())
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -84,8 +64,8 @@ export default function Header() {
               </Link>
             ))}
 
-            {/* Clerk Authentication - Only show if configured */}
-            {clerkEnabled && <DesktopAuthButtons />}
+            {/* Clerk Authentication */}
+            <DesktopAuthButtons />
           </div>
 
           {/* Mobile menu button */}
@@ -144,8 +124,8 @@ export default function Header() {
               </Link>
             ))}
 
-            {/* Clerk Authentication - Mobile - Only show if configured */}
-            {clerkEnabled && <MobileAuthButtons />}
+            {/* Clerk Authentication - Mobile */}
+            <MobileAuthButtons />
           </div>
         </div>
       </nav>
