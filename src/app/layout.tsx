@@ -1,17 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ClerkProviderWrapper from '@/components/ClerkProviderWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
-
-// Check if Clerk is properly configured
-const isClerkConfigured = (): boolean => {
-  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
-}
 
 export const metadata: Metadata = {
   title: {
@@ -48,22 +42,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const clerkEnabled = isClerkConfigured()
-
-  const content = (
+  return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <ClerkProviderWrapper>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </ClerkProviderWrapper>
       </body>
     </html>
   )
-
-  // Only wrap with ClerkProvider if Clerk is configured
-  if (clerkEnabled) {
-    return <ClerkProvider>{content}</ClerkProvider>
-  }
-
-  return content
 }

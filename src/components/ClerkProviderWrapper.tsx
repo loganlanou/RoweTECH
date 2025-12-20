@@ -1,7 +1,6 @@
 'use client'
 
-import { ClerkProvider } from '@clerk/nextjs'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 // Check if Clerk is properly configured
 const isClerkConfigured = (): boolean => {
@@ -12,25 +11,22 @@ const isClerkConfigured = (): boolean => {
 export default function ClerkProviderWrapper({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
-  const [mounted, setMounted] = useState(false)
-  const [enabled, setEnabled] = useState(false)
+  const [ClerkProviderComponent, setClerkProviderComponent] = useState<React.ComponentType<{ children: ReactNode }> | null>(null)
 
   useEffect(() => {
-    setMounted(true)
-    setEnabled(isClerkConfigured())
+    if (isClerkConfigured()) {
+      import('@clerk/nextjs').then((mod) => {
+        setClerkProviderComponent(() => mod.ClerkProvider)
+      })
+    }
   }, [])
 
-  // During SSR and initial mount, just render children
-  if (!mounted) {
+  // If Clerk is not configured or not yet loaded, just render children
+  if (!ClerkProviderComponent) {
     return <>{children}</>
   }
 
-  // Only wrap with ClerkProvider if Clerk is configured
-  if (!enabled) {
-    return <>{children}</>
-  }
-
-  return <ClerkProvider>{children}</ClerkProvider>
+  return <ClerkProviderComponent>{children}</ClerkProviderComponent>
 }
