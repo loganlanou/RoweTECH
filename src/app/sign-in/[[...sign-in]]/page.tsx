@@ -1,13 +1,19 @@
 'use client'
 
-import { SignIn } from '@clerk/nextjs'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 // Check if Clerk is properly configured
 const isClerkConfigured = (): boolean => {
   const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
 }
+
+// Dynamically import SignIn to avoid issues when Clerk isn't configured
+const SignIn = dynamic(
+  () => import('@clerk/nextjs').then((mod) => mod.SignIn),
+  { ssr: false, loading: () => <div className="h-64 flex items-center justify-center"><div className="animate-pulse text-secondary-400">Loading...</div></div> }
+)
 
 export default function SignInPage() {
   const clerkEnabled = isClerkConfigured()
