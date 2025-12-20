@@ -13,51 +13,44 @@ const config: Config = {
         '4xl': '2560px',
       },
       colors: {
-        // Industrial/Arctech color palette - dark, professional, high-tech
+        // RoweTECH Brand Colors
         primary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
-          950: '#052e16',
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#D97470',  // lighter red
+          500: '#C65D59',  // main red (--rowetech-red)
+          600: '#BE5753',  // darker red (--rowetech-red-dark)
+          700: '#A64844',
+          800: '#8B3C39',
+          900: '#742F2D',
+          950: '#5C2422',
         },
         secondary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#3d4a5c',
-          800: '#2d3a4a',
-          900: '#1e2a3a',
-          950: '#141e2a',
+          50: '#DEF0EE',   // offwhite (--rowetech-offwhite)
+          100: '#D0DDDB',  // lightgray (--rowetech-lightgray)
+          200: '#B4BCBB',  // midgray (--rowetech-midgray)
+          300: '#939998',  // gray-1 (--rowetech-gray-1)
+          400: '#757A78',  // gray-2 (--rowetech-gray-2)
+          500: '#6A706D',  // gray-3 (--rowetech-gray-3)
+          600: '#5C6160',  // charcoal (--rowetech-charcoal)
+          700: '#4A4F4E',
+          800: '#393D3C',
+          900: '#282B2A',
+          950: '#1A1C1B',
         },
-        // Accent colors for industrial feel
-        steel: {
-          50: '#f4f6f7',
-          100: '#e3e7ea',
-          200: '#c9d1d7',
-          300: '#a4b1bb',
-          400: '#778997',
-          500: '#5c6d7c',
-          600: '#4f5c69',
-          700: '#444e58',
-          800: '#3c444c',
-          900: '#353b42',
-          950: '#21262b',
-        },
-        copper: {
-          400: '#f59e0b',
-          500: '#d97706',
-          600: '#b45309',
+        // Semantic aliases for easier use
+        rowetech: {
+          red: '#C65D59',
+          'red-dark': '#BE5753',
+          offwhite: '#DEF0EE',
+          lightgray: '#D0DDDB',
+          midgray: '#B4BCBB',
+          'gray-1': '#939998',
+          'gray-2': '#757A78',
+          'gray-3': '#6A706D',
+          charcoal: '#5C6160',
         },
       },
       fontFamily: {
@@ -67,7 +60,7 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        'hero-gradient': 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+        'hero-gradient': 'linear-gradient(135deg, #DEF0EE 0%, #D0DDDB 50%, #DEF0EE 100%)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

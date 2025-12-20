@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled
-        ? 'bg-secondary-950/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-secondary-800/50'
+        ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-secondary-300/20 border-b border-secondary-200/50'
         : 'bg-transparent'
     }`}>
       <nav className="container-custom" aria-label="Main navigation">
@@ -41,8 +41,8 @@ export default function Header() {
               <div className="absolute inset-0 bg-primary-500 rounded-lg 3xl:rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <div className="hidden sm:block">
-              <span className="text-xl 3xl:text-2xl font-bold text-white">RoweTech</span>
-              <span className="block text-xs 3xl:text-sm text-primary-400 font-medium tracking-wider uppercase">Machine & Engineering</span>
+              <span className="text-xl 3xl:text-2xl font-bold text-secondary-600">RoweTech</span>
+              <span className="block text-xs 3xl:text-sm text-primary-500 font-medium tracking-wider uppercase">Machine & Engineering</span>
             </div>
           </Link>
 
@@ -52,7 +52,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative px-4 py-2 3xl:px-5 3xl:py-3 text-secondary-300 hover:text-white font-medium 3xl:text-lg transition-colors duration-200 group"
+                className="relative px-4 py-2 3xl:px-5 3xl:py-3 text-secondary-500 hover:text-secondary-600 font-medium 3xl:text-lg transition-colors duration-200 group"
               >
                 {item.name}
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
@@ -66,7 +66,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden p-2 rounded-lg text-secondary-400 hover:text-white hover:bg-secondary-800/50 transition-colors duration-200"
+            className="lg:hidden p-2 rounded-lg text-secondary-500 hover:text-secondary-600 hover:bg-secondary-100 transition-colors duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -91,12 +91,12 @@ export default function Header() {
           }`}
           id="mobile-menu"
         >
-          <div className="flex flex-col space-y-1 bg-secondary-900/90 backdrop-blur-md rounded-xl p-4 border border-secondary-800">
+          <div className="flex flex-col space-y-1 bg-white/95 backdrop-blur-md rounded-xl p-4 border border-secondary-200">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-secondary-300 hover:text-white hover:bg-secondary-800/50 px-4 py-3 rounded-lg font-medium transition-all duration-200"
+                className="text-secondary-500 hover:text-secondary-600 hover:bg-secondary-100 px-4 py-3 rounded-lg font-medium transition-all duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}

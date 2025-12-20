@@ -98,12 +98,12 @@ export default function Home() {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold leading-tight mb-6 2xl:mb-8 3xl:mb-10">
-                <span className="text-white">Precision Machining &</span>
+                <span className="text-white drop-shadow-md">Precision Machining &</span>
                 <br />
-                <span className="gradient-text">Mold Repair Excellence</span>
+                <span className="gradient-text drop-shadow-md">Mold Repair Excellence</span>
               </h1>
 
-              <p className="text-lg md:text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300 mb-8 3xl:mb-12 leading-relaxed">
+              <p className="text-lg md:text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-100 mb-8 3xl:mb-12 leading-relaxed">
                 RoweTech Machine & Engineering provides plastic injection mold repair, custom
                 fixtures, EOAT tooling, and CNC machining for manufacturers across Wisconsin.
               </p>
@@ -129,9 +129,9 @@ export default function Home() {
               {/* Quick Stats */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 3xl:gap-6">
                 {stats.map((stat, index) => (
-                  <div key={index} className="text-center p-4 3xl:p-6 rounded-lg 3xl:rounded-xl bg-secondary-900/50 border border-secondary-800">
+                  <div key={index} className="text-center p-4 3xl:p-6 rounded-lg 3xl:rounded-xl bg-white/20 backdrop-blur-sm border border-white/30">
                     <p className="text-2xl 3xl:text-3xl font-bold text-primary-400">{stat.value}</p>
-                    <p className="text-xs 3xl:text-sm text-secondary-400 mt-1">{stat.label}</p>
+                    <p className="text-xs 3xl:text-sm text-secondary-100 mt-1">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -141,7 +141,7 @@ export default function Home() {
             <div className="hidden lg:block">
               <div className="relative">
                 <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
-                <div className="relative rounded-2xl overflow-hidden border border-secondary-800 shadow-2xl 2xl:rounded-3xl 3xl:rounded-[2rem]">
+                <div className="relative rounded-2xl overflow-hidden border border-white/30 shadow-2xl 2xl:rounded-3xl 3xl:rounded-[2rem]">
                   <Image
                     src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80"
                     alt="Precision machining"
@@ -149,9 +149,9 @@ export default function Home() {
                     height={600}
                     className="w-full h-auto 2xl:min-h-[500px] 3xl:min-h-[600px] object-cover"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-secondary-950 to-transparent p-6 3xl:p-8">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-secondary-600 to-transparent p-6 3xl:p-8">
                     <p className="text-white font-semibold 3xl:text-lg">Precision CNC Machining</p>
-                    <p className="text-secondary-400 text-sm 3xl:text-base">Cadott, Wisconsin</p>
+                    <p className="text-secondary-200 text-sm 3xl:text-base">Cadott, Wisconsin</p>
                   </div>
                 </div>
               </div>
@@ -168,11 +168,11 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800 relative">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100 relative">
         <div className="absolute inset-0 tech-lines opacity-10"></div>
         <div className="container-custom relative">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">What We Do</span>
+            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">What We Do</span>
             <h2 className="section-heading mt-2">Our Services</h2>
             <p className="section-subheading mx-auto">
               Comprehensive machining and tooling solutions for plastic injection molding and
@@ -191,10 +191,10 @@ export default function Home() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/50 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-secondary-600/30 to-transparent"></div>
                   </div>
                   <div className="p-6 2xl:p-8 3xl:p-10">
-                    <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3 group-hover:text-primary-400 transition-colors">
+                    <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-600 mb-2 3xl:mb-3 group-hover:text-primary-500 transition-colors">
                       {service.title}
                     </h3>
                     <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{service.description}</p>
@@ -216,21 +216,21 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-700 relative overflow-hidden">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-50 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full">
           <Image
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80"
             alt="Industrial manufacturing"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-10"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-900 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-50 to-transparent"></div>
         </div>
 
         <div className="container-custom relative">
           <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
             <div>
-              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Why Choose Us</span>
+              <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Why Choose Us</span>
               <h2 className="section-heading mt-2">Precision You Can Trust</h2>
               <p className="section-subheading mb-8 3xl:mb-10">
                 We combine precision machining expertise with responsive customer service to deliver
@@ -257,7 +257,7 @@ export default function Home() {
                   },
                 ].map((benefit, index) => (
                   <div key={index} className="feature-highlight">
-                    <h3 className="font-semibold text-white mb-1 2xl:text-lg 3xl:text-xl">{benefit.title}</h3>
+                    <h3 className="font-semibold text-secondary-600 mb-1 2xl:text-lg 3xl:text-xl">{benefit.title}</h3>
                     <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{benefit.description}</p>
                   </div>
                 ))}
@@ -271,7 +271,7 @@ export default function Home() {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4 2xl:gap-6 3xl:gap-8">
                 <div className="space-y-4 2xl:space-y-6 3xl:space-y-8">
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="CNC Machine"
@@ -281,16 +281,16 @@ export default function Home() {
                     />
                   </div>
                   <div className="stat-card 2xl:p-8 3xl:p-10">
-                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-400">CNC</p>
+                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-500">CNC</p>
                     <p className="text-sm 2xl:text-base 3xl:text-lg text-secondary-400 mt-1">Precision Machining</p>
                   </div>
                 </div>
                 <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 pt-8 3xl:pt-12">
                   <div className="stat-card 2xl:p-8 3xl:p-10">
-                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-400">24/7</p>
+                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-500">24/7</p>
                     <p className="text-sm 2xl:text-base 3xl:text-lg text-secondary-400 mt-1">Quote Requests</p>
                   </div>
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="Manufacturing"
@@ -307,12 +307,12 @@ export default function Home() {
       </section>
 
       {/* Capabilities Preview */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800 relative">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-white relative">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
             <div className="relative order-2 lg:order-1">
               <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/10 to-transparent rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
-              <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-800">
+              <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-200 shadow-lg">
                 <Image
                   src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80"
                   alt="CNC Machining capabilities"
@@ -324,7 +324,7 @@ export default function Home() {
             </div>
 
             <div className="order-1 lg:order-2">
-              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Capabilities</span>
+              <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Capabilities</span>
               <h2 className="section-heading mt-2">Advanced Manufacturing</h2>
               <p className="section-subheading mb-8 3xl:mb-10">
                 Equipped with modern CNC machinery and experienced operators to handle your most demanding projects.
@@ -332,9 +332,9 @@ export default function Home() {
 
               <div className="grid sm:grid-cols-2 gap-4 2xl:gap-5 3xl:gap-6 mb-8 3xl:mb-10">
                 {capabilities.map((capability, index) => (
-                  <div key={index} className="flex items-center space-x-3 3xl:space-x-4 p-3 2xl:p-4 3xl:p-5 rounded-lg 3xl:rounded-xl bg-secondary-900/50 border border-secondary-800">
+                  <div key={index} className="flex items-center space-x-3 3xl:space-x-4 p-3 2xl:p-4 3xl:p-5 rounded-lg 3xl:rounded-xl bg-secondary-100 border border-secondary-200">
                     <div className="w-2 h-2 3xl:w-3 3xl:h-3 bg-primary-500 rounded-full"></div>
-                    <span className="text-secondary-300 2xl:text-lg 3xl:text-xl">{capability}</span>
+                    <span className="text-secondary-500 2xl:text-lg 3xl:text-xl">{capability}</span>
                   </div>
                 ))}
               </div>
@@ -348,10 +348,10 @@ export default function Home() {
       </section>
 
       {/* Machine Gallery Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-700">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100">
         <div className="container-custom">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Equipment</span>
+            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Equipment</span>
             <h2 className="section-heading mt-2">State-of-the-Art Machinery</h2>
             <p className="section-subheading mx-auto">
               From CNC machining to laser cutting and 3D printing, we have the equipment to handle any project.
@@ -360,17 +360,17 @@ export default function Home() {
 
           {/* Featured Image */}
           <div className="mb-12 2xl:mb-16 3xl:mb-20">
-            <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-600 aspect-video max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto group">
+            <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-200 shadow-xl aspect-video max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto group">
               <Image
                 src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
                 alt="CNC Precision Machining"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/80 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-transparent to-transparent"></div>
               <div className="absolute bottom-6 left-6 2xl:bottom-10 2xl:left-10 3xl:bottom-12 3xl:left-12">
                 <p className="text-white font-semibold text-lg 2xl:text-2xl 3xl:text-3xl">Precision Manufacturing</p>
-                <p className="text-secondary-300 text-sm 2xl:text-base 3xl:text-lg">Expert craftsmanship in every project</p>
+                <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">Expert craftsmanship in every project</p>
               </div>
             </div>
           </div>
@@ -378,17 +378,17 @@ export default function Home() {
           {/* Image Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-8 3xl:gap-10">
             {machineGallery.map((item, index) => (
-              <div key={index} className="group relative rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-600 aspect-[4/3]">
+              <div key={index} className="group relative rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg aspect-[4/3]">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-secondary-600/20 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4 2xl:bottom-6 2xl:left-6 3xl:bottom-8 3xl:left-8">
                   <h3 className="text-white font-semibold 2xl:text-lg 3xl:text-xl">{item.title}</h3>
-                  <p className="text-secondary-300 text-sm 2xl:text-base 3xl:text-lg">{item.description}</p>
+                  <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -414,15 +414,15 @@ export default function Home() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-secondary-950/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-950/50"></div>
+          <div className="absolute inset-0 bg-secondary-600/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-600/50"></div>
         </div>
 
         <div className="container-custom relative text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold text-white mb-6 2xl:mb-8 3xl:mb-10">
             Ready to Start Your Project?
           </h2>
-          <p className="text-secondary-300 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
+          <p className="text-secondary-200 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
             Contact us today for a quote on mold repair, custom fixtures, EOAT, or CNC machining
             services. Our team is ready to help bring your project to life.
           </p>

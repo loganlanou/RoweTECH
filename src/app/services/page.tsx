@@ -107,7 +107,7 @@ export default function ServicesPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-600/90 via-secondary-600/85 to-secondary-600/70"></div>
         </div>
         <div className="absolute inset-0 tech-lines opacity-20"></div>
 
@@ -119,7 +119,7 @@ export default function ServicesPage() {
               <br />
               <span className="gradient-text">Machining Solutions</span>
             </h1>
-            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300 leading-relaxed">
+            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-100 leading-relaxed">
               From mold repair to custom fixtures, we provide the precision machining and tooling
               services manufacturers need to stay productive.
             </p>
@@ -128,7 +128,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services List */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100">
         <div className="container-custom">
           <div className="space-y-32 2xl:space-y-40 3xl:space-y-48">
             {services.map((service, index) => (
@@ -143,7 +143,7 @@ export default function ServicesPage() {
                   {/* Image */}
                   <div className={`relative ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                     <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/20 to-transparent rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
-                    <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-800">
+                    <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-200 shadow-lg">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -151,7 +151,7 @@ export default function ServicesPage() {
                         height={600}
                         className="w-full h-auto"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-secondary-950 to-transparent p-6 2xl:p-8 3xl:p-10">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-secondary-600 to-transparent p-6 2xl:p-8 3xl:p-10">
                         <span className="text-primary-400 font-medium text-sm 2xl:text-base 3xl:text-lg">Service #{index + 1}</span>
                       </div>
                     </div>
@@ -159,38 +159,38 @@ export default function ServicesPage() {
 
                   {/* Content */}
                   <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                    <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">
+                    <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">
                       {service.id.replace('-', ' ')}
                     </span>
-                    <h2 className="text-3xl md:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-white mt-2 mb-4 2xl:mb-6 3xl:mb-8">
+                    <h2 className="text-3xl md:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-secondary-600 mt-2 mb-4 2xl:mb-6 3xl:mb-8">
                       {service.title}
                     </h2>
-                    <p className="text-lg 2xl:text-xl 3xl:text-2xl text-secondary-300 mb-8 3xl:mb-10">{service.description}</p>
+                    <p className="text-lg 2xl:text-xl 3xl:text-2xl text-secondary-500 mb-8 3xl:mb-10">{service.description}</p>
 
                     <div className="mb-8 3xl:mb-10">
-                      <h3 className="font-semibold text-white mb-4 2xl:text-lg 3xl:text-xl flex items-center">
+                      <h3 className="font-semibold text-secondary-600 mb-4 2xl:text-lg 3xl:text-xl flex items-center">
                         <span className="w-8 3xl:w-10 h-0.5 bg-primary-500 mr-3 3xl:mr-4"></span>
                         What We Offer
                       </h3>
                       <div className="grid sm:grid-cols-2 gap-3 2xl:gap-4 3xl:gap-5">
                         {service.details.map((detail, i) => (
-                          <div key={i} className="flex items-center space-x-3 3xl:space-x-4 p-3 2xl:p-4 3xl:p-5 rounded-lg 3xl:rounded-xl bg-secondary-900/50 border border-secondary-800">
+                          <div key={i} className="flex items-center space-x-3 3xl:space-x-4 p-3 2xl:p-4 3xl:p-5 rounded-lg 3xl:rounded-xl bg-white border border-secondary-200 shadow">
                             <div className="w-2 h-2 3xl:w-3 3xl:h-3 bg-primary-500 rounded-full flex-shrink-0"></div>
-                            <span className="text-secondary-300 text-sm 2xl:text-base 3xl:text-lg">{detail}</span>
+                            <span className="text-secondary-500 text-sm 2xl:text-base 3xl:text-lg">{detail}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="p-6 2xl:p-8 3xl:p-10 rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl bg-secondary-900 border border-secondary-800">
-                      <h3 className="font-semibold text-white mb-4 2xl:text-lg 3xl:text-xl">Common Use Cases</h3>
+                    <div className="p-6 2xl:p-8 3xl:p-10 rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl bg-white border border-secondary-200 shadow-lg">
+                      <h3 className="font-semibold text-secondary-600 mb-4 2xl:text-lg 3xl:text-xl">Common Use Cases</h3>
                       <ul className="space-y-3 2xl:space-y-4 3xl:space-y-5">
                         {service.useCases.map((useCase, i) => (
                           <li key={i} className="flex items-center space-x-3 3xl:space-x-4">
                             <svg className="w-5 h-5 2xl:w-6 2xl:h-6 3xl:w-7 3xl:h-7 text-primary-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
-                            <span className="text-secondary-300 2xl:text-lg 3xl:text-xl">{useCase}</span>
+                            <span className="text-secondary-500 2xl:text-lg 3xl:text-xl">{useCase}</span>
                           </li>
                         ))}
                       </ul>
@@ -207,12 +207,12 @@ export default function ServicesPage() {
       </section>
 
       {/* Don't See What You Need */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-700">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-50">
         <div className="container-custom">
           <div className="max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl mx-auto text-center">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Custom Projects</span>
+            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Custom Projects</span>
             <h2 className="section-heading mt-2">Don&apos;t See What You Need?</h2>
-            <p className="text-secondary-300 text-lg 2xl:text-xl 3xl:text-2xl mb-8 3xl:mb-10">
+            <p className="text-secondary-500 text-lg 2xl:text-xl 3xl:text-2xl mb-8 3xl:mb-10">
               We handle a wide variety of machining and tooling projects. If you have a unique
               requirement, reach out and let&apos;s discuss how we can help.
             </p>
@@ -232,15 +232,15 @@ export default function ServicesPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-secondary-950/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-950/50"></div>
+          <div className="absolute inset-0 bg-secondary-600/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-600/50"></div>
         </div>
 
         <div className="container-custom relative text-center">
           <h2 className="text-3xl md:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-white mb-6 2xl:mb-8 3xl:mb-10">
             Ready to Get Started?
           </h2>
-          <p className="text-secondary-300 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
+          <p className="text-secondary-200 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
             Contact us today for a quote. We&apos;ll review your requirements and get back to you
             promptly.
           </p>

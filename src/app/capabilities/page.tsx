@@ -75,11 +75,11 @@ export default function CapabilitiesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white py-16 lg:py-24 2xl:py-32 3xl:py-40">
+      <section className="bg-gradient-to-br from-secondary-600 via-secondary-500 to-secondary-600 text-white py-16 lg:py-24 2xl:py-32 3xl:py-40">
         <div className="container-custom">
           <div className="max-w-3xl 2xl:max-w-4xl 3xl:max-w-5xl">
             <h1 className="text-4xl md:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold mb-6 2xl:mb-8 3xl:mb-10">Our Capabilities</h1>
-            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300">
+            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-100">
               Modern equipment, skilled programming, and experience across a wide range of
               materials and applications.
             </p>
@@ -210,9 +210,9 @@ export default function CapabilitiesPage() {
                 </div>
               </div>
             </div>
-            <div className="bg-secondary-900 rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] p-8 2xl:p-10 3xl:p-12 text-white">
+            <div className="bg-secondary-600 rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] p-8 2xl:p-10 3xl:p-12 text-white">
               <h3 className="text-xl 2xl:text-2xl 3xl:text-3xl font-semibold mb-6 3xl:mb-8">File Formats Accepted</h3>
-              <p className="text-secondary-300 mb-6 2xl:text-lg 3xl:text-xl 3xl:mb-8">
+              <p className="text-secondary-200 mb-6 2xl:text-lg 3xl:text-xl 3xl:mb-8">
                 We can work with most common CAD file formats. Send us what you have and we&apos;ll
                 make it work.
               </p>

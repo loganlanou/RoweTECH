@@ -82,7 +82,7 @@ export default function AboutPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary-600/90 via-secondary-600/85 to-secondary-600/70"></div>
         </div>
         <div className="absolute inset-0 tech-lines opacity-20"></div>
 
@@ -94,7 +94,7 @@ export default function AboutPage() {
               <br />
               <span className="gradient-text">Wisconsin Roots</span>
             </h1>
-            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-300 leading-relaxed">
+            <p className="text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-100 leading-relaxed">
               A Wisconsin-based machine shop dedicated to quality, precision, and customer success.
               We bring decades of combined experience to every project.
             </p>
@@ -103,13 +103,13 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
             <div>
-              <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Story</span>
+              <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Story</span>
               <h2 className="section-heading mt-2">Built on Expertise</h2>
-              <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 text-secondary-300 leading-relaxed 2xl:text-lg 3xl:text-xl">
+              <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 text-secondary-500 leading-relaxed 2xl:text-lg 3xl:text-xl">
                 <p>
                   RoweTech Machine & Engineering was founded with a simple mission: provide
                   manufacturers with reliable, high-quality machining and tooling services they can
@@ -133,7 +133,7 @@ export default function AboutPage() {
               <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/20 to-transparent rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
               <div className="relative grid grid-cols-2 gap-4 2xl:gap-6 3xl:gap-8">
                 <div className="space-y-4 2xl:space-y-6 3xl:space-y-8">
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="CNC machining"
@@ -163,7 +163,7 @@ export default function AboutPage() {
                     <p className="font-semibold text-white 2xl:text-lg 3xl:text-xl">Specialization</p>
                     <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">Mold Repair & CNC</p>
                   </div>
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-800">
+                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
                     <Image
                       src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
                       alt="Manufacturing"
@@ -180,7 +180,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Values */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-700">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-50">
         <div className="container-custom">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
             <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Values</span>
@@ -195,7 +195,7 @@ export default function AboutPage() {
                 <div className="w-14 h-14 2xl:w-16 2xl:h-16 3xl:w-20 3xl:h-20 bg-primary-500/10 border border-primary-500/20 rounded-xl 3xl:rounded-2xl flex items-center justify-center text-primary-400 mb-4 3xl:mb-6 group-hover:bg-primary-500/20 transition-colors">
                   {value.icon}
                 </div>
-                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3">{value.title}</h3>
+                <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-600 mb-2 3xl:mb-3">{value.title}</h3>
                 <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{value.description}</p>
               </div>
             ))}
@@ -204,10 +204,10 @@ export default function AboutPage() {
       </section>
 
       {/* Industries We Serve */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-800">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-white">
         <div className="container-custom">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Industries</span>
+            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Industries</span>
             <h2 className="section-heading mt-2">Who We Serve</h2>
             <p className="section-subheading mx-auto">
               We work with manufacturers and molders across various sectors.
@@ -223,10 +223,10 @@ export default function AboutPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-900 via-secondary-900/50 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-secondary-600/30 to-transparent"></div>
                 </div>
                 <div className="p-6 2xl:p-8 3xl:p-10">
-                  <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3 group-hover:text-primary-400 transition-colors">
+                  <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-600 mb-2 3xl:mb-3 group-hover:text-primary-500 transition-colors">
                     {industry.title}
                   </h3>
                   <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{industry.description}</p>
@@ -246,15 +246,15 @@ export default function AboutPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-secondary-950/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-950/50"></div>
+          <div className="absolute inset-0 bg-secondary-600/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-600/50"></div>
         </div>
 
         <div className="container-custom relative text-center">
           <h2 className="text-3xl md:text-4xl 2xl:text-5xl 3xl:text-6xl font-bold text-white mb-6 2xl:mb-8 3xl:mb-10">
             Let&apos;s Work Together
           </h2>
-          <p className="text-secondary-300 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
+          <p className="text-secondary-200 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
             Ready to discuss your project? Contact us for a quote or to learn more about our
             capabilities.
           </p>

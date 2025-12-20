@@ -71,8 +71,8 @@ export default function HeroCarousel() {
       ))}
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/70"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-secondary-950 via-transparent to-secondary-950/50"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-secondary-600/90 via-secondary-600/80 to-secondary-600/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/90 via-transparent to-secondary-600/40"></div>
 
       {/* Carousel indicators */}
       <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
@@ -89,7 +89,7 @@ export default function HeroCarousel() {
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentIndex
                 ? 'bg-primary-500 w-8'
-                : 'bg-secondary-600 hover:bg-secondary-500'
+                : 'bg-secondary-200 hover:bg-secondary-100'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -98,7 +98,7 @@ export default function HeroCarousel() {
 
       {/* Current image label */}
       <div className="absolute bottom-36 left-1/2 -translate-x-1/2 z-20">
-        <span className="text-secondary-400 text-sm font-medium tracking-wider uppercase">
+        <span className="text-secondary-100 text-sm font-medium tracking-wider uppercase">
           {carouselImages[currentIndex].title}
         </span>
       </div>
