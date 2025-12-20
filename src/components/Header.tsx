@@ -58,9 +58,6 @@ export default function Header() {
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
-            <Link href="/contact" className="btn-primary ml-4 3xl:ml-6">
-              Request a Quote
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -102,13 +99,6 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="btn-primary mt-2 text-center"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Request a Quote
-            </Link>
           </div>
         </div>
       </nav>
