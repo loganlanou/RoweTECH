@@ -1,7 +1,23 @@
+'use client'
+
 import Link from 'next/link'
-import { SignOutButton } from '@clerk/nextjs'
+import dynamic from 'next/dynamic'
+
+// Check if Clerk is properly configured
+const isClerkConfigured = (): boolean => {
+  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
+}
+
+// Dynamically import SignOutButton only when needed
+const SignOutButton = dynamic(
+  () => import('@clerk/nextjs').then((mod) => mod.SignOutButton),
+  { ssr: false }
+)
 
 export default function UnauthorizedPage() {
+  const clerkEnabled = isClerkConfigured()
+
   return (
     <div className="min-h-screen bg-secondary-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
@@ -31,11 +47,20 @@ export default function UnauthorizedPage() {
           <Link href="/" className="btn-primary">
             Go to Homepage
           </Link>
-          <SignOutButton>
-            <button className="px-6 py-3 border border-secondary-300 text-secondary-600 font-medium rounded-lg hover:bg-secondary-100 transition-colors">
-              Sign Out
-            </button>
-          </SignOutButton>
+          {clerkEnabled ? (
+            <SignOutButton>
+              <button className="px-6 py-3 border border-secondary-300 text-secondary-600 font-medium rounded-lg hover:bg-secondary-100 transition-colors">
+                Sign Out
+              </button>
+            </SignOutButton>
+          ) : (
+            <Link
+              href="/"
+              className="px-6 py-3 border border-secondary-300 text-secondary-600 font-medium rounded-lg hover:bg-secondary-100 transition-colors"
+            >
+              Back to Home
+            </Link>
+          )}
         </div>
       </div>
     </div>

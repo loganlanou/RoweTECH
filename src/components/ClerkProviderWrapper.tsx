@@ -4,9 +4,9 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 
 // Check if Clerk is properly configured
-const isClerkConfigured = () => {
+const isClerkConfigured = (): boolean => {
   const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  return key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_')
+  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
 }
 
 export default function ClerkProviderWrapper({

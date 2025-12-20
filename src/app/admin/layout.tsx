@@ -1,17 +1,27 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { UserButton } from '@clerk/nextjs'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Admin Dashboard',
-  description: 'RoweTech admin content management',
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+// Check if Clerk is properly configured
+const isClerkConfigured = (): boolean => {
+  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
 }
+
+// Dynamically import UserButton only when needed
+const UserButton = dynamic(
+  () => import('@clerk/nextjs').then((mod) => mod.UserButton),
+  { ssr: false }
+)
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const clerkEnabled = isClerkConfigured()
+
   return (
     <div className="min-h-screen bg-secondary-50">
       {/* Admin Header */}
@@ -59,13 +69,15 @@ export default function AdminLayout({
               >
                 View Site
               </Link>
-              <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox: 'w-8 h-8',
-                  },
-                }}
-              />
+              {clerkEnabled && (
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: 'w-8 h-8',
+                    },
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -14,10 +14,10 @@ const navigation = [
 ]
 
 // Check if Clerk is properly configured
-const isClerkConfigured = () => {
+const isClerkConfigured = (): boolean => {
   if (typeof window === 'undefined') return false
   const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  return key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_')
+  return Boolean(key && key !== 'YOUR_PUBLISHABLE_KEY' && key.startsWith('pk_'))
 }
 
 // Dynamically import auth buttons only when Clerk is configured
