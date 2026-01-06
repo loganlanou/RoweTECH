@@ -144,8 +144,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          // Optionally unobserve after animating
-          // observer.unobserve(entry.target);
         }
       });
     }, {
@@ -154,7 +152,21 @@
       threshold: 0.1
     });
 
-    animatedElements.forEach(el => observer.observe(el));
+    // First, check which elements are already in view
+    animatedElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInView) {
+        el.classList.add('is-visible');
+      }
+      observer.observe(el);
+    });
+
+    // Add animate-ready class to body to enable animations
+    // This ensures content is visible if JS fails to load
+    requestAnimationFrame(() => {
+      document.body.classList.add('animate-ready');
+    });
   }
 
   // ===========================================
