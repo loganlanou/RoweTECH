@@ -1,133 +1,563 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
+import { AdminState, DEFAULT_ADMIN_STATE, ServiceCard } from '@/lib/admin-defaults'
+
+const layoutChips = [
+  { key: 'grid', label: 'Card Grid' },
+  { key: 'stacked', label: 'Stacked Story' },
+]
+
+const spacingChips = [
+  { key: 'roomy', label: 'Roomy Padding' },
+  { key: 'compact', label: 'Compact Padding' },
+]
+
+const galleryChips = [
+  { key: 'masonry', label: 'Masonry' },
+  { key: 'grid', label: 'Uniform Grid' },
+]
 
 export default function AdminDashboard() {
+  const [site, setSite] = useState<AdminState>(DEFAULT_ADMIN_STATE)
+  const [isSaving, setIsSaving] = useState(false)
+  const [status, setStatus] = useState('Draft changes are stored locally. Connect a database to persist.')
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch('/api/admin/state', { cache: 'no-store' })
+        if (res.ok) {
+          const data = (await res.json()) as AdminState
+          setSite(data)
+          setSite(data)
+          setStatus('Loaded latest admin state from local store.')
+        }
+      } catch (err) {
+        console.error(err)
+        setStatus('Using defaults; failed to load saved state.')
+      }
+    }
+    load()
+  }, [])
+
+  const updateHero = (key: keyof AdminState['hero'], value: string) => {
+    setSite((prev) => ({ ...prev, hero: { ...prev.hero, [key]: value } }))
+  }
+
+  const updateLayout = (key: keyof AdminState['layout'], value: string) => {
+    setSite((prev) => ({ ...prev, layout: { ...prev.layout, [key]: value as never } }))
+  }
+
+  const updateSeo = (key: keyof AdminState['seo'], value: string) => {
+    setSite((prev) => ({ ...prev, seo: { ...prev.seo, [key]: value } }))
+  }
+
+  const updateMedia = (key: keyof AdminState['media'], value: string) => {
+    setSite((prev) => ({ ...prev, media: { ...prev.media, [key]: value } }))
+  }
+
+  const updateService = (id: number, key: keyof ServiceCard, value: string) => {
+    setSite((prev) => ({
+      ...prev,
+      services: prev.services.map((svc) => (svc.id === id ? { ...svc, [key]: value } : svc)),
+    }))
+  }
+
+  const handleSave = async () => {
+    setIsSaving(true)
+    setStatus('Saving changes...')
+    try {
+      const res = await fetch('/api/admin/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(site),
+      })
+      if (!res.ok) {
+        throw new Error('Save failed')
+      }
+      const data = (await res.json()) as { state: AdminState }
+      setSite(data.state)
+      setStatus(
+        'Changes saved to local JSON store. Connect Supabase (content) + UploadThing/Cloudinary (media) for production.'
+      )
+    } catch (err) {
+      console.error(err)
+      setStatus('Save failed. Please try again.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const heroPreviewImage = useMemo(
+    () =>
+      site.hero.background ||
+      'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80',
+    [site.hero.background]
+  )
+
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-secondary-600">Dashboard</h1>
-        <p className="text-secondary-500 mt-1">
-          Manage your website content and images
-        </p>
+    <div className="space-y-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p className="text-sm text-primary-500 font-semibold uppercase tracking-wide">Admin</p>
+          <h1 className="text-3xl font-bold text-secondary-700">Site Command Center</h1>
+          <p className="text-secondary-500">{status}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="px-4 py-2 border border-secondary-200 rounded-lg text-secondary-600 hover:bg-secondary-100 transition-colors"
+          >
+            View Site
+          </Link>
+          <button onClick={handleSave} disabled={isSaving} className="btn-primary">
+            {isSaving ? 'Saving...' : 'Save Draft'}
+          </button>
+        </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      {/* Quick actions */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Link
           href="/admin/content"
-          className="bg-white rounded-xl border border-secondary-200 p-6 hover:border-primary-500 hover:shadow-lg transition-all group"
+          className="bg-white border border-secondary-200 rounded-xl p-4 hover:border-primary-500 hover:shadow-lg transition-all"
         >
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors">
-            <svg
-              className="w-6 h-6 text-primary-600 group-hover:text-white transition-colors"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-              />
-            </svg>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center font-semibold">
+              A
+            </div>
+            <div>
+              <p className="font-semibold text-secondary-700">Page copy & CTAs</p>
+              <p className="text-sm text-secondary-500">Edit headlines, paragraphs, and calls-to-action.</p>
+            </div>
           </div>
-          <h3 className="font-semibold text-secondary-600 mb-1">Manage Content</h3>
-          <p className="text-sm text-secondary-500">
-            Edit page text, headings, and descriptions
-          </p>
         </Link>
-
         <Link
           href="/admin/gallery"
-          className="bg-white rounded-xl border border-secondary-200 p-6 hover:border-primary-500 hover:shadow-lg transition-all group"
+          className="bg-white border border-secondary-200 rounded-xl p-4 hover:border-primary-500 hover:shadow-lg transition-all"
         >
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors">
-            <svg
-              className="w-6 h-6 text-primary-600 group-hover:text-white transition-colors"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-              />
-            </svg>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center font-semibold">
+              G
+            </div>
+            <div>
+              <p className="font-semibold text-secondary-700">Images & Alt text</p>
+              <p className="text-sm text-secondary-500">Swap hero media and gallery shots.</p>
+            </div>
           </div>
-          <h3 className="font-semibold text-secondary-600 mb-1">Gallery Images</h3>
-          <p className="text-sm text-secondary-500">
-            Upload and manage gallery photos
-          </p>
         </Link>
-
         <Link
           href="/admin/settings"
-          className="bg-white rounded-xl border border-secondary-200 p-6 hover:border-primary-500 hover:shadow-lg transition-all group"
+          className="bg-white border border-secondary-200 rounded-xl p-4 hover:border-primary-500 hover:shadow-lg transition-all"
         >
-          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors">
-            <svg
-              className="w-6 h-6 text-primary-600 group-hover:text-white transition-colors"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center font-semibold">
+              S
+            </div>
+            <div>
+              <p className="font-semibold text-secondary-700">Access & SEO</p>
+              <p className="text-sm text-secondary-500">Authorized admins, metadata, and deploy hints.</p>
+            </div>
           </div>
-          <h3 className="font-semibold text-secondary-600 mb-1">Settings</h3>
-          <p className="text-sm text-secondary-500">
-            Configure site settings and admin users
-          </p>
         </Link>
       </div>
 
-      {/* Recent Activity */}
-      <div className="bg-white rounded-xl border border-secondary-200 p-6">
-        <h2 className="font-semibold text-secondary-600 mb-4">Getting Started</h2>
-        <div className="space-y-4">
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-primary-600 text-sm font-medium">1</span>
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Editors */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-secondary-700">Homepage hero</h2>
+                <p className="text-sm text-secondary-500">Update headline, CTA, phone, and hero layout.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-secondary-500">Layout</span>
+                <div className="flex gap-2">
+                  {['split', 'overlay'].map((key) => (
+                    <button
+                      key={key}
+                      onClick={() => updateHero('layout', key)}
+                      className={`px-3 py-1 rounded-lg text-sm border ${
+                        site.hero.layout === key
+                          ? 'border-primary-500 text-primary-600 bg-primary-50'
+                          : 'border-secondary-200 text-secondary-500 hover:border-secondary-300'
+                      }`}
+                    >
+                      {key === 'split' ? 'Split' : 'Overlay'}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-secondary-600 font-medium">Deploy to Vercel</p>
-              <p className="text-sm text-secondary-500">
-                For full admin functionality, deploy this site to Vercel instead of GitHub Pages.
-              </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Headline</span>
+                <input
+                  value={site.hero.headline}
+                  onChange={(e) => updateHero('headline', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Subheadline</span>
+                <input
+                  value={site.hero.subheadline}
+                  onChange={(e) => updateHero('subheadline', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1 md:col-span-2">
+                <span className="text-sm font-medium text-secondary-600">Description</span>
+                <textarea
+                  rows={3}
+                  value={site.hero.description}
+                  onChange={(e) => updateHero('description', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">CTA label</span>
+                <input
+                  value={site.hero.ctaLabel}
+                  onChange={(e) => updateHero('ctaLabel', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">CTA link</span>
+                <input
+                  value={site.hero.ctaHref}
+                  onChange={(e) => updateHero('ctaHref', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Phone number</span>
+                <input
+                  value={site.hero.phone}
+                  onChange={(e) => updateHero('phone', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Hero background image</span>
+                <input
+                  value={site.hero.background}
+                  onChange={(e) => updateHero('background', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="https://..."
+                />
+              </label>
             </div>
           </div>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-primary-600 text-sm font-medium">2</span>
+
+          <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-secondary-700">Services & value props</h2>
+                <p className="text-sm text-secondary-500">Edit cards shown on services and home pages.</p>
+              </div>
+              <div className="flex gap-2">
+                {layoutChips.map((chip) => (
+                  <button
+                    key={chip.key}
+                    onClick={() => updateLayout('servicesLayout', chip.key)}
+                    className={`px-3 py-1 rounded-lg text-sm border ${
+                      site.layout.servicesLayout === chip.key
+                        ? 'border-primary-500 text-primary-600 bg-primary-50'
+                        : 'border-secondary-200 text-secondary-500 hover:border-secondary-300'
+                    }`}
+                  >
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div>
-              <p className="text-secondary-600 font-medium">Configure Clerk</p>
-              <p className="text-sm text-secondary-500">
-                Set up Google OAuth in your Clerk dashboard and add your API keys.
-              </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {site.services.map((service) => (
+                <div key={service.id} className="border border-secondary-200 rounded-lg p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-secondary-700">Card {service.id}</h3>
+                    <span className="text-xs text-secondary-500">Desktop + mobile</span>
+                  </div>
+                  <label className="space-y-1 block">
+                    <span className="text-sm text-secondary-600">Title</span>
+                    <input
+                      value={service.title}
+                      onChange={(e) => updateService(service.id, 'title', e.target.value)}
+                      className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </label>
+                  <label className="space-y-1 block">
+                    <span className="text-sm text-secondary-600">Description</span>
+                    <textarea
+                      rows={3}
+                      value={service.description}
+                      onChange={(e) => updateService(service.id, 'description', e.target.value)}
+                      className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </label>
+                  <label className="space-y-1 block">
+                    <span className="text-sm text-secondary-600">Image URL</span>
+                    <input
+                      value={service.image}
+                      onChange={(e) => updateService(service.id, 'image', e.target.value)}
+                      className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-primary-600 text-sm font-medium">3</span>
+
+          <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-secondary-700">Layout, spacing, and gallery</h2>
+                <p className="text-sm text-secondary-500">Keep color scheme, but fine-tune density and galleries.</p>
+              </div>
             </div>
-            <div>
-              <p className="text-secondary-600 font-medium">Set up database</p>
-              <p className="text-sm text-secondary-500">
-                Connect a database (like Supabase or PlanetScale) to store content.
-              </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-secondary-600">Spacing preset</p>
+                <div className="flex flex-wrap gap-2">
+                  {spacingChips.map((chip) => (
+                    <button
+                      key={chip.key}
+                      onClick={() => updateLayout('spacing', chip.key)}
+                      className={`px-3 py-2 rounded-lg text-sm border ${
+                        site.layout.spacing === chip.key
+                          ? 'border-primary-500 text-primary-600 bg-primary-50'
+                          : 'border-secondary-200 text-secondary-500 hover:border-secondary-300'
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-secondary-600">Gallery layout</p>
+                <div className="flex flex-wrap gap-2">
+                  {galleryChips.map((chip) => (
+                    <button
+                      key={chip.key}
+                      onClick={() => updateLayout('galleryLayout', chip.key)}
+                      className={`px-3 py-2 rounded-lg text-sm border ${
+                        site.layout.galleryLayout === chip.key
+                          ? 'border-primary-500 text-primary-600 bg-primary-50'
+                          : 'border-secondary-200 text-secondary-500 hover:border-secondary-300'
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Gallery cover image</span>
+                <input
+                  value={site.media.galleryCover}
+                  onChange={(e) => updateMedia('galleryCover', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Brand badge / watermark</span>
+                <input
+                  value={site.media.brandBadge}
+                  onChange={(e) => updateMedia('brandBadge', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-secondary-700">SEO & metadata</h2>
+                <p className="text-sm text-secondary-500">Keep titles and descriptions aligned with your services.</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Page title</span>
+                <input
+                  value={site.seo.title}
+                  onChange={(e) => updateSeo('title', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-sm font-medium text-secondary-600">Meta description</span>
+                <input
+                  value={site.seo.description}
+                  onChange={(e) => updateSeo('description', e.target.value)}
+                  className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="font-semibold text-secondary-700">Integration blueprint</h2>
+                <p className="text-sm text-secondary-500">
+                  Recommended stack for seamless editing, based on common production setups.
+                </p>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-semibold">
+                Clerk + DB + Media
+              </span>
+            </div>
+            <ul className="space-y-2 text-sm text-secondary-600 list-disc list-inside">
+              <li>Auth: Clerk (already wired) with an allowlist of admin emails.</li>
+              <li>
+                Content: Supabase or Vercel Postgres (JSONB for page sections) via a simple `/api/admin/content`
+                route using Zod validation.
+              </li>
+              <li>
+                Media: UploadThing or Cloudinary widget for drag-and-drop uploads; store returned URLs in the DB and
+                mirror to the gallery.
+              </li>
+              <li>
+                Editing UI: TipTap or BlockNote for rich text; keep Tailwind tokens to preserve the current color
+                scheme.
+              </li>
+              <li>
+                Publishing: server actions to persist on save, plus ISR revalidation (`revalidatePath('/')`) so
+                live pages stay in sync.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Preview & guide */}
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl border border-secondary-200 overflow-hidden">
+            <div className="p-4 border-b border-secondary-100 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-secondary-500">Live preview (mobile & desktop)</p>
+                <p className="font-semibold text-secondary-700">Hero + services snapshot</p>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-secondary-100 text-secondary-700 text-xs font-semibold">
+                {site.layout.spacing === 'compact' ? 'Compact' : 'Roomy'}
+              </span>
+            </div>
+            <div className="space-y-6 p-4">
+              <div className="relative overflow-hidden rounded-lg border border-secondary-200">
+                <div className="absolute inset-0 bg-gradient-to-r from-secondary-700/80 via-secondary-700/70 to-secondary-700/60" />
+                <Image
+                  src={heroPreviewImage}
+                  alt="Hero preview"
+                  width={800}
+                  height={500}
+                  className="w-full h-48 object-cover"
+                  priority
+                />
+                <div
+                  className={`absolute inset-0 ${site.hero.layout === 'overlay' ? 'bg-black/40' : 'bg-gradient-to-r from-secondary-900/80 via-secondary-900/40 to-transparent'}`}
+                />
+                <div
+                  className={`absolute inset-0 flex ${
+                    site.hero.layout === 'split'
+                      ? 'md:flex-row flex-col md:items-center md:justify-between'
+                      : 'flex-col justify-end'
+                  } p-4 gap-3`}
+                >
+                  <div className="max-w-md space-y-2">
+                    <p className="text-primary-200 text-xs uppercase tracking-wide">Hero</p>
+                    <h3 className="text-white text-xl font-bold leading-tight drop-shadow">
+                      {site.hero.headline}
+                    </h3>
+                    <p className="text-secondary-100 text-sm max-h-20 overflow-hidden">
+                      {site.hero.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 rounded-full bg-primary-500 text-white text-xs font-semibold">
+                        {site.hero.ctaLabel}
+                      </span>
+                      <span className="px-3 py-1 rounded-full bg-white/80 text-secondary-700 text-xs font-semibold">
+                        {site.hero.phone}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="px-3 py-2 rounded-lg bg-white/80 text-secondary-700 text-xs font-semibold border border-white/60">
+                      {site.hero.layout === 'split' ? 'Split layout' : 'Overlay layout'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-secondary-50 border border-secondary-200 rounded-lg p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-secondary-700">Services preview</p>
+                  <span className="text-xs text-secondary-500">
+                    {site.layout.servicesLayout === 'grid' ? 'Card grid' : 'Stacked story'}
+                  </span>
+                </div>
+                <div
+                  className={`grid gap-3 ${
+                    site.layout.servicesLayout === 'grid' ? 'sm:grid-cols-2' : 'grid-cols-1'
+                  }`}
+                >
+                  {site.services.slice(0, 2).map((svc) => (
+                    <div
+                      key={svc.id}
+                      className="rounded-lg border border-secondary-200 bg-white p-3 flex items-start gap-3"
+                    >
+                      <div className="w-12 h-12 rounded-md overflow-hidden bg-secondary-100 border border-secondary-200 flex-shrink-0">
+                        <Image
+                          src={svc.image}
+                          alt={svc.title}
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-secondary-700 text-sm">{svc.title}</p>
+                        <p className="text-secondary-500 text-xs max-h-12 overflow-hidden">
+                          {svc.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-secondary-200 p-5 space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center font-semibold">
+                ?
+              </div>
+              <div>
+                <p className="font-semibold text-secondary-700">Publishing checklist</p>
+                <ul className="mt-2 space-y-1 text-sm text-secondary-600 list-disc list-inside">
+                  <li>Deploy to Vercel for serverless middleware and Clerk protection.</li>
+                  <li>Add `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` env vars.</li>
+                  <li>
+                    Connect DB + storage, then swap the save handler for a server action that writes to your tables and
+                    revalidates affected routes.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

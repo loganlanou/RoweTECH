@@ -1,64 +1,204 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-
-const sampleImages = [
-  {
-    id: 1,
-    title: 'CNC Milling Operation',
-    category: 'CNC Machining',
-    url: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=400&q=80',
-  },
-  {
-    id: 2,
-    title: 'Laser Cutting',
-    category: 'Laser',
-    url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-  },
-  {
-    id: 3,
-    title: 'Welding & Fabrication',
-    category: 'Welding',
-    url: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=80',
-  },
-  {
-    id: 4,
-    title: '3D Printing',
-    category: '3D Printing',
-    url: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=400&q=80',
-  },
-]
+import { AdminState, DEFAULT_ADMIN_STATE, GalleryItem } from '@/lib/admin-defaults'
 
 export default function AdminGalleryPage() {
-  const [images, setImages] = useState(sampleImages)
+  const [state, setState] = useState<AdminState>(DEFAULT_ADMIN_STATE)
   const [isUploading, setIsUploading] = useState(false)
+  const [selectedId, setSelectedId] = useState<number | null>(DEFAULT_ADMIN_STATE.gallery[0]?.id ?? null)
+  const [displayMode, setDisplayMode] = useState<'grid' | 'masonry'>('grid')
+  const [status, setStatus] = useState('Loaded defaults. Saving writes to a local JSON store.')
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch('/api/admin/state', { cache: 'no-store' })
+        if (res.ok) {
+          const data = (await res.json()) as AdminState
+          setState(data)
+          setSelectedId(data.gallery[0]?.id ?? null)
+          setStatus('Loaded saved gallery. Edits persist locally; connect storage for production.')
+        }
+      } catch (err) {
+        console.error(err)
+        setStatus('Using defaults. Failed to load saved gallery.')
+      }
+    }
+    load()
+  }, [])
 
   const handleUpload = () => {
     setIsUploading(true)
-    // Simulate upload - in production, this would upload to cloud storage
     setTimeout(() => {
       setIsUploading(false)
-      alert('Upload functionality requires cloud storage integration (e.g., Cloudinary, AWS S3)')
-    }, 1000)
+      alert('Upload requires storage integration (UploadThing/Cloudinary/S3).')
+    }, 800)
   }
 
   const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this image?')) {
-      setImages(images.filter((img) => img.id !== id))
+      setState((prev) => {
+        const filtered = prev.gallery.filter((img) => img.id !== id)
+        return { ...prev, gallery: filtered }
+      })
+      setSelectedId((prev) => (prev === id ? null : prev))
     }
   }
+
+  const handleSelect = (id: number) => {
+    setSelectedId(id)
+  }
+
+  const handleEdit = (id: number, key: 'title' | 'category' | 'url', value: string) => {
+    setState((prev) => ({
+      ...prev,
+      gallery: prev.gallery.map((img) => (img.id === id ? { ...img, [key]: value } : img)),
+    }))
+  }
+
+  const handleSave = async () => {
+    setStatus('Saving...')
+    try {
+      const res = await fetch('/api/admin/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      })
+      if (!res.ok) throw new Error('Save failed')
+      const data = (await res.json()) as { state: AdminState }
+      setState(data.state)
+      setStatus('Saved to local JSON. Connect UploadThing/Cloudinary + DB for production.')
+    } catch (err) {
+      console.error(err)
+      setStatus('Save failed. Please retry.')
+    }
+  }
+
+  const addImage = () => {
+    const nextId = Math.max(0, ...state.gallery.map((g) => g.id)) + 1
+    const placeholder: GalleryItem = {
+      id: nextId,
+      title: `New Image ${nextId}`,
+      category: 'Uncategorized',
+      url: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80',
+    }
+    setState((prev) => ({ ...prev, gallery: [...prev.gallery, placeholder] }))
+    setSelectedId(nextId)
+  }
+
+  const selectedImage = state.gallery.find((img) => img.id === selectedId)
 
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-secondary-600">Gallery Management</h1>
-          <p className="text-secondary-500 mt-1">Upload and manage gallery images</p>
+          <p className="text-secondary-500 mt-1">{status}</p>
         </div>
-        <button onClick={handleUpload} disabled={isUploading} className="btn-primary">
-          {isUploading ? 'Uploading...' : 'Upload Image'}
-        </button>
+        <div className="flex gap-3 flex-wrap">
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 border border-secondary-200 rounded-lg text-secondary-600 hover:bg-secondary-100 transition-colors"
+          >
+            Save Gallery
+          </button>
+          <button
+            onClick={addImage}
+            className="px-4 py-2 border border-secondary-200 rounded-lg text-secondary-600 hover:bg-secondary-100 transition-colors"
+          >
+            Add Placeholder
+          </button>
+          <button onClick={handleUpload} disabled={isUploading} className="btn-primary">
+            {isUploading ? 'Uploading...' : 'Upload Image'}
+          </button>
+        </div>
+      </div>
+
+      {/* Editor */}
+      <div className="grid lg:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-secondary-700">Selected image</h2>
+              <p className="text-sm text-secondary-500">
+                Update title, category, and source URL. Changes save to local JSON until storage is wired.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              {(['grid', 'masonry'] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setDisplayMode(mode)}
+                  className={`px-3 py-1 rounded-lg text-sm border ${
+                    displayMode === mode
+                      ? 'border-primary-500 text-primary-600 bg-primary-50'
+                      : 'border-secondary-200 text-secondary-500 hover:border-secondary-300'
+                  }`}
+                >
+                  {mode === 'grid' ? 'Grid' : 'Masonry'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {selectedImage ? (
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-secondary-200 bg-secondary-50">
+                <Image
+                  src={selectedImage.url}
+                  alt={selectedImage.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/85 text-xs font-semibold text-secondary-700">
+                  {selectedImage.category}
+                </div>
+              </div>
+              <div className="space-y-3">
+                <label className="space-y-1 block">
+                  <span className="text-sm font-medium text-secondary-600">Title</span>
+                  <input
+                    value={selectedImage.title}
+                    onChange={(e) => handleEdit(selectedImage.id, 'title', e.target.value)}
+                    className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-sm font-medium text-secondary-600">Category</span>
+                  <input
+                    value={selectedImage.category}
+                    onChange={(e) => handleEdit(selectedImage.id, 'category', e.target.value)}
+                    className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-sm font-medium text-secondary-600">Image URL</span>
+                  <input
+                    value={selectedImage.url}
+                    onChange={(e) => handleEdit(selectedImage.id, 'url', e.target.value)}
+                    className="w-full px-3 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </label>
+              </div>
+            </div>
+          ) : (
+            <p className="text-secondary-500 text-sm">Select an image to edit.</p>
+          )}
+        </div>
+
+        <div className="bg-white rounded-xl border border-secondary-200 p-6 space-y-3">
+          <h2 className="font-semibold text-secondary-700">Storage recommendations</h2>
+          <p className="text-sm text-secondary-500">
+            Pair Clerk auth with UploadThing or Cloudinary for uploads, and store image metadata in Supabase/Postgres.
+          </p>
+          <ul className="list-disc list-inside text-sm text-secondary-600 space-y-1">
+            <li>Use a drag-and-drop uploader and persist returned URLs + alt text in a `gallery_items` table.</li>
+            <li>Revalidate `/gallery` after changes so the live site matches admin edits.</li>
+            <li>Keep alt text accessible; add a field when you wire storage.</li>
+          </ul>
+        </div>
       </div>
 
       {/* Upload Area */}
@@ -85,11 +225,20 @@ export default function AdminGalleryPage() {
       </div>
 
       {/* Image Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {images.map((image) => (
+      <div
+        className={
+          displayMode === 'masonry'
+            ? 'columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4'
+            : 'grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+        }
+      >
+        {state.gallery.map((image) => (
           <div
             key={image.id}
-            className="bg-white rounded-xl border border-secondary-200 overflow-hidden group"
+            className={`bg-white rounded-xl border border-secondary-200 overflow-hidden group ${
+              displayMode === 'masonry' ? 'break-inside-avoid' : ''
+            } ${selectedId === image.id ? 'border-primary-500 shadow-lg shadow-primary-500/10' : ''}`}
+            onClick={() => handleSelect(image.id)}
           >
             <div className="aspect-square relative">
               <Image
@@ -160,7 +309,7 @@ export default function AdminGalleryPage() {
           <div>
             <p className="text-sm font-medium text-yellow-800">Cloud Storage Required</p>
             <p className="text-sm text-yellow-700">
-              To upload and manage images, integrate a cloud storage service (Cloudinary, AWS S3, or Vercel Blob).
+              Wire UploadThing/Cloudinary (or S3) to replace the placeholder uploader, and persist metadata in your DB.
             </p>
           </div>
         </div>

@@ -1,50 +1,179 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { AdminState, DEFAULT_ADMIN_STATE } from '@/lib/admin-defaults'
 
-const contentSections = [
-  {
-    id: 'hero',
-    name: 'Homepage Hero',
-    fields: [
-      { key: 'headline', label: 'Headline', type: 'text', value: 'Precision Machining &' },
-      { key: 'subheadline', label: 'Sub-headline', type: 'text', value: 'Mold Repair Excellence' },
-      { key: 'description', label: 'Description', type: 'textarea', value: 'RoweTech Machine & Engineering provides plastic injection mold repair, custom fixtures, EOAT tooling, and CNC machining for manufacturers across Wisconsin.' },
-    ],
-  },
-  {
-    id: 'about',
-    name: 'About Section',
-    fields: [
-      { key: 'title', label: 'Title', type: 'text', value: 'Built on Expertise' },
-      { key: 'content', label: 'Content', type: 'textarea', value: 'RoweTech Machine & Engineering was founded with a simple mission: provide manufacturers with reliable, high-quality machining and tooling services they can count on.' },
-    ],
-  },
-  {
-    id: 'contact',
-    name: 'Contact Information',
-    fields: [
-      { key: 'phone', label: 'Phone', type: 'text', value: '(715) 202-3631' },
-      { key: 'address', label: 'Address', type: 'text', value: '549 Lavorata Rd' },
-      { key: 'city', label: 'City, State, ZIP', type: 'text', value: 'Cadott, WI 54727' },
-      { key: 'hours', label: 'Business Hours', type: 'text', value: 'Mon-Fri: 7:00 AM - 5:00 PM' },
-    ],
-  },
-]
+type SectionField = {
+  key: string
+  label: string
+  type: 'text' | 'textarea'
+}
 
 export default function AdminContentPage() {
-  const [activeSection, setActiveSection] = useState(contentSections[0].id)
+  const [state, setState] = useState<AdminState>(DEFAULT_ADMIN_STATE)
+  const [activeSection, setActiveSection] = useState('hero')
   const [isSaving, setIsSaving] = useState(false)
+  const [message, setMessage] = useState('Loaded defaults. Saving writes to a local JSON store for now.')
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch('/api/admin/state', { cache: 'no-store' })
+        if (res.ok) {
+          const data = (await res.json()) as AdminState
+          setState(data)
+          setMessage('Loaded saved content. Edits persist to local JSON; wire DB for production.')
+        }
+      } catch (err) {
+        console.error(err)
+        setMessage('Using defaults. Failed to load saved content.')
+      }
+    }
+    load()
+  }, [])
+
+  const sections = useMemo(() => {
+    return [
+      {
+        id: 'hero',
+        name: 'Homepage Hero',
+        fields: [
+          { key: 'headline', label: 'Headline', type: 'text' },
+          { key: 'subheadline', label: 'Sub-headline', type: 'text' },
+          { key: 'description', label: 'Description', type: 'textarea' },
+          { key: 'ctaLabel', label: 'Primary CTA label', type: 'text' },
+          { key: 'ctaHref', label: 'Primary CTA link', type: 'text' },
+        ] as SectionField[],
+      },
+      {
+        id: 'about',
+        name: 'About Section',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'content', label: 'Content', type: 'textarea' },
+        ] as SectionField[],
+      },
+      {
+        id: 'services',
+        name: 'Services',
+        fields: [
+          { key: 'service1Title', label: 'Service 1 Title', type: 'text' },
+          { key: 'service1Desc', label: 'Service 1 Description', type: 'textarea' },
+          { key: 'service2Title', label: 'Service 2 Title', type: 'text' },
+          { key: 'service2Desc', label: 'Service 2 Description', type: 'textarea' },
+          { key: 'service3Title', label: 'Service 3 Title', type: 'text' },
+          { key: 'service3Desc', label: 'Service 3 Description', type: 'textarea' },
+        ] as SectionField[],
+      },
+      {
+        id: 'contact',
+        name: 'Contact Information',
+        fields: [
+          { key: 'phone', label: 'Phone', type: 'text' },
+          { key: 'address', label: 'Address', type: 'text' },
+          { key: 'city', label: 'City, State, ZIP', type: 'text' },
+          { key: 'hours', label: 'Business Hours', type: 'text' },
+        ] as SectionField[],
+      },
+    ]
+  }, [])
+
+  const currentSection = sections.find((s) => s.id === activeSection)
+
+  const getValue = (field: string) => {
+    switch (field) {
+      case 'headline':
+      case 'subheadline':
+      case 'ctaLabel':
+      case 'ctaHref':
+        return state.hero[field]
+      case 'description':
+        return state.hero.description
+      case 'title':
+      case 'content':
+        return state.about[field]
+      case 'phone':
+      case 'address':
+      case 'city':
+      case 'hours':
+        return state.contact[field]
+      case 'service1Title':
+      case 'service2Title':
+      case 'service3Title': {
+        const index = Number(field[7]) - 1
+        return state.services[index]?.title ?? ''
+      }
+      case 'service1Desc':
+      case 'service2Desc':
+      case 'service3Desc': {
+        const index = Number(field[7]) - 1
+        return state.services[index]?.description ?? ''
+      }
+      default:
+        return ''
+    }
+  }
+
+  const setValue = (field: string, value: string) => {
+    switch (field) {
+      case 'headline':
+      case 'subheadline':
+      case 'ctaLabel':
+      case 'ctaHref':
+        setState((prev) => ({ ...prev, hero: { ...prev.hero, [field]: value } }))
+        break
+      case 'description':
+        setState((prev) => ({ ...prev, hero: { ...prev.hero, description: value } }))
+        break
+      case 'title':
+      case 'content':
+        setState((prev) => ({ ...prev, about: { ...prev.about, [field]: value } }))
+        break
+      case 'phone':
+      case 'address':
+      case 'city':
+      case 'hours':
+        setState((prev) => ({ ...prev, contact: { ...prev.contact, [field]: value } }))
+        break
+      case 'service1Title':
+      case 'service2Title':
+      case 'service3Title':
+      case 'service1Desc':
+      case 'service2Desc':
+      case 'service3Desc': {
+        const index = Number(field[7]) - 1
+        const key = field.includes('Desc') ? 'description' : 'title'
+        setState((prev) => {
+          const nextServices = prev.services.map((svc, idx) =>
+            idx === index ? { ...svc, [key]: value } : svc
+          )
+          return { ...prev, services: nextServices }
+        })
+        break
+      }
+      default:
+        break
+    }
+  }
 
   const handleSave = async () => {
     setIsSaving(true)
-    // Simulate save - in production, this would save to a database
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSaving(false)
-    alert('Content saved! (Note: Database integration required for persistence)')
+    setMessage('Saving...')
+    try {
+      const res = await fetch('/api/admin/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      })
+      if (!res.ok) throw new Error('Save failed')
+      setMessage('Saved to local JSON. Connect DB for production persistence.')
+    } catch (err) {
+      console.error(err)
+      setMessage('Save failed. Please retry.')
+    } finally {
+      setIsSaving(false)
+    }
   }
-
-  const currentSection = contentSections.find((s) => s.id === activeSection)
 
   return (
     <div>
@@ -68,7 +197,7 @@ export default function AdminContentPage() {
           <div className="bg-white rounded-xl border border-secondary-200 p-4">
             <h2 className="font-semibold text-secondary-600 mb-3">Sections</h2>
             <nav className="space-y-1">
-              {contentSections.map((section) => (
+              {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
@@ -97,14 +226,16 @@ export default function AdminContentPage() {
                   </label>
                   {field.type === 'textarea' ? (
                     <textarea
-                      defaultValue={field.value}
+                      value={getValue(field.key)}
+                      onChange={(e) => setValue(field.key, e.target.value)}
                       rows={4}
                       className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                     />
                   ) : (
                     <input
                       type="text"
-                      defaultValue={field.value}
+                      value={getValue(field.key)}
+                      onChange={(e) => setValue(field.key, e.target.value)}
                       className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                     />
                   )}
