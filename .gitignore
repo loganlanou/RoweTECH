@@ -7,7 +7,7 @@
 # Testing
 /coverage
 
-# Next.js
+# Next.js (legacy - can be removed after conversion)
 /.next/
 /out/
 
@@ -26,6 +26,7 @@ yarn-error.log*
 # Local env files
 .env*.local
 .env
+.envrc
 
 # Vercel
 .vercel
@@ -39,3 +40,30 @@ next-env.d.ts
 .vscode/
 *.swp
 *.swo
+
+# Go binaries
+rowetech
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build artifacts
+tmp/
+*.log
+
+# Generated files (regenerated on build)
+*_templ.go
+internal/database/sqlc/
+
+# Tailwind output (generated)
+static/css/output.css
+
+# SQLite database
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Air
+.air.toml.bak

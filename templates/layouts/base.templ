@@ -1,0 +1,54 @@
+package layouts
+
+import "rowetech/internal/meta"
+
+templ Base(m meta.PageMeta) {
+	<!DOCTYPE html>
+	<html lang="en" class="scroll-smooth">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			@MetaTags(m)
+			<link rel="preconnect" href="https://fonts.googleapis.com"/>
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+			<link rel="stylesheet" href="/static/css/output.css"/>
+			<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+		</head>
+		<body class="bg-secondary-950 text-secondary-100 font-sans antialiased">
+			@Header()
+			<main class="min-h-screen">
+				{ children... }
+			</main>
+			@Footer()
+			<script src="/static/js/site.js" defer></script>
+		</body>
+	</html>
+}
+
+templ MetaTags(m meta.PageMeta) {
+	<title>{ m.Title } | { meta.SiteNameFromCtx(ctx) }</title>
+	if m.Description != "" {
+		<meta name="description" content={ m.Description }/>
+	}
+	if m.Canonical != "" {
+		<link rel="canonical" href={ m.Canonical }/>
+	}
+	if m.NoIndex {
+		<meta name="robots" content="noindex, nofollow"/>
+	}
+	<meta property="og:title" content={ m.Title }/>
+	<meta property="og:site_name" content={ meta.SiteNameFromCtx(ctx) }/>
+	<meta property="og:type" content={ m.OGType }/>
+	if m.Description != "" {
+		<meta property="og:description" content={ m.Description }/>
+	}
+	if m.OGImage != "" {
+		<meta property="og:image" content={ m.OGImage }/>
+	}
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:title" content={ m.Title }/>
+	if m.Description != "" {
+		<meta name="twitter:description" content={ m.Description }/>
+	}
+}

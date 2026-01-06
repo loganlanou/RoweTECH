@@ -1,0 +1,100 @@
+package pages
+
+import (
+	"rowetech/internal/meta"
+	"rowetech/internal/database/sqlc"
+	"rowetech/templates/layouts"
+)
+
+templ AdminDashboard() {
+	@layouts.Base(meta.New("Admin Dashboard", "RoweTech admin portal.").WithNoIndex()) {
+		<div class="min-h-screen bg-secondary-950 pt-24">
+			<div class="container-custom py-8">
+				<div class="mb-8">
+					<h1 class="font-display text-3xl text-white uppercase">Admin Dashboard</h1>
+					<p class="text-secondary-400">Manage your website content and settings.</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+					@adminCard("Gallery", "Manage project gallery images", "/admin/gallery", "📸")
+					@adminCard("Content", "Edit website content", "/admin/content", "📝")
+					@adminCard("Settings", "Site settings", "/admin/settings", "⚙️")
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ adminCard(title, description, href, icon string) {
+	<a href={ templ.SafeURL(href) } class="block p-8 bg-secondary-900 border border-secondary-800 hover:border-primary-500/50 transition-colors" style="clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));">
+		<span class="text-4xl mb-4 block">{ icon }</span>
+		<h2 class="font-display text-xl text-white uppercase mb-2">{ title }</h2>
+		<p class="text-secondary-400">{ description }</p>
+	</a>
+}
+
+templ AdminGallery(items []sqlc.GalleryItem) {
+	@layouts.Base(meta.New("Gallery Management", "Manage gallery items.").WithNoIndex()) {
+		<div class="min-h-screen bg-secondary-950 pt-24">
+			<div class="container-custom py-8">
+				<div class="flex justify-between items-center mb-8">
+					<div>
+						<h1 class="font-display text-3xl text-white uppercase">Gallery</h1>
+						<p class="text-secondary-400">Manage your project gallery.</p>
+					</div>
+					<a href="/admin" class="btn-outline">← Back</a>
+				</div>
+
+				<div class="bg-secondary-900 border border-secondary-800 p-6">
+					<p class="text-secondary-400 text-center py-8">
+						Gallery management coming soon. Use database migrations to add items.
+					</p>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ AdminContent() {
+	@layouts.Base(meta.New("Content Management", "Manage website content.").WithNoIndex()) {
+		<div class="min-h-screen bg-secondary-950 pt-24">
+			<div class="container-custom py-8">
+				<div class="flex justify-between items-center mb-8">
+					<div>
+						<h1 class="font-display text-3xl text-white uppercase">Content</h1>
+						<p class="text-secondary-400">Edit website content.</p>
+					</div>
+					<a href="/admin" class="btn-outline">← Back</a>
+				</div>
+
+				<div class="bg-secondary-900 border border-secondary-800 p-6">
+					<p class="text-secondary-400 text-center py-8">
+						Content management coming soon.
+					</p>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ AdminSettings() {
+	@layouts.Base(meta.New("Settings", "Site settings.").WithNoIndex()) {
+		<div class="min-h-screen bg-secondary-950 pt-24">
+			<div class="container-custom py-8">
+				<div class="flex justify-between items-center mb-8">
+					<div>
+						<h1 class="font-display text-3xl text-white uppercase">Settings</h1>
+						<p class="text-secondary-400">Configure site settings.</p>
+					</div>
+					<a href="/admin" class="btn-outline">← Back</a>
+				</div>
+
+				<div class="bg-secondary-900 border border-secondary-800 p-6">
+					<p class="text-secondary-400 text-center py-8">
+						Settings management coming soon.
+					</p>
+				</div>
+			</div>
+		</div>
+	}
+}

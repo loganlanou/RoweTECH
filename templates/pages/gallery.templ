@@ -1,0 +1,85 @@
+package pages
+
+import (
+	"rowetech/internal/meta"
+	"rowetech/internal/database/sqlc"
+	"rowetech/templates/layouts"
+)
+
+templ Gallery(items []sqlc.GalleryItem, categories []string) {
+	@layouts.Base(meta.New("Gallery", "Explore RoweTech's machining work, equipment, and project gallery.")) {
+		<!-- Hero -->
+		<section class="relative min-h-[50vh] flex items-center overflow-hidden">
+			<div class="absolute inset-0">
+				<img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80" alt="Workshop" class="w-full h-full object-cover"/>
+				<div class="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/80"></div>
+			</div>
+			<div class="absolute inset-0 industrial-grid opacity-20"></div>
+			<div class="container-custom relative py-32 lg:py-40">
+				<span class="inline-flex items-center text-primary-400 font-medium tracking-wider uppercase text-sm mb-6">
+					<span class="w-12 h-px bg-primary-500 mr-4"></span>
+					Our Work
+				</span>
+				<h1 class="font-display text-5xl md:text-6xl lg:text-7xl text-white uppercase mb-6">Gallery</h1>
+				<p class="text-xl lg:text-2xl text-secondary-300 max-w-2xl leading-relaxed">
+					Examples of our precision machining, mold repair, and custom tooling projects.
+				</p>
+			</div>
+		</section>
+
+		<!-- Gallery Grid -->
+		<section class="py-24 lg:py-32 bg-secondary-950 relative overflow-hidden">
+			<div class="absolute inset-0 industrial-grid opacity-10"></div>
+			<div class="container-custom relative">
+				<!-- Category Filters -->
+				<div class="flex flex-wrap gap-3 mb-12 justify-center" id="gallery-filters">
+					<button class="gallery-filter active px-6 py-2 bg-primary-500 text-white font-semibold uppercase tracking-wider text-sm transition-colors" data-category="all">
+						All
+					</button>
+					for _, cat := range categories {
+						<button class="gallery-filter px-6 py-2 bg-secondary-800 text-secondary-300 font-semibold uppercase tracking-wider text-sm hover:bg-secondary-700 transition-colors" data-category={ cat }>
+							{ cat }
+						</button>
+					}
+				</div>
+
+				<!-- Gallery Items -->
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 xl:gap-6" id="gallery-grid">
+					for _, item := range items {
+						@galleryItem(item)
+					}
+				</div>
+
+				if len(items) == 0 {
+					<div class="text-center py-16">
+						<p class="text-secondary-400 text-lg">No gallery items yet. Check back soon!</p>
+					</div>
+				}
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="py-24 bg-secondary-900 relative">
+			<div class="container-custom text-center">
+				<h2 class="font-display text-4xl md:text-5xl text-white uppercase mb-6">Like What You See?</h2>
+				<p class="text-secondary-300 text-xl mb-8 max-w-2xl mx-auto">
+					Contact us to discuss your project. We'd love to add your work to our gallery.
+				</p>
+				<a href="/contact" class="btn-primary">Start Your Project</a>
+			</div>
+		</section>
+	}
+}
+
+templ galleryItem(item sqlc.GalleryItem) {
+	<div class="gallery-item group relative aspect-square overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-500 cursor-pointer"
+		 data-category={ item.Category }
+		 style="clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));">
+		<img src={ item.ImageUrl } alt={ item.Title } class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+		<div class="absolute inset-0 bg-gradient-to-t from-secondary-950 via-secondary-950/30 to-transparent opacity-80"></div>
+		<div class="absolute bottom-0 left-0 right-0 p-4">
+			<span class="text-primary-400 text-xs font-semibold uppercase tracking-wider">{ item.Category }</span>
+			<h3 class="font-display text-lg uppercase tracking-wide text-white mt-1">{ item.Title }</h3>
+		</div>
+	</div>
+}

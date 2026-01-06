@@ -1,0 +1,124 @@
+package pages
+
+import (
+	"rowetech/internal/meta"
+	"rowetech/templates/layouts"
+)
+
+templ Capabilities() {
+	@layouts.Base(meta.New("Capabilities", "Equipment, materials, and tolerances for RoweTech machining services.")) {
+		<!-- Hero -->
+		<section class="relative min-h-[50vh] flex items-center overflow-hidden">
+			<div class="absolute inset-0">
+				<img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=80" alt="CNC Equipment" class="w-full h-full object-cover"/>
+				<div class="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/95 to-secondary-950/80"></div>
+			</div>
+			<div class="absolute inset-0 industrial-grid opacity-20"></div>
+			<div class="container-custom relative py-32 lg:py-40">
+				<span class="inline-flex items-center text-primary-400 font-medium tracking-wider uppercase text-sm mb-6">
+					<span class="w-12 h-px bg-primary-500 mr-4"></span>
+					What We Can Do
+				</span>
+				<h1 class="font-display text-5xl md:text-6xl lg:text-7xl text-white uppercase mb-6">Capabilities</h1>
+				<p class="text-xl lg:text-2xl text-secondary-300 max-w-2xl leading-relaxed">
+					Modern CNC equipment and experienced machinists ready to tackle your most demanding projects.
+				</p>
+			</div>
+		</section>
+
+		<!-- Equipment -->
+		<section class="py-24 lg:py-32 bg-secondary-950 relative overflow-hidden">
+			<div class="absolute inset-0 industrial-grid opacity-10"></div>
+			<div class="container-custom relative">
+				<div class="text-center mb-16">
+					<span class="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Our Equipment</span>
+					<h2 class="section-heading mt-4">Machine Capabilities</h2>
+				</div>
+				<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+					@capabilityCard("CNC Milling", []string{"Vertical Machining Centers", "3-Axis Capability", "Multi-Axis Options"})
+					@capabilityCard("CNC Turning", []string{"CNC Lathes", "Live Tooling", "Mill-Turn Capability"})
+					@capabilityCard("Surface Finishing", []string{"Surface Grinding", "Polishing", "Mold Finishing"})
+					@capabilityCard("EDM", []string{"Wire EDM", "Sinker EDM", "Complex Cavity Machining"})
+				</div>
+			</div>
+		</section>
+
+		<!-- Materials -->
+		<section class="py-24 lg:py-32 bg-secondary-900 relative overflow-hidden">
+			<div class="absolute inset-0 industrial-grid opacity-10"></div>
+			<div class="container-custom relative">
+				<div class="text-center mb-16">
+					<span class="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Materials We Work With</span>
+					<h2 class="section-heading mt-4">Material Expertise</h2>
+				</div>
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					@materialCard("Tool Steels", []string{"P20", "H13", "S7", "A2", "D2", "O1", "420 SS"})
+					@materialCard("Stainless Steels", []string{"303", "304", "316", "17-4 PH"})
+					@materialCard("Aluminum", []string{"6061-T6", "7075-T6", "2024", "MIC-6"})
+					@materialCard("Other Metals", []string{"Brass", "Bronze", "Copper", "Mild Steel"})
+					@materialCard("Plastics", []string{"Delrin/Acetal", "UHMW", "Nylon", "PEEK", "Acrylic"})
+					@materialCard("File Formats", []string{"STEP (.stp, .step)", "IGES (.igs)", "SolidWorks", "Parasolid", "DXF/DWG", "PDF"})
+				</div>
+			</div>
+		</section>
+
+		<!-- Tolerances -->
+		<section class="py-24 lg:py-32 bg-secondary-950">
+			<div class="container-custom">
+				<div class="text-center mb-16">
+					<span class="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Precision Standards</span>
+					<h2 class="section-heading mt-4">Tolerances</h2>
+				</div>
+				<div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+					@toleranceCard("Standard", "±0.005\"", "Unless otherwise specified")
+					@toleranceCard("Precision", "±0.001\"", "Achievable on critical features")
+					@toleranceCard("Surface Finish", "Various", "Based on requirements")
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="py-24 bg-secondary-900 relative">
+			<div class="container-custom text-center">
+				<h2 class="font-display text-4xl md:text-5xl text-white uppercase mb-6">Have a Challenging Project?</h2>
+				<p class="text-secondary-300 text-xl mb-8 max-w-2xl mx-auto">
+					Send us your prints and specifications. We'll review your requirements and provide a quote.
+				</p>
+				<a href="/contact" class="btn-primary">Request a Quote</a>
+			</div>
+		</section>
+	}
+}
+
+templ capabilityCard(title string, items []string) {
+	<div class="p-8 bg-secondary-900/50 border border-secondary-800 hover:border-primary-500/30 transition-colors" style="clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));">
+		<h3 class="font-display text-xl uppercase tracking-wide text-white mb-6">{ title }</h3>
+		<ul class="space-y-3">
+			for _, item := range items {
+				<li class="flex items-center text-secondary-300">
+					<span class="w-2 h-2 bg-primary-500 rounded-full mr-3"></span>
+					{ item }
+				</li>
+			}
+		</ul>
+	</div>
+}
+
+templ materialCard(title string, items []string) {
+	<div class="p-6 bg-secondary-950/50 border border-secondary-800" style="clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));">
+		<h3 class="font-display text-lg uppercase tracking-wide text-primary-400 mb-4">{ title }</h3>
+		<div class="flex flex-wrap gap-2">
+			for _, item := range items {
+				<span class="px-3 py-1 bg-secondary-800 text-secondary-300 text-sm">{ item }</span>
+			}
+		</div>
+	</div>
+}
+
+templ toleranceCard(label, value, description string) {
+	<div class="text-center p-8 bg-secondary-900/50 border border-secondary-800" style="clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));">
+		<div class="font-display text-4xl text-primary-500 mb-2">{ value }</div>
+		<div class="font-display text-lg text-white uppercase tracking-wide mb-2">{ label }</div>
+		<p class="text-secondary-400 text-sm">{ description }</p>
+	</div>
+}

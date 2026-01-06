@@ -1,0 +1,88 @@
+package pages
+
+import (
+	"rowetech/internal/meta"
+	"rowetech/templates/layouts"
+)
+
+templ SignIn() {
+	@layouts.Base(meta.New("Sign In", "Sign in to your RoweTech account.")) {
+		<div class="min-h-screen flex items-center justify-center bg-secondary-950 pt-20">
+			<div class="container-custom py-16">
+				<div class="max-w-md mx-auto">
+					<div class="bg-secondary-900 border border-secondary-800 p-8" style="clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));">
+						<div class="text-center mb-8">
+							<h1 class="font-display text-3xl text-white uppercase mb-2">Sign In</h1>
+							<p class="text-secondary-400">Access your account</p>
+						</div>
+
+						<!-- Clerk SignIn component will be mounted here -->
+						<div id="clerk-sign-in" class="min-h-[400px] flex items-center justify-center">
+							<p class="text-secondary-400">Loading authentication...</p>
+						</div>
+
+						<div class="mt-6 text-center">
+							<p class="text-secondary-400 text-sm">
+								Don't have an account?
+								<a href="/sign-up" class="text-primary-400 hover:text-primary-300 ml-1">Sign up</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ SignUp() {
+	@layouts.Base(meta.New("Sign Up", "Create a RoweTech account.")) {
+		<div class="min-h-screen flex items-center justify-center bg-secondary-950 pt-20">
+			<div class="container-custom py-16">
+				<div class="max-w-md mx-auto">
+					<div class="bg-secondary-900 border border-secondary-800 p-8" style="clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));">
+						<div class="text-center mb-8">
+							<h1 class="font-display text-3xl text-white uppercase mb-2">Sign Up</h1>
+							<p class="text-secondary-400">Create your account</p>
+						</div>
+
+						<!-- Clerk SignUp component will be mounted here -->
+						<div id="clerk-sign-up" class="min-h-[400px] flex items-center justify-center">
+							<p class="text-secondary-400">Loading authentication...</p>
+						</div>
+
+						<div class="mt-6 text-center">
+							<p class="text-secondary-400 text-sm">
+								Already have an account?
+								<a href="/sign-in" class="text-primary-400 hover:text-primary-300 ml-1">Sign in</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ Unauthorized() {
+	@layouts.Base(meta.New("Access Denied", "You do not have permission to access this page.")) {
+		<div class="min-h-screen flex items-center justify-center bg-secondary-950 pt-20">
+			<div class="container-custom py-16">
+				<div class="max-w-lg mx-auto text-center">
+					<div class="w-20 h-20 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center mx-auto mb-6">
+						<svg class="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+						</svg>
+					</div>
+					<h1 class="font-display text-4xl text-white uppercase mb-4">Access Denied</h1>
+					<p class="text-secondary-300 text-lg mb-8">
+						You don't have permission to access this page. Please sign in with an authorized account.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 justify-center">
+						<a href="/sign-in" class="btn-primary">Sign In</a>
+						<a href="/" class="btn-outline">Go Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
