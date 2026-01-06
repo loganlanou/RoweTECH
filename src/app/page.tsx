@@ -66,6 +66,13 @@ export default function Home() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/90 to-secondary-950/70" />
+        <div
+          className="absolute inset-0 opacity-60 mix-blend-screen animate-ambient-pan"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 20% 20%, rgba(198,93,89,0.14), transparent 32%), radial-gradient(circle at 80% 12%, rgba(117,122,120,0.14), transparent 28%), radial-gradient(circle at 30% 78%, rgba(198,93,89,0.08), transparent 30%)',
+          }}
+        />
 
         {/* Industrial grid overlay */}
         <div className="absolute inset-0 industrial-grid opacity-30" />
@@ -82,7 +89,7 @@ export default function Home() {
             <FadeInUp>
               <div className="inline-flex items-center px-4 py-2 mb-8 border-l-4 border-primary-500 bg-secondary-900/50 backdrop-blur-sm">
                 <span className="w-2 h-2 bg-primary-500 rounded-full mr-3 animate-pulse" />
-                <span className="text-primary-400 text-sm font-semibold tracking-[0.2em] uppercase">
+                <span className="text-primary-400 text-sm font-semibold tracking-[0.25em] uppercase">
                   Wisconsin Precision Manufacturing
                 </span>
               </div>
@@ -90,14 +97,14 @@ export default function Home() {
 
             {/* Display heading */}
             <FadeInUp delay={0.1}>
-              <h1 className="mb-8">
-                <span className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-white uppercase tracking-wide block">
+              <h1 className="mb-10">
+                <span className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] text-white uppercase tracking-tight block leading-[0.95]">
                   Industrial
                 </span>
-                <span className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-primary-500 uppercase tracking-wide block">
+                <span className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] text-primary-500 uppercase tracking-tight block leading-[0.95]">
                   Precision
                 </span>
-                <span className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-secondary-400 uppercase tracking-wide block mt-2">
+                <span className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-secondary-300 uppercase tracking-[0.25em] block mt-4">
                   Engineered Excellence
                 </span>
               </h1>
@@ -105,7 +112,7 @@ export default function Home() {
 
             {/* Subheading */}
             <FadeInUp delay={0.2}>
-              <p className="text-xl md:text-2xl xl:text-3xl text-secondary-300 max-w-2xl xl:max-w-3xl mb-10 border-l-2 border-secondary-700 pl-6">
+              <p className="text-2xl md:text-3xl xl:text-4xl text-secondary-200 max-w-3xl xl:max-w-4xl mb-12 border-l-2 border-secondary-700 pl-6 leading-relaxed">
                 Mold repair, custom fixtures, EOAT tooling, and CNC machining
                 for manufacturers who demand precision and reliability.
               </p>
@@ -113,16 +120,16 @@ export default function Home() {
 
             {/* CTAs */}
             <FadeInUp delay={0.3}>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/contact" className="btn-primary">
+              <div className="flex flex-wrap gap-5">
+                <Link href="/contact" className="btn-primary text-lg md:text-xl px-10 py-5">
                   <span className="flex items-center">
                     Request Quote
-                    <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="ml-3 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </span>
                 </Link>
-                <a href="tel:+17152023631" className="btn-outline">
+                <a href="tel:+17152023631" className="btn-outline text-lg md:text-xl px-10 py-5">
                   <svg className="mr-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>

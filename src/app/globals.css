@@ -237,7 +237,7 @@
 
   /* Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-primary-500 to-primary-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-400 via-primary-300 to-white bg-clip-text text-transparent;
   }
 
   /* Glass effect */
@@ -277,6 +277,20 @@
   .image-overlay::after {
     content: '';
     @apply absolute inset-0 bg-gradient-to-t from-secondary-950 via-secondary-950/50 to-transparent;
+  }
+
+  /* Motion helpers */
+  .animate-fade-up {
+    animation: fadeUp 0.9s ease-out forwards;
+  }
+
+  .animate-glow-soft {
+    animation: glowSoft 6s ease-in-out infinite;
+  }
+
+  .animate-ambient-pan {
+    background-size: 200% 200%;
+    animation: ambientPan 18s ease-in-out infinite;
   }
 
   /* ================================
@@ -348,7 +362,7 @@
      NAVIGATION
      ================================ */
   .nav-link {
-    @apply relative text-secondary-300 font-medium uppercase tracking-wider text-sm
+    @apply relative text-secondary-200 font-semibold uppercase tracking-[0.18em] text-base
            transition-colors duration-300 hover:text-white;
   }
 
@@ -393,6 +407,22 @@
   100% { width: 100%; }
 }
 
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowSoft {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.05); }
+}
+
+@keyframes ambientPan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -403,6 +433,19 @@
 
 .animate-shine {
   animation: shine 3s infinite;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.9s ease-out forwards;
+}
+
+.animate-glow-soft {
+  animation: glowSoft 6s ease-in-out infinite;
+}
+
+.animate-ambient-pan {
+  background-size: 200% 200%;
+  animation: ambientPan 18s ease-in-out infinite;
 }
 
 /* Reduce motion for accessibility */

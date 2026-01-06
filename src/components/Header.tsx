@@ -65,12 +65,12 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-2 3xl:space-x-3">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="nav-link px-4 py-2"
+                className="nav-link px-5 py-3 3xl:px-6 3xl:py-4 text-base 3xl:text-xl tracking-wide"
               >
                 {item.name}
               </Link>
