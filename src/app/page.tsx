@@ -84,7 +84,7 @@ export default function Home() {
 
         {/* Content */}
         <div className="container-custom relative z-10 pt-32 pb-40">
-          <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl">
+          <div className="max-w-none">
             {/* Badge */}
             <FadeInUp>
               <div className="inline-flex items-center px-4 py-2 mb-8 border-l-4 border-primary-500 bg-secondary-900/50 backdrop-blur-sm">
@@ -112,7 +112,7 @@ export default function Home() {
 
             {/* Subheading */}
             <FadeInUp delay={0.2}>
-              <p className="text-2xl md:text-3xl xl:text-4xl text-secondary-200 max-w-3xl xl:max-w-4xl mb-12 border-l-2 border-secondary-700 pl-6 leading-relaxed">
+              <p className="text-2xl md:text-3xl xl:text-4xl text-secondary-200 max-w-4xl 2xl:max-w-5xl mb-12 border-l-2 border-secondary-700 pl-6 leading-relaxed">
                 Mold repair, custom fixtures, EOAT tooling, and CNC machining
                 for manufacturers who demand precision and reliability.
               </p>
@@ -142,8 +142,8 @@ export default function Home() {
 
         {/* Stats bar at bottom */}
         <div className="absolute bottom-0 left-0 right-0 bg-secondary-950/90 backdrop-blur-md border-t border-secondary-800 z-20">
-          <div className="container-custom py-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="container-custom py-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16 xl:gap-24">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="font-display text-3xl md:text-4xl text-primary-500 uppercase">{stat.value}</div>
