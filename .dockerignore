@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+tmp/
+*.log
+rowetech
+
+# Database
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Environment
+.env
+.env.local
+.envrc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Generated files (will be regenerated in build)
+*_templ.go
+internal/database/sqlc/
+static/css/output.css

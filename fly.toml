@@ -1,0 +1,28 @@
+# fly.toml - Fly.io configuration
+# Deploy with: fly launch (first time) or fly deploy
+
+app = "rowetech"
+primary_region = "ord"  # Chicago - close to Wisconsin
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  ENV = "production"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[mounts]
+  source = "rowetech_data"
+  destination = "/app/data"
