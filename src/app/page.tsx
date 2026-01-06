@@ -1,345 +1,328 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import HeroCarousel from '@/components/HeroCarousel'
+import { FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from '@/components/AnimatedSection'
 
 const services = [
   {
-    title: 'Plastic Injection Mold Repair',
-    description: 'Expert repair and maintenance of plastic injection molds to keep your production running smoothly.',
-    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
+    title: 'Mold Repair',
+    description: 'Expert plastic injection mold repair and maintenance to minimize downtime.',
+    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80',
     href: '/services#mold-repair',
   },
   {
-    title: 'Custom Fixtures & EOAT',
-    description: 'Precision-engineered workholding fixtures and end-of-arm tooling for automation systems.',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
+    title: 'Custom Fixtures',
+    description: 'Precision-engineered workholding fixtures for your production needs.',
+    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
     href: '/services#fixtures',
   },
   {
-    title: 'CNC Machining Services',
-    description: 'High-precision CNC milling and turning for prototypes and production runs.',
+    title: 'EOAT Tooling',
+    description: 'End-of-arm tooling designed for automation and robotics systems.',
+    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+    href: '/services#eoat',
+  },
+  {
+    title: 'CNC Machining',
+    description: 'High-precision CNC milling and turning for complex parts.',
     image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80',
     href: '/services#cnc',
-  },
-  {
-    title: 'Fast Turnaround',
-    description: 'Wisconsin-based shop offering quick lead times and responsive customer service.',
-    image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
-    href: '/contact',
-  },
-]
-
-const machineGallery = [
-  {
-    title: 'CNC Milling',
-    description: 'Precision 3-axis and 5-axis CNC milling for complex parts',
-    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
-  },
-  {
-    title: 'Laser Cutting',
-    description: 'High-precision laser cutting and engraving services',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-  },
-  {
-    title: 'Welding & Fabrication',
-    description: 'Professional welding and metal fabrication',
-    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80',
-  },
-  {
-    title: '3D Printing',
-    description: 'Rapid prototyping with industrial 3D printing',
-    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=800&q=80',
-  },
-  {
-    title: 'CNC Turning',
-    description: 'Precision lathe work for cylindrical components',
-    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
-  },
-  {
-    title: 'Plasma Cutting',
-    description: 'Heavy-duty plasma cutting for thick materials',
-    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80',
   },
 ]
 
 const stats = [
-  { value: 'WI', label: 'Based in Wisconsin' },
-  { value: 'CNC', label: 'Precision Machining' },
-  { value: '24/7', label: 'Quote Requests' },
-  { value: 'M-F', label: '7AM - 5PM' },
+  { value: '15+', label: 'Years Experience' },
+  { value: '500+', label: 'Projects Completed' },
+  { value: '48hr', label: 'Quote Response' },
+  { value: '100%', label: 'Quality Focused' },
 ]
 
 const capabilities = [
-  'CNC Milling & Turning',
-  'Wire & Sinker EDM',
-  'Surface Grinding',
-  'Mold Repair & Maintenance',
-  'Custom Fixture Design',
-  'EOAT Manufacturing',
+  { name: 'CNC Milling', icon: '⚙️' },
+  { name: 'CNC Turning', icon: '🔧' },
+  { name: 'Wire EDM', icon: '⚡' },
+  { name: 'Surface Grinding', icon: '✨' },
+  { name: 'Mold Repair', icon: '🔩' },
+  { name: 'EOAT Design', icon: '🤖' },
+]
+
+const galleryImages = [
+  { src: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80', title: 'CNC Milling' },
+  { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80', title: 'Laser Cutting' },
+  { src: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80', title: 'Welding' },
 ]
 
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-secondary-950 via-secondary-900 to-secondary-800 text-white">
-        {/* Cycling Background Images */}
-        <HeroCarousel />
+      {/* Hero Section - Bold Industrial */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-secondary-950" />
+        <Image
+          src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
+          alt="Industrial manufacturing"
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary-950 via-secondary-950/90 to-secondary-950/70" />
 
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary-950/80 via-secondary-900/70 to-secondary-800/50 z-10"></div>
-        <div className="absolute inset-0 tech-lines opacity-20 z-10"></div>
-        <div className="absolute inset-y-0 right-10 w-px bg-gradient-to-b from-transparent via-primary-400/40 to-transparent blur-sm z-10"></div>
+        {/* Industrial grid overlay */}
+        <div className="absolute inset-0 industrial-grid opacity-30" />
 
-        <div className="container-custom relative z-20 pt-20 2xl:pt-32 3xl:pt-40">
-          <div className="grid lg:grid-cols-2 gap-12 2xl:gap-20 3xl:gap-28 items-center">
-            <div className="max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl">
-              <div className="inline-flex items-center px-4 py-2 3xl:px-6 3xl:py-3 rounded-full bg-primary-500/10 border border-primary-500/20 mb-6 3xl:mb-8">
-                <span className="w-2 h-2 3xl:w-3 3xl:h-3 bg-primary-500 rounded-full mr-2 3xl:mr-3 animate-pulse"></span>
-                <span className="text-primary-400 text-sm 3xl:text-base font-medium">Precision Manufacturing in Wisconsin</span>
+        {/* Diagonal accent lines */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-primary-500/50 via-primary-500/20 to-transparent" />
+        <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary-500/10 to-primary-500/30" />
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-primary-500/30 via-transparent to-primary-500/20" />
+
+        {/* Content */}
+        <div className="container-custom relative z-10 pt-32 pb-40">
+          <div className="max-w-4xl">
+            {/* Badge */}
+            <FadeInUp>
+              <div className="inline-flex items-center px-4 py-2 mb-8 border-l-4 border-primary-500 bg-secondary-900/50 backdrop-blur-sm">
+                <span className="w-2 h-2 bg-primary-500 rounded-full mr-3 animate-pulse" />
+                <span className="text-primary-400 text-sm font-semibold tracking-[0.2em] uppercase">
+                  Wisconsin Precision Manufacturing
+                </span>
               </div>
+            </FadeInUp>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold leading-tight mb-6 2xl:mb-8 3xl:mb-10">
-                <span className="text-white drop-shadow-md">Precision Machining &</span>
-                <br />
-                <span className="gradient-text drop-shadow-md">Mold Repair Excellence</span>
+            {/* Display heading */}
+            <FadeInUp delay={0.1}>
+              <h1 className="mb-8">
+                <span className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white uppercase tracking-wide block">
+                  Industrial
+                </span>
+                <span className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-primary-500 uppercase tracking-wide block">
+                  Precision
+                </span>
+                <span className="font-display text-3xl md:text-4xl lg:text-5xl text-secondary-400 uppercase tracking-wide block mt-2">
+                  Engineered Excellence
+                </span>
               </h1>
+            </FadeInUp>
 
-              <p className="text-lg md:text-xl 2xl:text-2xl 3xl:text-3xl text-secondary-100 mb-8 3xl:mb-12 leading-relaxed">
-                RoweTech Machine & Engineering provides plastic injection mold repair, custom
-                fixtures, EOAT tooling, and CNC machining for manufacturers across Wisconsin.
+            {/* Subheading */}
+            <FadeInUp delay={0.2}>
+              <p className="text-xl md:text-2xl text-secondary-300 max-w-2xl mb-10 border-l-2 border-secondary-700 pl-6">
+                Mold repair, custom fixtures, EOAT tooling, and CNC machining
+                for manufacturers who demand precision and reliability.
               </p>
+            </FadeInUp>
 
-              <div className="flex flex-col sm:flex-row gap-4 3xl:gap-6 mb-12 3xl:mb-16">
-                <Link href="/contact" className="btn-primary text-lg px-8 py-4">
-                  Request a Quote
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
+            {/* CTAs */}
+            <FadeInUp delay={0.3}>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact" className="btn-primary">
+                  <span className="flex items-center">
+                    Request Quote
+                    <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
                 </Link>
-                <a
-                  href="tel:+17152023631"
-                  className="btn-secondary text-lg px-8 py-4"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                <a href="tel:+17152023631" className="btn-outline">
+                  <svg className="mr-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   (715) 202-3631
                 </a>
               </div>
+            </FadeInUp>
+          </div>
+        </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 3xl:gap-6">
-                {stats.map((stat, index) => (
-                  <div
-                    key={index}
-                    className="text-center p-4 3xl:p-6 rounded-lg 3xl:rounded-xl bg-secondary-900/80 border border-secondary-700/60 shadow-lg shadow-black/20"
-                  >
-                    <p className="text-2xl 3xl:text-3xl font-bold text-primary-300">{stat.value}</p>
-                    <p className="text-xs 3xl:text-sm text-secondary-200 mt-1">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Hero Image Card */}
-            <div className="hidden lg:block">
-              <div className="relative">
-                <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
-                <div className="relative rounded-2xl overflow-hidden border border-white/30 shadow-2xl 2xl:rounded-3xl 3xl:rounded-[2rem]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80"
-                    alt="Precision machining"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto 2xl:min-h-[500px] 3xl:min-h-[600px] object-cover"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-secondary-600 to-transparent p-6 3xl:p-8">
-                    <p className="text-white font-semibold 3xl:text-lg">Precision CNC Machining</p>
-                    <p className="text-secondary-200 text-sm 3xl:text-base">Cadott, Wisconsin</p>
-                  </div>
+        {/* Stats bar at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 bg-secondary-950/90 backdrop-blur-md border-t border-secondary-800 z-20">
+          <div className="container-custom py-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="font-display text-3xl md:text-4xl text-primary-500 uppercase">{stat.value}</div>
+                  <div className="text-sm text-secondary-400 uppercase tracking-wider mt-1">{stat.label}</div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-20">
-          <svg className="w-6 h-6 text-secondary-500" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+        {/* Scroll indicator */}
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 animate-bounce z-20">
+          <svg className="w-6 h-6 text-secondary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 relative bg-gradient-to-b from-secondary-900 via-secondary-950 to-secondary-900 text-white">
-        <div className="absolute inset-0 tech-lines opacity-10"></div>
-        <div className="container-custom relative">
-          <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">What We Do</span>
-            <h2 className="section-heading mt-2 text-white">Our Services</h2>
-            <p className="section-subheading mx-auto text-secondary-200">
-              Comprehensive machining and tooling solutions for plastic injection molding and
-              manufacturing operations.
-            </p>
-          </div>
+      <section className="section-darker py-24 md:py-32">
+        <div className="container-custom">
+          <FadeInUp>
+            <div className="text-center mb-16">
+              <span className="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">What We Do</span>
+              <h2 className="section-heading mt-4">Our Services</h2>
+              <p className="section-subheading mx-auto mt-4">
+                Comprehensive machining and tooling solutions for plastic injection molding and manufacturing.
+              </p>
+            </div>
+          </FadeInUp>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8 3xl:gap-10">
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <Link key={index} href={service.href} className="group">
-                <div className="service-card h-full shadow-xl shadow-black/30">
-                  <div className="relative h-48 2xl:h-56 3xl:h-64 overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/85 via-secondary-900/40 to-transparent"></div>
+              <StaggerItem key={index}>
+                <Link href={service.href} className="group block h-full">
+                  <div className="service-card h-full">
+                    <div className="relative h-56 overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="service-card-image"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-secondary-950 via-secondary-950/50 to-transparent" />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 bg-primary-500/90 text-white text-xs font-bold uppercase tracking-wider">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="service-card-content">
+                      <h3 className="font-display text-xl uppercase tracking-wide text-white mb-3 group-hover:text-primary-400 transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="text-secondary-400 text-sm leading-relaxed">{service.description}</p>
+                      <div className="mt-4 flex items-center text-primary-400 text-sm font-semibold uppercase tracking-wider">
+                        Learn More
+                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-6 2xl:p-8 3xl:p-10">
-                    <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3 group-hover:text-primary-400 transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">{service.description}</p>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
-          <div className="text-center mt-12">
+          <FadeInUp className="text-center mt-12">
             <Link href="/services" className="btn-outline">
               View All Services
-              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
             </Link>
-          </div>
+          </FadeInUp>
         </div>
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full">
+      <section className="py-24 md:py-32 bg-secondary-950 relative overflow-hidden">
+        {/* Background accent */}
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
           <Image
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80"
-            alt="Industrial manufacturing"
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1200&q=80"
+            alt=""
             fill
-            className="object-cover opacity-10"
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary-50 to-transparent"></div>
         </div>
+        <div className="absolute inset-0 industrial-grid opacity-20" />
 
         <div className="container-custom relative">
-          <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
-            <div>
-              <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Why Choose Us</span>
-              <h2 className="section-heading mt-2">Precision You Can Trust</h2>
-              <p className="section-subheading mb-8 3xl:mb-10">
-                We combine precision machining expertise with responsive customer service to deliver
-                quality tooling solutions on time.
-              </p>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <SlideInLeft>
+              <div>
+                <span className="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Why Choose Us</span>
+                <h2 className="section-heading mt-4">Precision You Can Trust</h2>
+                <p className="section-subheading mt-4 mb-10">
+                  Combining precision machining expertise with responsive service to deliver quality tooling solutions on time.
+                </p>
 
-              <div className="space-y-6 2xl:space-y-8 3xl:space-y-10">
-                {[
-                  {
-                    title: 'Local Wisconsin Shop',
-                    description: 'Quick lead times and easy communication with a shop right here in the Midwest.',
-                  },
-                  {
-                    title: 'Experienced Team',
-                    description: 'Deep expertise in plastic injection tooling and precision machining.',
-                  },
-                  {
-                    title: 'Modern CNC Equipment',
-                    description: 'State-of-the-art machinery and skilled programming for complex geometries.',
-                  },
-                  {
-                    title: 'Flexible & Responsive',
-                    description: 'From prototypes to production runs, we adapt to your needs.',
-                  },
-                ].map((benefit, index) => (
-                  <div key={index} className="feature-highlight">
-                    <h3 className="font-semibold text-secondary-600 mb-1 2xl:text-lg 3xl:text-xl">{benefit.title}</h3>
-                    <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{benefit.description}</p>
-                  </div>
-                ))}
-              </div>
-
-              <Link href="/about" className="btn-primary mt-8 3xl:mt-12 inline-flex">
-                Learn More About Us
-              </Link>
-            </div>
-
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-4 2xl:gap-6 3xl:gap-8">
-                <div className="space-y-4 2xl:space-y-6 3xl:space-y-8">
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
-                    <Image
-                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
-                      alt="CNC Machine"
-                      width={300}
-                      height={400}
-                      className="w-full h-auto"
-                    />
-                  </div>
-                  <div className="stat-card 2xl:p-8 3xl:p-10">
-                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-500">CNC</p>
-                    <p className="text-sm 2xl:text-base 3xl:text-lg text-secondary-400 mt-1">Precision Machining</p>
-                  </div>
+                <div className="space-y-6">
+                  {[
+                    { title: 'Local Wisconsin Shop', desc: 'Quick lead times and easy communication.' },
+                    { title: 'Experienced Team', desc: 'Deep expertise in plastic injection tooling.' },
+                    { title: 'Modern Equipment', desc: 'State-of-the-art CNC machinery.' },
+                    { title: 'Flexible & Responsive', desc: 'Prototypes to production runs.' },
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center flex-shrink-0"
+                           style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}>
+                        <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-display text-lg uppercase tracking-wide text-white">{item.title}</h3>
+                        <p className="text-secondary-400 text-sm mt-1">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="space-y-4 2xl:space-y-6 3xl:space-y-8 pt-8 3xl:pt-12">
-                  <div className="stat-card 2xl:p-8 3xl:p-10">
-                    <p className="text-3xl 2xl:text-4xl 3xl:text-5xl font-bold text-primary-500">24/7</p>
-                    <p className="text-sm 2xl:text-base 3xl:text-lg text-secondary-400 mt-1">Quote Requests</p>
-                  </div>
-                  <div className="rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg">
-                    <Image
-                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
-                      alt="Manufacturing"
-                      width={300}
-                      height={400}
-                      className="w-full h-auto"
-                    />
+
+                <Link href="/about" className="btn-primary mt-10 inline-flex">
+                  Learn More About Us
+                </Link>
+              </div>
+            </SlideInLeft>
+
+            <SlideInRight>
+              <div className="relative">
+                <div className="absolute -inset-4 bg-primary-500/20 blur-3xl" />
+                <div className="relative overflow-hidden border border-secondary-800"
+                     style={{ clipPath: 'polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 40px 100%, 0 calc(100% - 40px))' }}>
+                  <Image
+                    src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80"
+                    alt="CNC Machining"
+                    width={600}
+                    height={500}
+                    className="w-full h-auto"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-950 via-transparent to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="bg-secondary-900/90 backdrop-blur-sm border border-secondary-800 p-4"
+                         style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
+                      <p className="font-display text-lg uppercase tracking-wide text-white">Precision CNC Machining</p>
+                      <p className="text-secondary-400 text-sm">Cadott, Wisconsin</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </SlideInRight>
           </div>
         </div>
       </section>
 
-      {/* Capabilities Preview */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-white relative">
+      {/* Capabilities Section */}
+      <section className="section-darker py-24 md:py-32">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 2xl:gap-24 3xl:gap-32 items-center">
-            <div className="relative order-2 lg:order-1">
-              <div className="absolute -inset-4 3xl:-inset-6 bg-gradient-to-r from-primary-500/10 to-transparent rounded-2xl 3xl:rounded-3xl blur-2xl"></div>
-              <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-200 shadow-lg">
-                <Image
-                  src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80"
-                  alt="CNC Machining capabilities"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                />
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <FadeInUp className="order-2 lg:order-1">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-primary-500/10 blur-3xl" />
+                <div className="relative overflow-hidden border border-secondary-800"
+                     style={{ clipPath: 'polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)' }}>
+                  <Image
+                    src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80"
+                    alt="Manufacturing capabilities"
+                    width={600}
+                    height={500}
+                    className="w-full h-auto"
+                  />
+                </div>
               </div>
-            </div>
+            </FadeInUp>
 
-            <div className="order-1 lg:order-2">
-              <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Capabilities</span>
-              <h2 className="section-heading mt-2">Advanced Manufacturing</h2>
-              <p className="section-subheading mb-8 3xl:mb-10">
-                Equipped with modern CNC machinery and experienced operators to handle your most demanding projects.
+            <FadeInUp delay={0.2} className="order-1 lg:order-2">
+              <span className="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Our Capabilities</span>
+              <h2 className="section-heading mt-4">Advanced Manufacturing</h2>
+              <p className="section-subheading mt-4 mb-10">
+                Equipped with modern CNC machinery to handle your most demanding projects.
               </p>
 
-              <div className="grid sm:grid-cols-2 gap-4 2xl:gap-5 3xl:gap-6 mb-8 3xl:mb-10">
-                {capabilities.map((capability, index) => (
-                  <div key={index} className="flex items-center space-x-3 3xl:space-x-4 p-3 2xl:p-4 3xl:p-5 rounded-lg 3xl:rounded-xl bg-secondary-100 border border-secondary-200">
-                    <div className="w-2 h-2 3xl:w-3 3xl:h-3 bg-primary-500 rounded-full"></div>
-                    <span className="text-secondary-500 2xl:text-lg 3xl:text-xl">{capability}</span>
+              <div className="grid grid-cols-2 gap-4 mb-10">
+                {capabilities.map((cap, index) => (
+                  <div key={index} className="stat-card flex items-center space-x-4">
+                    <span className="text-2xl">{cap.icon}</span>
+                    <span className="text-white font-medium">{cap.name}</span>
                   </div>
                 ))}
               </div>
@@ -347,102 +330,82 @@ export default function Home() {
               <Link href="/capabilities" className="btn-outline">
                 View Full Capabilities
               </Link>
-            </div>
+            </FadeInUp>
           </div>
         </div>
       </section>
 
-      {/* Machine Gallery Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-gradient-to-br from-secondary-950 via-secondary-900 to-secondary-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 tech-lines opacity-10"></div>
+      {/* Gallery Preview */}
+      <section className="py-24 md:py-32 bg-secondary-950 relative overflow-hidden">
+        <div className="absolute inset-0 diamond-plate opacity-20" />
+
         <div className="container-custom relative">
-          <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Equipment</span>
-            <h2 className="section-heading mt-2 text-white">State-of-the-Art Machinery</h2>
-            <p className="section-subheading mx-auto text-secondary-200">
-              From CNC machining to laser cutting and 3D printing, we have the equipment to handle any project.
-            </p>
-          </div>
-
-          {/* Featured Image */}
-          <div className="mb-12 2xl:mb-16 3xl:mb-20">
-            <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-700/60 shadow-xl shadow-black/30 aspect-video max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto group">
-              <Image
-                src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
-                alt="CNC Precision Machining"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary-950/85 via-secondary-900/30 to-transparent"></div>
-              <div className="absolute bottom-6 left-6 2xl:bottom-10 2xl:left-10 3xl:bottom-12 3xl:left-12">
-                <p className="text-white font-semibold text-lg 2xl:text-2xl 3xl:text-3xl">Precision Manufacturing</p>
-                <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">Expert craftsmanship in every project</p>
-              </div>
+          <FadeInUp>
+            <div className="text-center mb-16">
+              <span className="text-primary-400 font-semibold tracking-[0.2em] uppercase text-sm">Our Work</span>
+              <h2 className="section-heading mt-4">Project Gallery</h2>
             </div>
-          </div>
+          </FadeInUp>
 
-          {/* Image Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-8 3xl:gap-10">
-            {machineGallery.map((item, index) => (
-              <div key={index} className="group relative rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-700/60 shadow-lg shadow-black/25 aspect-[4/3]">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary-950/80 via-secondary-800/30 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 2xl:bottom-6 2xl:left-6 3xl:bottom-8 3xl:left-8">
-                  <h3 className="text-white font-semibold 2xl:text-lg 3xl:text-xl">{item.title}</h3>
-                  <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">{item.description}</p>
+          <StaggerContainer className="grid md:grid-cols-3 gap-6">
+            {galleryImages.map((img, index) => (
+              <StaggerItem key={index}>
+                <div className="group relative aspect-[4/3] overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-500"
+                     style={{ clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))' }}>
+                  <Image
+                    src={img.src}
+                    alt={img.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary-950 via-secondary-950/30 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <p className="font-display text-lg uppercase tracking-wide text-white">{img.title}</p>
+                  </div>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
-          <div className="text-center mt-12">
+          <FadeInUp className="text-center mt-12">
             <Link href="/gallery" className="btn-outline">
               View Full Gallery
-              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
             </Link>
-          </div>
+          </FadeInUp>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 relative overflow-hidden">
+      <section className="py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80"
-            alt="Manufacturing background"
+            src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
+            alt=""
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-secondary-600/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-secondary-600/50"></div>
+          <div className="absolute inset-0 bg-secondary-950/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-transparent" />
         </div>
+        <div className="absolute inset-0 caution-stripes opacity-30" />
 
         <div className="container-custom relative text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl font-bold text-white mb-6 2xl:mb-8 3xl:mb-10">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-secondary-200 text-lg 2xl:text-xl 3xl:text-2xl mb-10 3xl:mb-12 max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto">
-            Contact us today for a quote on mold repair, custom fixtures, EOAT, or CNC machining
-            services. Our team is ready to help bring your project to life.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 2xl:gap-6 3xl:gap-8 justify-center">
-            <Link href="/contact" className="btn-primary text-lg 2xl:text-xl 3xl:text-2xl px-10 py-4 2xl:px-12 2xl:py-5 3xl:px-14 3xl:py-6">
-              Request a Quote
-            </Link>
-            <a
-              href="tel:+17152023631"
-              className="btn-outline text-lg 2xl:text-xl 3xl:text-2xl px-10 py-4 2xl:px-12 2xl:py-5 3xl:px-14 3xl:py-6"
-            >
-              Call (715) 202-3631
-            </a>
-          </div>
+          <FadeInUp>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-wide mb-6">
+              Ready to Start?
+            </h2>
+            <p className="text-secondary-300 text-xl max-w-2xl mx-auto mb-10">
+              Contact us today for a quote on mold repair, custom fixtures, EOAT, or CNC machining services.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact" className="btn-primary text-lg">
+                Request a Quote
+              </Link>
+              <a href="tel:+17152023631" className="btn-outline text-lg">
+                Call (715) 202-3631
+              </a>
+            </div>
+          </FadeInUp>
         </div>
       </section>
     </>
