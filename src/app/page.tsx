@@ -82,12 +82,14 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-secondary-950 via-secondary-900 to-secondary-800 text-white">
         {/* Cycling Background Images */}
         <HeroCarousel />
 
         {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 tech-lines opacity-30 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary-950/80 via-secondary-900/70 to-secondary-800/50 z-10"></div>
+        <div className="absolute inset-0 tech-lines opacity-20 z-10"></div>
+        <div className="absolute inset-y-0 right-10 w-px bg-gradient-to-b from-transparent via-primary-400/40 to-transparent blur-sm z-10"></div>
 
         <div className="container-custom relative z-20 pt-20 2xl:pt-32 3xl:pt-40">
           <div className="grid lg:grid-cols-2 gap-12 2xl:gap-20 3xl:gap-28 items-center">
@@ -129,9 +131,12 @@ export default function Home() {
               {/* Quick Stats */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 3xl:gap-6">
                 {stats.map((stat, index) => (
-                  <div key={index} className="text-center p-4 3xl:p-6 rounded-lg 3xl:rounded-xl bg-white/20 backdrop-blur-sm border border-white/30">
-                    <p className="text-2xl 3xl:text-3xl font-bold text-primary-400">{stat.value}</p>
-                    <p className="text-xs 3xl:text-sm text-secondary-100 mt-1">{stat.label}</p>
+                  <div
+                    key={index}
+                    className="text-center p-4 3xl:p-6 rounded-lg 3xl:rounded-xl bg-secondary-900/80 border border-secondary-700/60 shadow-lg shadow-black/20"
+                  >
+                    <p className="text-2xl 3xl:text-3xl font-bold text-primary-300">{stat.value}</p>
+                    <p className="text-xs 3xl:text-sm text-secondary-200 mt-1">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -168,13 +173,13 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100 relative">
+      <section className="py-24 2xl:py-32 3xl:py-40 relative bg-gradient-to-b from-secondary-900 via-secondary-950 to-secondary-900 text-white">
         <div className="absolute inset-0 tech-lines opacity-10"></div>
         <div className="container-custom relative">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">What We Do</span>
-            <h2 className="section-heading mt-2">Our Services</h2>
-            <p className="section-subheading mx-auto">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">What We Do</span>
+            <h2 className="section-heading mt-2 text-white">Our Services</h2>
+            <p className="section-subheading mx-auto text-secondary-200">
               Comprehensive machining and tooling solutions for plastic injection molding and
               manufacturing operations.
             </p>
@@ -183,7 +188,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8 3xl:gap-10">
             {services.map((service, index) => (
               <Link key={index} href={service.href} className="group">
-                <div className="service-card h-full">
+                <div className="service-card h-full shadow-xl shadow-black/30">
                   <div className="relative h-48 2xl:h-56 3xl:h-64 overflow-hidden">
                     <Image
                       src={service.image}
@@ -191,13 +196,13 @@ export default function Home() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-secondary-600/30 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/85 via-secondary-900/40 to-transparent"></div>
                   </div>
                   <div className="p-6 2xl:p-8 3xl:p-10">
-                    <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-secondary-600 mb-2 3xl:mb-3 group-hover:text-primary-500 transition-colors">
+                    <h3 className="text-lg 2xl:text-xl 3xl:text-2xl font-semibold text-white mb-2 3xl:mb-3 group-hover:text-primary-400 transition-colors">
                       {service.title}
                     </h3>
-                    <p className="text-secondary-400 text-sm 2xl:text-base 3xl:text-lg">{service.description}</p>
+                    <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">{service.description}</p>
                   </div>
                 </div>
               </Link>
@@ -348,26 +353,27 @@ export default function Home() {
       </section>
 
       {/* Machine Gallery Section */}
-      <section className="py-24 2xl:py-32 3xl:py-40 bg-secondary-100">
-        <div className="container-custom">
+      <section className="py-24 2xl:py-32 3xl:py-40 bg-gradient-to-br from-secondary-950 via-secondary-900 to-secondary-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 tech-lines opacity-10"></div>
+        <div className="container-custom relative">
           <div className="text-center mb-16 2xl:mb-20 3xl:mb-24">
-            <span className="text-primary-500 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Equipment</span>
-            <h2 className="section-heading mt-2">State-of-the-Art Machinery</h2>
-            <p className="section-subheading mx-auto">
+            <span className="text-primary-400 font-medium tracking-wider uppercase text-sm 2xl:text-base 3xl:text-lg">Our Equipment</span>
+            <h2 className="section-heading mt-2 text-white">State-of-the-Art Machinery</h2>
+            <p className="section-subheading mx-auto text-secondary-200">
               From CNC machining to laser cutting and 3D printing, we have the equipment to handle any project.
             </p>
           </div>
 
           {/* Featured Image */}
           <div className="mb-12 2xl:mb-16 3xl:mb-20">
-            <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-200 shadow-xl aspect-video max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto group">
+            <div className="relative rounded-2xl 2xl:rounded-3xl 3xl:rounded-[2rem] overflow-hidden border border-secondary-700/60 shadow-xl shadow-black/30 aspect-video max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto group">
               <Image
                 src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
                 alt="CNC Precision Machining"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary-950/85 via-secondary-900/30 to-transparent"></div>
               <div className="absolute bottom-6 left-6 2xl:bottom-10 2xl:left-10 3xl:bottom-12 3xl:left-12">
                 <p className="text-white font-semibold text-lg 2xl:text-2xl 3xl:text-3xl">Precision Manufacturing</p>
                 <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">Expert craftsmanship in every project</p>
@@ -378,14 +384,14 @@ export default function Home() {
           {/* Image Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-8 3xl:gap-10">
             {machineGallery.map((item, index) => (
-              <div key={index} className="group relative rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-200 shadow-lg aspect-[4/3]">
+              <div key={index} className="group relative rounded-xl 2xl:rounded-2xl 3xl:rounded-3xl overflow-hidden border border-secondary-700/60 shadow-lg shadow-black/25 aspect-[4/3]">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary-600/80 via-secondary-600/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary-950/80 via-secondary-800/30 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4 2xl:bottom-6 2xl:left-6 3xl:bottom-8 3xl:left-8">
                   <h3 className="text-white font-semibold 2xl:text-lg 3xl:text-xl">{item.title}</h3>
                   <p className="text-secondary-200 text-sm 2xl:text-base 3xl:text-lg">{item.description}</p>
