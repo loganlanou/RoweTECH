@@ -318,17 +318,23 @@
     animation: slideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* Hero text mobile sizing */
+  /* Hero text - INDUSTRIAL PRECISION as dominant title */
   .hero-title {
-    @apply font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] text-white uppercase tracking-tight leading-[0.95];
+    @apply font-display text-white uppercase tracking-tight font-bold;
+    font-size: clamp(4.5rem, 15vw, 14rem);
+    line-height: 0.9;
   }
 
   .hero-title-accent {
-    @apply font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] text-primary-500 uppercase tracking-tight leading-[0.95];
+    @apply font-display text-primary-500 uppercase tracking-tight font-bold;
+    font-size: clamp(4.5rem, 15vw, 14rem);
+    line-height: 0.9;
   }
 
   .hero-subtitle {
-    @apply font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-secondary-300 uppercase tracking-[0.25em];
+    @apply font-display text-secondary-400 uppercase;
+    font-size: clamp(1.25rem, 2.5vw, 3rem);
+    letter-spacing: 0.3em;
   }
 }
 
