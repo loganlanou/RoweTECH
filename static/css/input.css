@@ -333,8 +333,8 @@
 
   .hero-subtitle {
     @apply font-display text-secondary-400 uppercase;
-    font-size: clamp(1.25rem, 2.5vw, 3rem);
-    letter-spacing: 0.3em;
+    font-size: clamp(1rem, 1.8vw, 2.25rem);
+    letter-spacing: 0.28em;
   }
 }
 
