@@ -44,7 +44,7 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	// Admin routes
 	admin := e.Group("/admin")
 	if h.cfg.HasClerk() {
-		admin.Use(middleware.RequireClerkSession())
+		admin.Use(middleware.RequireAdminAccess(h.cfg))
 	}
 	admin.GET("", h.AdminDashboard)
 	admin.GET("/gallery", h.AdminGallery)
