@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "make setup-ci && make build-static",
+  "installCommand": "curl -fsSL https://go.dev/dl/go1.23.4.linux-amd64.tar.gz | tar -C /vercel -xzf - && npm install",
+  "buildCommand": "export PATH=$PATH:/vercel/go/bin && export GOPATH=/vercel/.go && go install github.com/a-h/templ/cmd/templ@latest && export PATH=$PATH:$GOPATH/bin && make build-static",
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
