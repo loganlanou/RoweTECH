@@ -20,12 +20,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const clerkJWKSURL = "https://api.clerk.com/v1/jwks"
-
 type jwksCache struct {
 	mu        sync.Mutex
 	keys      map[string]*rsa.PublicKey
 	fetchedAt time.Time
+	jwksURL   string
 }
 
 var clerkJWKS jwksCache
@@ -42,7 +41,7 @@ func RequireAdminAccess(cfg *config.Config) echo.MiddlewareFunc {
 				return c.Redirect(http.StatusFound, "/sign-in")
 			}
 
-			claims, err := verifyClerkSessionToken(c.Request().Context(), token)
+			claims, err := verifyClerkSessionToken(c.Request().Context(), cfg, token)
 			if err != nil {
 				slog.Warn("clerk session verification failed", "error", err)
 				return c.Redirect(http.StatusFound, "/sign-in")
@@ -81,21 +80,23 @@ func sessionToken(c echo.Context) (string, bool) {
 	return "", false
 }
 
-func verifyClerkSessionToken(ctx context.Context, token string) (*jwt.RegisteredClaims, error) {
+func verifyClerkSessionToken(ctx context.Context, cfg *config.Config, token string) (*jwt.RegisteredClaims, error) {
+	jwksURL := frontendAPIJWKSURL(cfg.ClerkPublishableKey)
+	if jwksURL == "" {
+		return nil, errors.New("could not determine JWKS URL from publishable key")
+	}
+
 	parser := jwt.NewParser(jwt.WithValidMethods([]string{"RS256"}))
 	claims := &jwt.RegisteredClaims{}
 
 	_, err := parser.ParseWithClaims(token, claims, func(t *jwt.Token) (interface{}, error) {
 		kid, _ := t.Header["kid"].(string)
-		return clerkPublicKey(ctx, kid)
+		return clerkPublicKey(ctx, jwksURL, kid)
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	if err := claims.Valid(); err != nil {
-		return nil, err
-	}
 	if claims.Subject == "" {
 		return nil, errors.New("missing subject")
 	}
@@ -103,7 +104,25 @@ func verifyClerkSessionToken(ctx context.Context, token string) (*jwt.Registered
 	return claims, nil
 }
 
-func clerkPublicKey(ctx context.Context, kid string) (*rsa.PublicKey, error) {
+// frontendAPIJWKSURL extracts the JWKS URL from the publishable key.
+func frontendAPIJWKSURL(pk string) string {
+	if pk == "" {
+		return ""
+	}
+	parts := strings.Split(pk, "_")
+	if len(parts) < 3 {
+		return ""
+	}
+	encoded := parts[2]
+	decoded, err := base64.RawStdEncoding.DecodeString(encoded)
+	if err != nil {
+		return ""
+	}
+	domain := strings.TrimSuffix(string(decoded), "$")
+	return "https://" + domain + "/.well-known/jwks.json"
+}
+
+func clerkPublicKey(ctx context.Context, jwksURL, kid string) (*rsa.PublicKey, error) {
 	if kid == "" {
 		return nil, errors.New("missing key id")
 	}
@@ -111,18 +130,20 @@ func clerkPublicKey(ctx context.Context, kid string) (*rsa.PublicKey, error) {
 	clerkJWKS.mu.Lock()
 	defer clerkJWKS.mu.Unlock()
 
-	if clerkJWKS.keys != nil && time.Since(clerkJWKS.fetchedAt) < 12*time.Hour {
+	// Check cache (also invalidate if URL changed)
+	if clerkJWKS.keys != nil && clerkJWKS.jwksURL == jwksURL && time.Since(clerkJWKS.fetchedAt) < 12*time.Hour {
 		if key, ok := clerkJWKS.keys[kid]; ok {
 			return key, nil
 		}
 	}
 
-	keys, err := fetchClerkJWKS(ctx)
+	keys, err := fetchClerkJWKS(ctx, jwksURL)
 	if err != nil {
 		return nil, err
 	}
 	clerkJWKS.keys = keys
 	clerkJWKS.fetchedAt = time.Now()
+	clerkJWKS.jwksURL = jwksURL
 
 	key, ok := keys[kid]
 	if !ok {
@@ -144,8 +165,8 @@ type clerkJWKSResponse struct {
 	Keys []clerkJWK `json:"keys"`
 }
 
-func fetchClerkJWKS(ctx context.Context) (map[string]*rsa.PublicKey, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, clerkJWKSURL, nil)
+func fetchClerkJWKS(ctx context.Context, jwksURL string) (map[string]*rsa.PublicKey, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, jwksURL, nil)
 	if err != nil {
 		return nil, err
 	}

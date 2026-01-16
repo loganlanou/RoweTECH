@@ -23,7 +23,7 @@ templ Base(m meta.PageMeta) {
 			<link rel="stylesheet" href="/static/css/output.css"/>
 			<script src="https://unpkg.com/htmx.org@2.0.4"></script>
 			if clerk.EnabledFromCtx(ctx) {
-				<script defer src="https://js.clerk.com/v4/clerk.js" data-clerk-publishable-key={ clerk.PublishableKeyFromCtx(ctx) }></script>
+				<script async crossorigin="anonymous" src={ clerk.ClerkJSURLFromCtx(ctx) } data-clerk-publishable-key={ clerk.PublishableKeyFromCtx(ctx) }></script>
 			}
 		</head>
 		<body class="bg-secondary-950 text-secondary-100 font-sans antialiased">
