@@ -53,6 +53,10 @@ func main() {
 		{"/gallery/index.html", pages.Gallery([]models.GalleryItem{}, []string{})},
 		{"/sign-in/index.html", pages.SignIn()},
 		{"/sign-up/index.html", pages.SignUp()},
+		{"/admin/index.html", pages.AdminDashboard()},
+		{"/admin/gallery/index.html", pages.AdminGallery([]models.GalleryItem{})},
+		{"/admin/content/index.html", pages.AdminContent()},
+		{"/admin/settings/index.html", pages.AdminSettings()},
 	}
 
 	fmt.Printf("Building static site to %s/\n", outDir)
