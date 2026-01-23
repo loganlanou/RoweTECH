@@ -88,6 +88,42 @@ templ Contact(success bool, errorMsg string) {
 									<label for="message" class="block text-sm font-medium text-secondary-300 mb-2">Message *</label>
 									<textarea id="message" name="message" rows="5" required class="input-industrial"></textarea>
 								</div>
+								<!-- Newsletter Opt-in -->
+								<div class="flex items-start gap-3">
+									<input
+										type="checkbox"
+										id="newsletter"
+										name="newsletter"
+										value="1"
+										class="mt-1 w-5 h-5 rounded border-secondary-700 bg-secondary-800 text-primary-500 focus:ring-primary-500 focus:ring-offset-secondary-900"
+									/>
+									<label for="newsletter" class="text-sm text-secondary-300">
+										<span class="font-medium text-white">Subscribe to our newsletter</span>
+										<br/>
+										<span class="text-secondary-400">Receive occasional updates about our services, industry news, and special offers.</span>
+									</label>
+								</div>
+								<!-- Terms and Services -->
+								<div class="flex items-start gap-3">
+									<input
+										type="checkbox"
+										id="agreeToTerms"
+										name="agreeToTerms"
+										value="1"
+										required
+										class="mt-1 w-5 h-5 rounded border-secondary-700 bg-secondary-800 text-primary-500 focus:ring-primary-500 focus:ring-offset-secondary-900"
+									/>
+									<label for="agreeToTerms" class="text-sm text-secondary-300">
+										<span class="font-medium text-white">I agree to the Terms of Service *</span>
+										<br/>
+										<span class="text-secondary-400">
+											By submitting this form, you agree to our
+											<a href="/terms" class="text-primary-400 hover:text-primary-300 underline">Terms of Service</a>
+											and
+											<a href="/privacy" class="text-primary-400 hover:text-primary-300 underline">Privacy Policy</a>.
+										</span>
+									</label>
+								</div>
 								<button type="submit" class="btn-primary w-full justify-center">
 									Send Message
 									<svg class="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

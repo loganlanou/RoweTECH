@@ -1,9 +1,12 @@
 package handler
 
 import (
+	"database/sql"
+	"log/slog"
 	"net/http"
 
 	"rowetech/internal/database/models"
+	"rowetech/internal/database/sqlc"
 	"rowetech/templates/pages"
 
 	"github.com/labstack/echo/v4"
@@ -63,20 +66,41 @@ func (h *Handler) ContactSubmit(c echo.Context) error {
 	phone := c.FormValue("phone")
 	projectType := c.FormValue("projectType")
 	message := c.FormValue("message")
+	newsletter := c.FormValue("newsletter") == "1"
+	agreeToTerms := c.FormValue("agreeToTerms") == "1"
 
 	// Validate required fields
 	if name == "" || email == "" || message == "" {
 		return pages.Contact(false, "Please complete the required fields.").Render(ctx, c.Response().Writer)
 	}
 
-	// For now, just log the submission (sqlc will be generated on first build)
-	// TODO: Save to database once sqlc is generated
-	_ = name
-	_ = company
-	_ = email
-	_ = phone
-	_ = projectType
-	_ = message
+	// Validate terms acceptance
+	if !agreeToTerms {
+		return pages.Contact(false, "You must agree to the Terms of Service to submit this form.").Render(ctx, c.Response().Writer)
+	}
+
+	// Convert booleans to int64 for SQLite
+	newsletterInt := int64(0)
+	if newsletter {
+		newsletterInt = 1
+	}
+	termsInt := int64(1) // Always 1 since we validated above
+
+	// Save to database
+	_, err := h.db.Queries.CreateContactSubmission(ctx, sqlc.CreateContactSubmissionParams{
+		Name:            name,
+		Company:         sql.NullString{String: company, Valid: company != ""},
+		Email:           email,
+		Phone:           sql.NullString{String: phone, Valid: phone != ""},
+		ProjectType:     sql.NullString{String: projectType, Valid: projectType != ""},
+		Message:         message,
+		NewsletterOptIn: sql.NullInt64{Int64: newsletterInt, Valid: true},
+		AgreedToTerms:   sql.NullInt64{Int64: termsInt, Valid: true},
+	})
+	if err != nil {
+		slog.Error("failed to save contact submission", "error", err)
+		return pages.Contact(false, "There was an error submitting your message. Please try again.").Render(ctx, c.Response().Writer)
+	}
 
 	return pages.Contact(true, "").Render(ctx, c.Response().Writer)
 }

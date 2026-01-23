@@ -34,15 +34,17 @@ func FromSqlcGalleryItems(items []sqlc.GalleryItem) []GalleryItem {
 
 // ContactSubmission represents a contact form submission
 type ContactSubmission struct {
-	ID          int64  `json:"id"`
-	Name        string `json:"name"`
-	Company     string `json:"company"`
-	Email       string `json:"email"`
-	Phone       string `json:"phone"`
-	ProjectType string `json:"project_type"`
-	Message     string `json:"message"`
-	IsRead      bool   `json:"is_read"`
-	CreatedAt   string `json:"created_at"`
+	ID            int64  `json:"id"`
+	Name          string `json:"name"`
+	Company       string `json:"company"`
+	Email         string `json:"email"`
+	Phone         string `json:"phone"`
+	ProjectType   string `json:"project_type"`
+	Message       string `json:"message"`
+	IsRead        bool   `json:"is_read"`
+	NewsletterOpt bool   `json:"newsletter_opt_in"`
+	AgreedToTerms bool   `json:"agreed_to_terms"`
+	CreatedAt     string `json:"created_at"`
 }
 
 // FromSqlcContactSubmissions converts sqlc ContactSubmissions to models ContactSubmissions
@@ -54,15 +56,17 @@ func FromSqlcContactSubmissions(items []sqlc.ContactSubmission) []ContactSubmiss
 			createdAt = item.CreatedAt.Time.Format("Jan 2, 2006 3:04 PM")
 		}
 		result[i] = ContactSubmission{
-			ID:          item.ID,
-			Name:        item.Name,
-			Company:     item.Company.String,
-			Email:       item.Email,
-			Phone:       item.Phone.String,
-			ProjectType: item.ProjectType.String,
-			Message:     item.Message,
-			IsRead:      item.IsRead.Int64 == 1,
-			CreatedAt:   createdAt,
+			ID:            item.ID,
+			Name:          item.Name,
+			Company:       item.Company.String,
+			Email:         item.Email,
+			Phone:         item.Phone.String,
+			ProjectType:   item.ProjectType.String,
+			Message:       item.Message,
+			IsRead:        item.IsRead.Int64 == 1,
+			NewsletterOpt: item.NewsletterOptIn.Int64 == 1,
+			AgreedToTerms: item.AgreedToTerms.Int64 == 1,
+			CreatedAt:     createdAt,
 		}
 	}
 	return result
@@ -75,15 +79,17 @@ func FromSqlcContactSubmission(item sqlc.ContactSubmission) ContactSubmission {
 		createdAt = item.CreatedAt.Time.Format("Jan 2, 2006 3:04 PM")
 	}
 	return ContactSubmission{
-		ID:          item.ID,
-		Name:        item.Name,
-		Company:     item.Company.String,
-		Email:       item.Email,
-		Phone:       item.Phone.String,
-		ProjectType: item.ProjectType.String,
-		Message:     item.Message,
-		IsRead:      item.IsRead.Int64 == 1,
-		CreatedAt:   createdAt,
+		ID:            item.ID,
+		Name:          item.Name,
+		Company:       item.Company.String,
+		Email:         item.Email,
+		Phone:         item.Phone.String,
+		ProjectType:   item.ProjectType.String,
+		Message:       item.Message,
+		IsRead:        item.IsRead.Int64 == 1,
+		NewsletterOpt: item.NewsletterOptIn.Int64 == 1,
+		AgreedToTerms: item.AgreedToTerms.Int64 == 1,
+		CreatedAt:     createdAt,
 	}
 }
 

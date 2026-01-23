@@ -1,6 +1,6 @@
 -- name: CreateContactSubmission :one
-INSERT INTO contact_submissions (name, company, email, phone, project_type, message)
-VALUES (?, ?, ?, ?, ?, ?)
+INSERT INTO contact_submissions (name, company, email, phone, project_type, message, newsletter_opt_in, agreed_to_terms)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 RETURNING *;
 
 -- name: ListContactSubmissions :many
