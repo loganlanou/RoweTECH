@@ -202,3 +202,4 @@ func getStaticGalleryCategories() []string {
 		"EDM",
 	}
 }
+// Force redeploy Fri Jan 23 11:01:32 AM CST 2026
