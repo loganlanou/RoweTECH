@@ -369,6 +369,12 @@
         const userButtonEl = document.getElementById('clerk-user-button');
         const userEmailEl = document.getElementById('clerk-user-email');
 
+        // Header profile dropdown elements
+        const headerSignIn = document.getElementById('header-sign-in');
+        const headerProfile = document.getElementById('header-profile');
+        const mobileSignIn = document.getElementById('mobile-sign-in');
+        const mobileProfile = document.getElementById('mobile-profile');
+
         if (signInEl && window.Clerk.user) {
           window.location.href = '/admin';
           return;
@@ -398,6 +404,46 @@
           userEmailEl.textContent = window.Clerk.user.primaryEmailAddress?.emailAddress || 'Authenticated';
         }
 
+        // Handle header profile dropdown
+        if (window.Clerk.user) {
+          const user = window.Clerk.user;
+          const email = user.primaryEmailAddress?.emailAddress || '';
+          const firstName = user.firstName || '';
+          const lastName = user.lastName || '';
+          const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'User';
+          const imageUrl = user.imageUrl;
+
+          // Show profile dropdown, hide sign in button (desktop)
+          if (headerSignIn) headerSignIn.classList.add('hidden');
+          if (headerProfile) headerProfile.classList.remove('hidden');
+
+          // Show profile menu, hide sign in link (mobile)
+          if (mobileSignIn) mobileSignIn.classList.add('hidden');
+          if (mobileProfile) mobileProfile.classList.remove('hidden');
+
+          // Update user info in dropdowns
+          const headerUserName = document.getElementById('header-user-name');
+          const dropdownUserName = document.getElementById('dropdown-user-name');
+          const dropdownUserEmail = document.getElementById('dropdown-user-email');
+          const mobileUserName = document.getElementById('mobile-user-name');
+          const mobileUserEmail = document.getElementById('mobile-user-email');
+          const headerUserAvatar = document.getElementById('header-user-avatar');
+
+          if (headerUserName) headerUserName.textContent = firstName || 'Profile';
+          if (dropdownUserName) dropdownUserName.textContent = fullName;
+          if (dropdownUserEmail) dropdownUserEmail.textContent = email;
+          if (mobileUserName) mobileUserName.textContent = fullName;
+          if (mobileUserEmail) mobileUserEmail.textContent = email;
+
+          // Update avatar with user image if available
+          if (headerUserAvatar && imageUrl) {
+            headerUserAvatar.innerHTML = '<img src="' + imageUrl + '" alt="" class="w-8 h-8 rounded-full object-cover" />';
+          }
+
+          // Initialize dropdown toggle
+          initProfileDropdown();
+        }
+
         if (adminShell) {
           if (!window.Clerk.user) {
             window.location.href = '/sign-in';
@@ -416,6 +462,80 @@
     }
 
     mountClerk();
+  }
+
+  // ===========================================
+  // Profile Dropdown
+  // ===========================================
+  function initProfileDropdown() {
+    const dropdownBtn = document.getElementById('profile-dropdown-btn');
+    const dropdownMenu = document.getElementById('profile-dropdown-menu');
+    const headerSignOut = document.getElementById('header-sign-out');
+    const mobileSignOut = document.getElementById('mobile-sign-out');
+
+    if (!dropdownBtn || !dropdownMenu) return;
+
+    let isOpen = false;
+
+    function openDropdown() {
+      isOpen = true;
+      dropdownBtn.setAttribute('aria-expanded', 'true');
+      dropdownMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+      dropdownMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+    }
+
+    function closeDropdown() {
+      isOpen = false;
+      dropdownBtn.setAttribute('aria-expanded', 'false');
+      dropdownMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+      dropdownMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+    }
+
+    // Toggle dropdown on button click
+    dropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (isOpen) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (isOpen && !dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    // Close dropdown on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isOpen) {
+        closeDropdown();
+      }
+    });
+
+    // Handle sign out (desktop)
+    if (headerSignOut) {
+      headerSignOut.addEventListener('click', function() {
+        if (window.Clerk) {
+          window.Clerk.signOut().then(() => {
+            window.location.href = '/';
+          });
+        }
+      });
+    }
+
+    // Handle sign out (mobile)
+    if (mobileSignOut) {
+      mobileSignOut.addEventListener('click', function() {
+        if (window.Clerk) {
+          window.Clerk.signOut().then(() => {
+            window.location.href = '/';
+          });
+        }
+      });
+    }
   }
 
   // ===========================================

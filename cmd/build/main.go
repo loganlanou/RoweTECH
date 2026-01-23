@@ -15,6 +15,7 @@ import (
 	"rowetech/internal/config"
 	"rowetech/internal/ctxkeys"
 	"rowetech/internal/database/models"
+	"rowetech/templates/layouts"
 	"rowetech/templates/pages"
 )
 
@@ -40,6 +41,9 @@ func main() {
 
 	fmt.Printf("Clerk enabled: %v\n", cfg.HasClerk())
 
+	// Empty stats for static build
+	emptyStats := layouts.AdminStats{}
+
 	// Define pages to generate
 	staticPages := []struct {
 		path      string
@@ -53,10 +57,12 @@ func main() {
 		{"/gallery/index.html", pages.Gallery([]models.GalleryItem{}, []string{})},
 		{"/sign-in/index.html", pages.SignIn()},
 		{"/sign-up/index.html", pages.SignUp()},
-		{"/admin/index.html", pages.AdminDashboard()},
-		{"/admin/gallery/index.html", pages.AdminGallery([]models.GalleryItem{})},
-		{"/admin/content/index.html", pages.AdminContent()},
-		{"/admin/settings/index.html", pages.AdminSettings()},
+		{"/admin/index.html", pages.AdminDashboard(emptyStats)},
+		{"/admin/gallery/index.html", pages.AdminGallery([]models.GalleryItem{}, []string{}, emptyStats)},
+		{"/admin/contacts/index.html", pages.AdminContacts([]models.ContactSubmission{}, emptyStats, "")},
+		{"/admin/users/index.html", pages.AdminUsers([]clerk.User{}, 0, emptyStats, cfg.HasClerk())},
+		{"/admin/images/index.html", pages.AdminImages(map[string][]models.PageImage{}, []string{}, emptyStats)},
+		{"/admin/settings/index.html", pages.AdminSettings(emptyStats)},
 	}
 
 	fmt.Printf("Building static site to %s/\n", outDir)

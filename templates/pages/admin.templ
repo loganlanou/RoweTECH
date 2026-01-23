@@ -1,247 +1,135 @@
 package pages
 
 import (
+	"fmt"
 	"rowetech/internal/meta"
-	"rowetech/internal/database/models"
-	"rowetech/internal/clerk"
 	"rowetech/templates/layouts"
 )
 
-templ AdminDashboard() {
-	@layouts.Base(meta.New("Admin Dashboard", "RoweTech admin portal.").WithNoIndex()) {
-		<div class="min-h-screen bg-secondary-950 pt-24">
-			<div class="container-custom py-8">
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-auth-loading" class="card-base border border-secondary-800 p-6 clip-lg mb-8">
-						<p class="text-secondary-400 text-center">Checking authentication...</p>
-					</div>
-				}
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-shell" class="opacity-0 transition-opacity duration-300">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Admin Dashboard</h1>
-								<p class="text-secondary-400">Manage your website content and settings.</p>
-							</div>
-							<div class="card-base border border-secondary-800 p-4 flex flex-col sm:flex-row sm:items-center gap-4">
-								<div class="flex items-center gap-4">
-									<div id="clerk-user-button" class="min-w-[40px] min-h-[40px]"></div>
-									<div>
-										<p class="text-xs text-secondary-500 uppercase tracking-wider">Signed in</p>
-										<p id="clerk-user-email" class="text-secondary-200 text-sm">Loading profile...</p>
-									</div>
-								</div>
-								<div class="sm:ml-auto flex items-center gap-3">
-									<a href="/sign-in" class="btn-outline px-4 py-2 text-xs">Switch account</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-							@adminCardSVG("Gallery", "Manage project gallery images", "/admin/gallery", "gallery")
-							@adminCardSVG("Content", "Edit website content", "/admin/content", "document")
-							@adminCardSVG("Settings", "Site settings", "/admin/settings", "cog")
-						</div>
-					</div>
-				} else {
-					<div id="admin-shell">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Admin Dashboard</h1>
-								<p class="text-secondary-400">Manage your website content and settings.</p>
-							</div>
-						</div>
-
-						<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-							@adminCardSVG("Gallery", "Manage project gallery images", "/admin/gallery", "gallery")
-							@adminCardSVG("Content", "Edit website content", "/admin/content", "document")
-							@adminCardSVG("Settings", "Site settings", "/admin/settings", "cog")
-						</div>
-					</div>
-				}
+templ AdminDashboard(stats layouts.AdminStats) {
+	@layouts.Admin(meta.New("Admin Dashboard", "RoweTech admin portal.").WithNoIndex(), "dashboard", stats) {
+		<div class="space-y-8">
+			<!-- Page Header -->
+			<div>
+				<h1 class="font-display text-2xl md:text-3xl text-white uppercase">Dashboard</h1>
+				<p class="text-secondary-400 mt-1">Welcome to the RoweTech admin panel.</p>
+			</div>
+			<!-- Stats Grid -->
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+				@statsCard("Gallery Items", fmt.Sprintf("%d", stats.GalleryCount), "/admin/gallery", "gallery", "primary")
+				@statsCard("Unread Messages", fmt.Sprintf("%d", stats.UnreadContacts), "/admin/contacts", "contacts", stats.UnreadContacts > 0)
+				@statsCard("Page Images", fmt.Sprintf("%d", stats.PageImages), "/admin/images", "images", "default")
+				@statsCard("Settings", "Configure", "/admin/settings", "settings", "default")
+			</div>
+			<!-- Quick Actions -->
+			<div class="card-base border border-secondary-800 p-6 clip-lg">
+				<h2 class="font-display text-lg text-white uppercase mb-4">Quick Actions</h2>
+				<div class="flex flex-wrap gap-3">
+					<a href="/admin/gallery" class="btn-primary px-4 py-2 text-sm">
+						<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+						</svg>
+						Add Gallery Item
+					</a>
+					<a href="/admin/contacts" class="btn-outline px-4 py-2 text-sm">
+						<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+						</svg>
+						View Messages
+					</a>
+					<a href="/" target="_blank" class="btn-secondary px-4 py-2 text-sm">
+						<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+						</svg>
+						View Site
+					</a>
+				</div>
+			</div>
+			<!-- Recent Activity Placeholder -->
+			<div class="card-base border border-secondary-800 p-6 clip-lg">
+				<h2 class="font-display text-lg text-white uppercase mb-4">Recent Activity</h2>
+				<div class="space-y-3">
+					<p class="text-secondary-500 text-sm">Activity tracking coming soon.</p>
+				</div>
 			</div>
 		</div>
 	}
 }
 
-templ adminCardSVG(title, description, href, iconType string) {
-	<a href={ templ.SafeURL(href) } class="block p-8 card-base hover:border-primary-500/50 transition-colors clip-lg">
-		<div class="w-14 h-14 bg-primary-500/10 rounded-lg flex items-center justify-center mb-4">
-			switch iconType {
-				case "gallery":
-					<svg class="w-7 h-7 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-					</svg>
-				case "document":
-					<svg class="w-7 h-7 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-					</svg>
-				case "cog":
-					<svg class="w-7 h-7 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-					</svg>
-			}
+templ statsCard(title, value, href, iconType string, highlight any) {
+	<a
+		href={ templ.SafeURL(href) }
+		class={ "group card-base border p-6 clip-md transition-all duration-300 hover:border-primary-500/50 hover:-translate-y-1",
+			templ.KV("border-primary-500/30 bg-primary-500/5", isHighlighted(highlight)),
+			templ.KV("border-secondary-800", !isHighlighted(highlight)) }
+	>
+		<div class="flex items-center justify-between mb-4">
+			<div class={ "w-12 h-12 rounded-lg flex items-center justify-center transition-colors",
+				templ.KV("bg-primary-500/20 text-primary-400", isHighlighted(highlight)),
+				templ.KV("bg-secondary-800 text-secondary-400 group-hover:bg-primary-500/20 group-hover:text-primary-400", !isHighlighted(highlight)) }>
+				@statsIcon(iconType)
+			</div>
+			<svg class="w-5 h-5 text-secondary-600 group-hover:text-primary-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+			</svg>
 		</div>
-		<h2 class="font-display text-xl text-white uppercase mb-2">{ title }</h2>
-		<p class="text-secondary-400">{ description }</p>
+		<p class={ "text-3xl font-bold mb-1",
+			templ.KV("text-primary-400", isHighlighted(highlight)),
+			templ.KV("text-white", !isHighlighted(highlight)) }>
+			{ value }
+		</p>
+		<p class="text-secondary-400 text-sm">{ title }</p>
 	</a>
 }
 
-templ AdminGallery(items []models.GalleryItem) {
-	@layouts.Base(meta.New("Gallery Management", "Manage gallery items.").WithNoIndex()) {
-		<div class="min-h-screen bg-secondary-950 pt-24">
-			<div class="container-custom py-8">
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-auth-loading" class="card-base border border-secondary-800 p-6 clip-lg mb-8">
-						<p class="text-secondary-400 text-center">Checking authentication...</p>
-					</div>
-				}
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-shell" class="opacity-0 transition-opacity duration-300">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Gallery</h1>
-								<p class="text-secondary-400">Manage your project gallery.</p>
-							</div>
-							<div class="flex items-center gap-4">
-								<div class="card-base border border-secondary-800 px-4 py-3 flex items-center gap-4">
-									<div id="clerk-user-button" class="min-w-[36px] min-h-[36px]"></div>
-									<p id="clerk-user-email" class="text-secondary-200 text-sm">Loading profile...</p>
-								</div>
-								<a href="/admin" class="btn-outline">← Back</a>
-							</div>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Gallery management coming soon. Use database migrations to add items.
-							</p>
-						</div>
-					</div>
-				} else {
-					<div id="admin-shell">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Gallery</h1>
-								<p class="text-secondary-400">Manage your project gallery.</p>
-							</div>
-							<a href="/admin" class="btn-outline">← Back</a>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Gallery management coming soon. Use database migrations to add items.
-							</p>
-						</div>
-					</div>
-				}
-			</div>
-		</div>
+func isHighlighted(h any) bool {
+	switch v := h.(type) {
+	case bool:
+		return v
+	case int64:
+		return v > 0
+	case string:
+		return v == "primary"
+	default:
+		return false
 	}
 }
 
-templ AdminContent() {
-	@layouts.Base(meta.New("Content Management", "Manage website content.").WithNoIndex()) {
-		<div class="min-h-screen bg-secondary-950 pt-24">
-			<div class="container-custom py-8">
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-auth-loading" class="card-base border border-secondary-800 p-6 clip-lg mb-8">
-						<p class="text-secondary-400 text-center">Checking authentication...</p>
-					</div>
-				}
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-shell" class="opacity-0 transition-opacity duration-300">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Content</h1>
-								<p class="text-secondary-400">Edit website content.</p>
-							</div>
-							<div class="flex items-center gap-4">
-								<div class="card-base border border-secondary-800 px-4 py-3 flex items-center gap-4">
-									<div id="clerk-user-button" class="min-w-[36px] min-h-[36px]"></div>
-									<p id="clerk-user-email" class="text-secondary-200 text-sm">Loading profile...</p>
-								</div>
-								<a href="/admin" class="btn-outline">← Back</a>
-							</div>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Content management coming soon.
-							</p>
-						</div>
-					</div>
-				} else {
-					<div id="admin-shell">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Content</h1>
-								<p class="text-secondary-400">Edit website content.</p>
-							</div>
-							<a href="/admin" class="btn-outline">← Back</a>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Content management coming soon.
-							</p>
-						</div>
-					</div>
-				}
-			</div>
-		</div>
+templ statsIcon(iconType string) {
+	switch iconType {
+		case "gallery":
+			<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+			</svg>
+		case "contacts":
+			<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+			</svg>
+		case "images":
+			<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+			</svg>
+		case "settings":
+			<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+			</svg>
 	}
 }
 
-templ AdminSettings() {
-	@layouts.Base(meta.New("Settings", "Site settings.").WithNoIndex()) {
-		<div class="min-h-screen bg-secondary-950 pt-24">
-			<div class="container-custom py-8">
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-auth-loading" class="card-base border border-secondary-800 p-6 clip-lg mb-8">
-						<p class="text-secondary-400 text-center">Checking authentication...</p>
-					</div>
-				}
-				if clerk.EnabledFromCtx(ctx) {
-					<div id="admin-shell" class="opacity-0 transition-opacity duration-300">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Settings</h1>
-								<p class="text-secondary-400">Configure site settings.</p>
-							</div>
-							<div class="flex items-center gap-4">
-								<div class="card-base border border-secondary-800 px-4 py-3 flex items-center gap-4">
-									<div id="clerk-user-button" class="min-w-[36px] min-h-[36px]"></div>
-									<p id="clerk-user-email" class="text-secondary-200 text-sm">Loading profile...</p>
-								</div>
-								<a href="/admin" class="btn-outline">← Back</a>
-							</div>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Settings management coming soon.
-							</p>
-						</div>
-					</div>
-				} else {
-					<div id="admin-shell">
-						<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
-							<div>
-								<h1 class="font-display text-3xl text-white uppercase">Settings</h1>
-								<p class="text-secondary-400">Configure site settings.</p>
-							</div>
-							<a href="/admin" class="btn-outline">← Back</a>
-						</div>
-
-						<div class="bg-secondary-900 border border-secondary-800 p-6">
-							<p class="text-secondary-400 text-center py-8">
-								Settings management coming soon.
-							</p>
-						</div>
-					</div>
-				}
+templ AdminSettings(stats layouts.AdminStats) {
+	@layouts.Admin(meta.New("Settings", "Site settings.").WithNoIndex(), "settings", stats) {
+		<div class="space-y-8">
+			<!-- Page Header -->
+			<div>
+				<h1 class="font-display text-2xl md:text-3xl text-white uppercase">Settings</h1>
+				<p class="text-secondary-400 mt-1">Configure site settings.</p>
+			</div>
+			<!-- Settings Content -->
+			<div class="card-base border border-secondary-800 p-6 clip-lg">
+				<p class="text-secondary-400 text-center py-8">
+					Settings management coming soon.
+				</p>
 			</div>
 		</div>
 	}

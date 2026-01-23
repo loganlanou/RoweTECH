@@ -48,10 +48,25 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	}
 	admin.GET("", h.AdminDashboard)
 	admin.GET("/gallery", h.AdminGallery)
-	admin.GET("/content", h.AdminContent)
+	admin.GET("/contacts", h.AdminContacts)
+	admin.GET("/users", h.AdminUsers)
+	admin.GET("/images", h.AdminImages)
 	admin.GET("/settings", h.AdminSettings)
 
-	// API routes
+	// Admin API routes
+	admin.GET("/api/gallery/:id/edit", h.APIGetGalleryEditForm)
+	admin.POST("/api/gallery", h.APICreateGalleryItem)
+	admin.PUT("/api/gallery/:id", h.APIUpdateGalleryItem)
+	admin.DELETE("/api/gallery/:id", h.APIDeleteGalleryItem)
+	admin.PUT("/api/gallery/:id/sort", h.APIUpdateGallerySortOrder)
+	admin.POST("/api/contacts/:id/read", h.APIMarkContactRead)
+	admin.POST("/api/contacts/:id/unread", h.APIMarkContactUnread)
+	admin.DELETE("/api/contacts/:id", h.APIDeleteContact)
+	admin.PUT("/api/images/:id/url", h.APIUpdateImageURL)
+	admin.PUT("/api/images/:id/alt", h.APIUpdateImageAlt)
+	admin.PUT("/api/images/:id/sort", h.APIUpdateImageSortOrder)
+
+	// Public API routes
 	api := e.Group("/api")
 	api.POST("/contact", h.APIContactSubmit)
 	api.GET("/gallery", h.APIListGallery)

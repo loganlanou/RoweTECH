@@ -449,6 +449,15 @@
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
+/* Sortable drag-and-drop styles */
+.sortable-ghost {
+  @apply opacity-50 bg-primary-500/20 border-primary-500/50;
+}
+
+.sortable-drag {
+  @apply opacity-100 bg-secondary-800 shadow-lg scale-105;
+}
+
 /* Smooth image reveal */
 .img-reveal {
   @apply opacity-0 transition-opacity duration-500;

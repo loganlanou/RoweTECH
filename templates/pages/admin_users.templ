@@ -1,0 +1,155 @@
+package pages
+
+import (
+	"fmt"
+	"rowetech/internal/clerk"
+	"rowetech/internal/meta"
+	"rowetech/templates/layouts"
+)
+
+templ AdminUsers(users []clerk.User, totalCount int, stats layouts.AdminStats, clerkEnabled bool) {
+	@layouts.Admin(meta.New("User Management", "View registered users.").WithNoIndex(), "users", stats) {
+		<div class="space-y-6">
+			<!-- Page Header -->
+			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+				<div>
+					<h1 class="font-display text-2xl md:text-3xl text-white uppercase">Users</h1>
+					<p class="text-secondary-400 mt-1">View users registered through Clerk authentication.</p>
+				</div>
+				if clerkEnabled {
+					<a
+						href="https://dashboard.clerk.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-outline px-4 py-2 text-sm w-full sm:w-auto"
+					>
+						<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+						</svg>
+						Clerk Dashboard
+					</a>
+				}
+			</div>
+			if !clerkEnabled {
+				<!-- Clerk Not Configured -->
+				<div class="card-base border border-secondary-800 p-12 text-center clip-lg">
+					<svg class="w-16 h-16 text-secondary-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+					</svg>
+					<p class="text-secondary-400 text-lg mb-2">Authentication Not Configured</p>
+					<p class="text-secondary-500 text-sm mb-6">Set up Clerk authentication to manage users.</p>
+					<a
+						href="https://clerk.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-primary px-6 py-2"
+					>
+						Learn About Clerk
+					</a>
+				</div>
+			} else {
+				<!-- User Stats -->
+				<div class="card-base border border-secondary-800 p-4 clip-md">
+					<div class="flex items-center gap-4">
+						<div class="w-10 h-10 bg-primary-500/20 rounded-lg flex items-center justify-center">
+							<svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<p class="text-2xl font-bold text-white">{ formatUserCount(totalCount) }</p>
+							<p class="text-secondary-400 text-sm">Total registered users</p>
+						</div>
+					</div>
+				</div>
+				<!-- Users List -->
+				<div class="space-y-4">
+					if len(users) == 0 {
+						<div class="card-base border border-secondary-800 p-12 text-center clip-lg">
+							<svg class="w-16 h-16 text-secondary-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+							</svg>
+							<p class="text-secondary-400 text-lg mb-2">No users yet</p>
+							<p class="text-secondary-500 text-sm">Users will appear here after they sign up.</p>
+						</div>
+					} else {
+						<div class="grid gap-4">
+							for _, user := range users {
+								@userCard(user)
+							}
+						</div>
+					}
+				</div>
+			}
+		</div>
+	}
+}
+
+func formatUserCount(count int) string {
+	return fmt.Sprintf("%d", count)
+}
+
+templ userCard(user clerk.User) {
+	<div class="card-base border border-secondary-800 p-4 sm:p-6 clip-md hover:border-primary-500/30 transition-colors">
+		<div class="flex flex-col sm:flex-row sm:items-center gap-4">
+			<!-- Avatar -->
+			<div class="flex-shrink-0">
+				if user.GetImageURL() != "" {
+					<img
+						src={ user.GetImageURL() }
+						alt={ user.GetFullName() }
+						class="w-14 h-14 rounded-full object-cover border-2 border-secondary-700"
+					/>
+				} else {
+					<div class="w-14 h-14 rounded-full bg-primary-500/20 flex items-center justify-center border-2 border-secondary-700">
+						<span class="text-xl font-bold text-primary-400">
+							{ getInitials(user) }
+						</span>
+					</div>
+				}
+			</div>
+			<!-- Info -->
+			<div class="flex-1 min-w-0">
+				<div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+					<h3 class="font-semibold text-white truncate">{ user.GetFullName() }</h3>
+					if user.Username != "" {
+						<span class="text-secondary-500 text-sm">{ "@" + user.Username }</span>
+					}
+				</div>
+				<p class="text-secondary-400 text-sm truncate">{ user.GetPrimaryEmail() }</p>
+				<div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-secondary-500">
+					<span>Joined { user.GetCreatedAtFormatted() }</span>
+					<span>Last sign in: { user.GetLastSignInFormatted() }</span>
+				</div>
+			</div>
+			<!-- Actions -->
+			<div class="flex items-center gap-2 sm:flex-col sm:items-end">
+				<span class="text-xs text-secondary-600 font-mono hidden sm:block">{ user.ID[:12] }...</span>
+				<a
+					href={ templ.SafeURL("https://dashboard.clerk.com/users/" + user.ID) }
+					target="_blank"
+					rel="noopener noreferrer"
+					class="px-3 py-1.5 text-xs text-secondary-300 hover:text-white hover:bg-secondary-800 rounded transition-colors flex items-center gap-1"
+				>
+					View in Clerk
+					<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+					</svg>
+				</a>
+			</div>
+		</div>
+	</div>
+}
+
+func getInitials(user clerk.User) string {
+	name := user.GetFullName()
+	if name == "" {
+		return "?"
+	}
+	// Get first letter
+	runes := []rune(name)
+	if len(runes) > 0 {
+		return string(runes[0])
+	}
+	return "?"
+}

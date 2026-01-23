@@ -39,6 +39,9 @@ internal/database/sqlc/
 # Tailwind output (generated)
 static/css/output.css
 
+# Uploaded images (managed via admin panel)
+static/uploads/
+
 # SQLite database
 data/*.db
 data/*.db-shm

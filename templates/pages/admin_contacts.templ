@@ -1,0 +1,197 @@
+package pages
+
+import (
+	"fmt"
+	"rowetech/internal/database/models"
+	"rowetech/internal/meta"
+	"rowetech/templates/layouts"
+)
+
+templ AdminContacts(contacts []models.ContactSubmission, stats layouts.AdminStats, filter string) {
+	@layouts.Admin(meta.New("Contact Submissions", "View contact form submissions.").WithNoIndex(), "contacts", stats) {
+		<div class="space-y-6">
+			<!-- Page Header -->
+			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+				<div>
+					<h1 class="font-display text-2xl md:text-3xl text-white uppercase">Contact Messages</h1>
+					<p class="text-secondary-400 mt-1">View and manage contact form submissions.</p>
+				</div>
+				if stats.UnreadContacts > 0 {
+					<div class="flex items-center gap-2 px-4 py-2 bg-primary-500/10 border border-primary-500/30 rounded-lg">
+						<span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+						<span class="text-primary-400 text-sm font-medium">{ fmt.Sprintf("%d unread", stats.UnreadContacts) }</span>
+					</div>
+				}
+			</div>
+			<!-- Filters -->
+			<div class="card-base border border-secondary-800 p-4 clip-md">
+				<div class="flex flex-col sm:flex-row gap-4">
+					<div class="flex gap-2">
+						<a
+							href="/admin/contacts"
+							class={ "px-4 py-2 text-sm rounded transition-colors",
+								templ.KV("bg-primary-500 text-white", filter == "" || filter == "all"),
+								templ.KV("bg-secondary-800 text-secondary-300 hover:bg-secondary-700", filter != "" && filter != "all") }
+						>
+							All
+						</a>
+						<a
+							href="/admin/contacts?filter=unread"
+							class={ "px-4 py-2 text-sm rounded transition-colors",
+								templ.KV("bg-primary-500 text-white", filter == "unread"),
+								templ.KV("bg-secondary-800 text-secondary-300 hover:bg-secondary-700", filter != "unread") }
+						>
+							Unread
+						</a>
+						<a
+							href="/admin/contacts?filter=read"
+							class={ "px-4 py-2 text-sm rounded transition-colors",
+								templ.KV("bg-primary-500 text-white", filter == "read"),
+								templ.KV("bg-secondary-800 text-secondary-300 hover:bg-secondary-700", filter != "read") }
+						>
+							Read
+						</a>
+					</div>
+					<div class="sm:ml-auto">
+						<p class="text-secondary-400 text-sm">{ fmt.Sprintf("%d messages", len(contacts)) }</p>
+					</div>
+				</div>
+			</div>
+			<!-- Contacts List -->
+			<div id="contacts-list" class="space-y-4">
+				if len(contacts) == 0 {
+					<div class="card-base border border-secondary-800 p-12 text-center clip-lg">
+						<svg class="w-16 h-16 text-secondary-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+						</svg>
+						<p class="text-secondary-400 text-lg mb-2">No messages yet</p>
+						<p class="text-secondary-500 text-sm">Contact form submissions will appear here.</p>
+					</div>
+				} else {
+					for _, contact := range contacts {
+						@contactCard(contact)
+					}
+				}
+			</div>
+		</div>
+	}
+}
+
+templ contactCard(contact models.ContactSubmission) {
+	<div
+		id={ fmt.Sprintf("contact-%d", contact.ID) }
+		class={ "card-base border overflow-hidden clip-md transition-all duration-300",
+			templ.KV("border-primary-500/30 bg-primary-500/5", !contact.IsRead),
+			templ.KV("border-secondary-800", contact.IsRead) }
+	>
+		<!-- Header -->
+		<div class="p-4 sm:p-6">
+			<div class="flex flex-col sm:flex-row sm:items-start gap-4">
+				<!-- Avatar -->
+				<div class={ "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0",
+					templ.KV("bg-primary-500/20 text-primary-400", !contact.IsRead),
+					templ.KV("bg-secondary-800 text-secondary-400", contact.IsRead) }>
+					<span class="text-lg font-bold">{ string([]rune(contact.Name)[0]) }</span>
+				</div>
+				<!-- Info -->
+				<div class="flex-1 min-w-0">
+					<div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+						<h3 class={ "font-semibold truncate",
+							templ.KV("text-white", !contact.IsRead),
+							templ.KV("text-secondary-200", contact.IsRead) }>
+							{ contact.Name }
+						</h3>
+						if !contact.IsRead {
+							<span class="inline-flex px-2 py-0.5 bg-primary-500 text-white text-xs font-bold uppercase rounded w-fit">
+								New
+							</span>
+						}
+					</div>
+					<div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-secondary-400">
+						<a href={ templ.SafeURL("mailto:" + contact.Email) } class="hover:text-primary-400 transition-colors">
+							{ contact.Email }
+						</a>
+						if contact.Phone != "" {
+							<a href={ templ.SafeURL("tel:" + contact.Phone) } class="hover:text-primary-400 transition-colors">
+								{ contact.Phone }
+							</a>
+						}
+						if contact.Company != "" {
+							<span>{ contact.Company }</span>
+						}
+					</div>
+				</div>
+				<!-- Timestamp & Actions -->
+				<div class="flex items-center gap-3 sm:flex-col sm:items-end">
+					<span class="text-xs text-secondary-500">{ contact.CreatedAt }</span>
+					<div class="flex gap-2">
+						if !contact.IsRead {
+							<button
+								type="button"
+								class="p-2 text-secondary-400 hover:text-green-400 hover:bg-green-500/10 rounded transition-colors"
+								title="Mark as read"
+								hx-post={ fmt.Sprintf("/admin/api/contacts/%d/read", contact.ID) }
+								hx-target={ fmt.Sprintf("#contact-%d", contact.ID) }
+								hx-swap="outerHTML"
+							>
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+								</svg>
+							</button>
+						} else {
+							<button
+								type="button"
+								class="p-2 text-secondary-400 hover:text-primary-400 hover:bg-primary-500/10 rounded transition-colors"
+								title="Mark as unread"
+								hx-post={ fmt.Sprintf("/admin/api/contacts/%d/unread", contact.ID) }
+								hx-target={ fmt.Sprintf("#contact-%d", contact.ID) }
+								hx-swap="outerHTML"
+							>
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+								</svg>
+							</button>
+						}
+						<button
+							type="button"
+							class="p-2 text-secondary-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
+							title="Delete"
+							hx-delete={ fmt.Sprintf("/admin/api/contacts/%d", contact.ID) }
+							hx-confirm="Are you sure you want to delete this message?"
+							hx-target={ fmt.Sprintf("#contact-%d", contact.ID) }
+							hx-swap="outerHTML"
+						>
+							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Project Type -->
+			if contact.ProjectType != "" {
+				<div class="mt-4 pt-4 border-t border-secondary-800">
+					<span class="text-xs text-secondary-500 uppercase">Project Type:</span>
+					<span class="ml-2 text-sm text-secondary-300">{ contact.ProjectType }</span>
+				</div>
+			}
+		</div>
+		<!-- Message (collapsible) -->
+		<details class="group border-t border-secondary-800">
+			<summary class="px-4 sm:px-6 py-3 cursor-pointer hover:bg-secondary-800/50 transition-colors flex items-center justify-between">
+				<span class="text-sm text-secondary-400">View message</span>
+				<svg class="w-5 h-5 text-secondary-500 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+				</svg>
+			</summary>
+			<div class="px-4 sm:px-6 py-4 bg-secondary-950/50">
+				<p class="text-secondary-200 whitespace-pre-wrap">{ contact.Message }</p>
+			</div>
+		</details>
+	</div>
+}
+
+// ContactCardPartial renders a single contact card (for HTMX updates)
+templ ContactCardPartial(contact models.ContactSubmission) {
+	@contactCard(contact)
+}
