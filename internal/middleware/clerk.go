@@ -36,12 +36,12 @@ func RequireAdminAccess(cfg *config.Config) echo.MiddlewareFunc {
 				return next(c)
 			}
 
-			token, ok := sessionToken(c)
+			token, ok := SessionToken(c)
 			if !ok {
 				return c.Redirect(http.StatusFound, "/sign-in")
 			}
 
-			claims, err := verifyClerkSessionToken(c.Request().Context(), cfg, token)
+			claims, err := VerifyClerkSessionToken(c.Request().Context(), cfg, token)
 			if err != nil {
 				slog.Warn("clerk session verification failed", "error", err)
 				return c.Redirect(http.StatusFound, "/sign-in")
@@ -51,7 +51,7 @@ func RequireAdminAccess(cfg *config.Config) echo.MiddlewareFunc {
 				return next(c)
 			}
 
-			userEmail, err := fetchClerkUserEmail(c.Request().Context(), cfg.ClerkSecretKey, claims.Subject)
+			userEmail, err := FetchClerkUserEmail(c.Request().Context(), cfg.ClerkSecretKey, claims.Subject)
 			if err != nil {
 				slog.Error("failed to fetch clerk user", "error", err)
 				return c.Redirect(http.StatusFound, "/unauthorized")
@@ -66,7 +66,8 @@ func RequireAdminAccess(cfg *config.Config) echo.MiddlewareFunc {
 	}
 }
 
-func sessionToken(c echo.Context) (string, bool) {
+// SessionToken extracts the session token from the request.
+func SessionToken(c echo.Context) (string, bool) {
 	authHeader := c.Request().Header.Get("Authorization")
 	if strings.HasPrefix(authHeader, "Bearer ") {
 		return strings.TrimSpace(strings.TrimPrefix(authHeader, "Bearer ")), true
@@ -80,7 +81,8 @@ func sessionToken(c echo.Context) (string, bool) {
 	return "", false
 }
 
-func verifyClerkSessionToken(ctx context.Context, cfg *config.Config, token string) (*jwt.RegisteredClaims, error) {
+// VerifyClerkSessionToken verifies and parses a Clerk session JWT.
+func VerifyClerkSessionToken(ctx context.Context, cfg *config.Config, token string) (*jwt.RegisteredClaims, error) {
 	jwksURL := frontendAPIJWKSURL(cfg.ClerkPublishableKey)
 	if jwksURL == "" {
 		return nil, errors.New("could not determine JWKS URL from publishable key")
@@ -234,7 +236,8 @@ type clerkUserResponse struct {
 	} `json:"email_addresses"`
 }
 
-func fetchClerkUserEmail(ctx context.Context, secretKey, userID string) (string, error) {
+// FetchClerkUserEmail gets the email address for a Clerk user by ID.
+func FetchClerkUserEmail(ctx context.Context, secretKey, userID string) (string, error) {
 	if secretKey == "" || userID == "" {
 		return "", errors.New("missing clerk credentials")
 	}

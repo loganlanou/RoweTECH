@@ -15,6 +15,7 @@ import (
 
 	"rowetech/internal/database/models"
 	"rowetech/internal/database/sqlc"
+	"rowetech/internal/middleware"
 	"rowetech/templates/pages"
 
 	"github.com/labstack/echo/v4"
@@ -376,4 +377,37 @@ func (h *Handler) APIUploadImage(c echo.Context) error {
 	// Return the URL path to the uploaded file
 	imageURL := fmt.Sprintf("/static/uploads/gallery/%s", filename)
 	return c.JSON(http.StatusOK, map[string]string{"url": imageURL})
+}
+
+// APIIsAdmin checks if the current user is an admin
+func (h *Handler) APIIsAdmin(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	// If Clerk is not configured, no one is admin
+	if !h.cfg.HasClerk() {
+		return c.JSON(http.StatusOK, map[string]bool{"isAdmin": false})
+	}
+
+	// Get session token
+	token, ok := middleware.SessionToken(c)
+	if !ok {
+		return c.JSON(http.StatusOK, map[string]bool{"isAdmin": false})
+	}
+
+	// Verify token
+	claims, err := middleware.VerifyClerkSessionToken(ctx, h.cfg, token)
+	if err != nil {
+		return c.JSON(http.StatusOK, map[string]bool{"isAdmin": false})
+	}
+
+	// Fetch user email
+	userEmail, err := middleware.FetchClerkUserEmail(ctx, h.cfg.ClerkSecretKey, claims.Subject)
+	if err != nil {
+		slog.Error("failed to fetch clerk user email", "error", err)
+		return c.JSON(http.StatusOK, map[string]bool{"isAdmin": false})
+	}
+
+	// Check if user is admin
+	isAdmin := h.cfg.IsAdminEmail(userEmail)
+	return c.JSON(http.StatusOK, map[string]bool{"isAdmin": isAdmin})
 }

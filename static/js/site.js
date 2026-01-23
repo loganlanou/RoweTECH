@@ -440,6 +440,9 @@
             headerUserAvatar.innerHTML = '<img src="' + imageUrl + '" alt="" class="w-8 h-8 rounded-full object-cover" />';
           }
 
+          // Check if user is admin and show admin links
+          checkAdminStatus();
+
           // Initialize dropdown toggle
           initProfileDropdown();
         }
@@ -462,6 +465,30 @@
     }
 
     mountClerk();
+  }
+
+  // ===========================================
+  // Admin Status Check
+  // ===========================================
+  function checkAdminStatus() {
+    fetch('/api/is-admin')
+      .then(response => response.json())
+      .then(data => {
+        const headerAdminLink = document.getElementById('header-admin-link');
+        const mobileAdminLink = document.getElementById('mobile-admin-link');
+        const footerAdminLink = document.getElementById('footer-admin-link');
+
+        if (data.isAdmin) {
+          // Show admin links for admin users
+          if (headerAdminLink) headerAdminLink.classList.remove('hidden');
+          if (mobileAdminLink) mobileAdminLink.classList.remove('hidden');
+          if (footerAdminLink) footerAdminLink.classList.remove('hidden');
+        }
+        // Non-admin users: links remain hidden (default state)
+      })
+      .catch(err => {
+        console.error('Error checking admin status:', err);
+      });
   }
 
   // ===========================================

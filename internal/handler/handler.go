@@ -71,4 +71,5 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	api := e.Group("/api")
 	api.POST("/contact", h.APIContactSubmit)
 	api.GET("/gallery", h.APIListGallery)
+	api.GET("/is-admin", h.APIIsAdmin)
 }
