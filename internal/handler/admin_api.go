@@ -1,10 +1,17 @@
 package handler
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
+	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 
 	"rowetech/internal/database/models"
 	"rowetech/internal/database/sqlc"
@@ -306,4 +313,67 @@ func (h *Handler) APIUpdateGallerySortOrder(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+}
+
+// APIUploadImage handles image file uploads for gallery items
+func (h *Handler) APIUploadImage(c echo.Context) error {
+	// Get the uploaded file
+	file, err := c.FormFile("image")
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "No image file provided"})
+	}
+
+	// Validate file type
+	ext := strings.ToLower(filepath.Ext(file.Filename))
+	allowedExts := map[string]bool{".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true}
+	if !allowedExts[ext] {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid file type. Allowed: jpg, jpeg, png, gif, webp"})
+	}
+
+	// Validate file size (max 10MB)
+	if file.Size > 10*1024*1024 {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "File too large. Maximum size is 10MB"})
+	}
+
+	// Generate unique filename
+	randomBytes := make([]byte, 16)
+	if _, err := rand.Read(randomBytes); err != nil {
+		slog.Error("failed to generate random filename", "error", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to process upload"})
+	}
+	filename := hex.EncodeToString(randomBytes) + ext
+
+	// Ensure upload directory exists
+	uploadDir := "static/uploads/gallery"
+	if err := os.MkdirAll(uploadDir, 0755); err != nil {
+		slog.Error("failed to create upload directory", "error", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to process upload"})
+	}
+
+	// Open the uploaded file
+	src, err := file.Open()
+	if err != nil {
+		slog.Error("failed to open uploaded file", "error", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to process upload"})
+	}
+	defer src.Close()
+
+	// Create destination file
+	dstPath := filepath.Join(uploadDir, filename)
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		slog.Error("failed to create destination file", "error", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to save file"})
+	}
+	defer dst.Close()
+
+	// Copy the file
+	if _, err := io.Copy(dst, src); err != nil {
+		slog.Error("failed to copy file", "error", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to save file"})
+	}
+
+	// Return the URL path to the uploaded file
+	imageURL := fmt.Sprintf("/static/uploads/gallery/%s", filename)
+	return c.JSON(http.StatusOK, map[string]string{"url": imageURL})
 }

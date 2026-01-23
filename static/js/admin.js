@@ -287,9 +287,99 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
+// Handle gallery image file upload
+function handleGalleryImageUpload(input, formType) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    showToast('Invalid file type. Please use JPG, PNG, GIF, or WebP.', 'error');
+    input.value = '';
+    return;
+  }
+
+  // Validate file size (10MB max)
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('File too large. Maximum size is 10MB.', 'error');
+    input.value = '';
+    return;
+  }
+
+  // Show preview immediately
+  const previewId = formType === 'add' ? 'add-image-preview' : 'edit-image-preview';
+  const urlInputId = formType === 'add' ? 'add-image-url' : 'edit-image-url';
+  const preview = document.getElementById(previewId);
+  const urlInput = document.getElementById(urlInputId);
+
+  if (preview) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = preview.querySelector('img');
+      if (img) {
+        img.src = e.target.result;
+      }
+      preview.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Upload file to server
+  const formData = new FormData();
+  formData.append('image', file);
+
+  // Show loading state
+  const uploadLabel = input.closest('label');
+  const originalText = uploadLabel ? uploadLabel.querySelector('span').textContent : '';
+  if (uploadLabel) {
+    uploadLabel.querySelector('span').textContent = 'Uploading...';
+    uploadLabel.style.pointerEvents = 'none';
+  }
+
+  fetch('/admin/api/upload/image', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.error || 'Upload failed');
+      });
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.url) {
+      // Set the URL in the input field
+      if (urlInput) {
+        urlInput.value = data.url;
+      }
+      showToast('Image uploaded successfully!', 'success');
+    }
+  })
+  .catch(err => {
+    console.error('Upload error:', err);
+    showToast(err.message || 'Failed to upload image', 'error');
+    // Reset preview on error
+    if (preview && formType === 'add') {
+      preview.classList.add('hidden');
+    }
+  })
+  .finally(() => {
+    // Reset upload button state
+    if (uploadLabel) {
+      uploadLabel.querySelector('span').textContent = originalText;
+      uploadLabel.style.pointerEvents = '';
+    }
+    input.value = ''; // Allow re-uploading same file
+  });
+}
+
 // Export functions for global use
 window.toggleSidebar = toggleSidebar;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.confirmDelete = confirmDelete;
 window.showToast = showToast;
+window.handleGalleryImageUpload = handleGalleryImageUpload;
