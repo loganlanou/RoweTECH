@@ -41,8 +41,12 @@ func main() {
 
 	fmt.Printf("Clerk enabled: %v\n", cfg.HasClerk())
 
-	// Empty stats for static build
-	emptyStats := layouts.AdminStats{}
+	// Stats for static build
+	staticStats := layouts.AdminStats{
+		GalleryCount:   30,
+		UnreadContacts: 0,
+		PageImages:     0,
+	}
 
 	// Gallery items for static build (stock photos)
 	galleryItems := getStaticGalleryItems()
@@ -61,12 +65,12 @@ func main() {
 		{"/gallery/index.html", pages.Gallery(galleryItems, galleryCategories)},
 		{"/sign-in/index.html", pages.SignIn()},
 		{"/sign-up/index.html", pages.SignUp()},
-		{"/admin/index.html", pages.AdminDashboard(emptyStats)},
-		{"/admin/gallery/index.html", pages.AdminGallery([]models.GalleryItem{}, []string{}, emptyStats)},
-		{"/admin/contacts/index.html", pages.AdminContacts([]models.ContactSubmission{}, emptyStats, "")},
-		{"/admin/users/index.html", pages.AdminUsers([]clerk.User{}, 0, emptyStats, cfg.HasClerk())},
-		{"/admin/images/index.html", pages.AdminImages(map[string][]models.PageImage{}, []string{}, emptyStats)},
-		{"/admin/settings/index.html", pages.AdminSettings(emptyStats)},
+		{"/admin/index.html", pages.AdminDashboard(staticStats)},
+		{"/admin/gallery/index.html", pages.AdminGallery(galleryItems, galleryCategories, staticStats)},
+		{"/admin/contacts/index.html", pages.AdminContacts([]models.ContactSubmission{}, staticStats, "")},
+		{"/admin/users/index.html", pages.AdminUsers([]clerk.User{}, 0, staticStats, cfg.HasClerk())},
+		{"/admin/images/index.html", pages.AdminImages(map[string][]models.PageImage{}, []string{}, staticStats)},
+		{"/admin/settings/index.html", pages.AdminSettings(staticStats)},
 	}
 
 	fmt.Printf("Building static site to %s/\n", outDir)
